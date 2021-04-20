@@ -1,5 +1,5 @@
-import { Geometry } from "../interface/geometry";
-import { MapsCoordinate } from "./MapsCoordinate";
+import {Geometry} from '../interface/geometry';
+import {MapsCoordinate} from './MapsCoordinate';
 
 /**
  * MapsLine a object that can be used as GEOJson for a line
@@ -21,27 +21,21 @@ export class MapsLine {
    * @memberof MapsLine
    */
   constructor(coordinates: Array<MapsCoordinate>) {
-    this.type = "Feature";
+    this.type = 'Feature';
     this.geometry = {
-      type: "LineString",
+      type: 'LineString',
       coordinates,
     };
   }
 
   /**
-   *The map() method creates a new array populated with the results of calling a provided function on every element in the calling array.
+   * getter
    *
    * @author Robert Boudewijn
    * @date 2021/04/20
-   * @param {*} function
    * @memberof MapsLine
-   * todo:
    */
-  mapOverCoordinates(funct) {
-    let x = new Array();
-    for (let i in this.geometry.coordinates) {
-      x.push(funct(this.geometry.coordinates[i].toArray()));
-    }
-    return x;
+  getCordinates() {
+    return this.geometry.coordinates.map(element=> element.toArray());
   }
 }

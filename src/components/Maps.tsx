@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
+import { Geometry } from 'geojson';
 
 const Maps = props => {
   MapboxGL.setAccessToken(
@@ -17,14 +18,12 @@ const Maps = props => {
     },
   };
 
-  let geoJSON = {
-    type: "FeatureCollection",
-    features: () => {
-      if (props.geoJSON === undefined) {
-        return;
-      }
-      return props.geoJSON.mapOverCoordinates(geoJson => geoJson);
-    },
+
+
+  let geoJSON :Geometry   = {
+    type: 'LineString',
+    coordinates: props.geoJSON.getCordinates(),
+    
   };
 
   function genaratePoints() {
@@ -32,7 +31,11 @@ const Maps = props => {
       return;
     }
     return props.mapPoints.map(point => (
-      <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
+      <MapboxGL.PointAnnotation
+        id={point.toString()}
+        coordinate={point}
+        key={point.toString()}
+      />
     ));
   }
 
@@ -54,6 +57,9 @@ const Maps = props => {
     </View>
   );
 };
+
+
+//{ type: string; features: { type: string; geometry: { type: string; coordinates: number[][]; }; }[]; }
 
 const styles = StyleSheet.create({
   page: {
