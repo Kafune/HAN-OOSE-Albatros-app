@@ -17,12 +17,20 @@ const Maps = (props) => {
 
   let geoJSON = {
     "type": "FeatureCollection",
-    "features":
-      props.geoJSON.map((geoJson) => geoJson)
+    "features":()=>{
+      if(props.geoJSON == undefined ){
+        return null;
+      }
+      return props.geoJSON.map((geoJson) => geoJson)
+    }
+      
   }
 
 
   function genaratePoints() {
+    if(props.mapPoints == undefined ){
+      return null;
+    }
     let points = props.mapPoints.map((point) => {
       return <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
     })

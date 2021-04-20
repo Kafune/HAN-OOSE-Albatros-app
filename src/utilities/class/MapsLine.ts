@@ -9,8 +9,8 @@ import { MapsCoordinate } from './MapsCoordinate';
  * @class MapsLine
  */
 export class MapsLine {
-    type;
-    geometry;
+    type: string;
+    geometry:object ;
 
     /**
      * Creates an instance of MapsLine.
@@ -19,7 +19,7 @@ export class MapsLine {
      * @param {Array<MapsCoordinate>} coordinates
      * @memberof MapsLine
      */
-    constructor(coordinates) {
+    constructor(coordinates:Array<MapsCoordinate>) {
         this.type = "Feature";
         this.geometry = {
             "type": "LineString",
@@ -34,11 +34,14 @@ export class MapsLine {
      * @date 2021/04/20
      * @param {*} function
      * @memberof MapsLine
+     * todo:
      */
-    map(funct){
-        for(let i in this.geometry.coordinates){
-            funct(i);
+    map(funct) {
+        let x = new Array;
+        for (let i in this.geometry.coordinates) {
+            x.push(funct(this.geometry.coordinates[i]));
         }
+        return x
     }
 
 }

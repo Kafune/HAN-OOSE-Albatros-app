@@ -9,7 +9,7 @@ import { MapsCoordinate } from './MapsCoordinate';
  * @class MapsLine
  */
 export class MapsPoint {
-    coordinates;
+    coordinates: Array<Number[]>;
 
     /**
      * Creates an instance of MapsLine.
@@ -18,7 +18,7 @@ export class MapsPoint {
      * @param {Array<MapsCoordinate>} coordinates
      * @memberof MapsLine
      */
-    constructor(coordinates) {
+    constructor(coordinates: MapsCoordinate[]) {
         this.coordinates = coordinates.map(item => item.toArray())
     }
 

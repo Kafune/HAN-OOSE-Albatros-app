@@ -7,8 +7,8 @@
  * @class MapsCoordinate
  */
 export class MapsCoordinate {
-  longitude;
-  latitude;
+  longitude: Number;
+  latitude: Number;
 
   /**
    * Creates an instance of MapsCoordinate.
@@ -18,7 +18,7 @@ export class MapsCoordinate {
    * @param {Number} latitude
    * @memberof MapsCoordinate
    */
-  constructor(longitude, latitude) {
+  constructor(longitude: Number, latitude: Number) {
     this.longitude = longitude;
     this.latitude = latitude;
   }
@@ -28,7 +28,7 @@ export class MapsCoordinate {
    *
    * @author Robert Boudewijn
    * @date 2021/04/20
-   * @return {*} 
+   * @return {Array<Number>} 
    * @memberof MapsCoordinate
    */
   toArray(){
