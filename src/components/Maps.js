@@ -30,10 +30,9 @@ const Maps = props => {
     if (props.mapPoints === undefined) {
       return;
     }
-    let points = props.mapPoints.map(point => (
+    return props.mapPoints.map(point => (
       <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
     ));
-    return points;
   }
 
   return (
