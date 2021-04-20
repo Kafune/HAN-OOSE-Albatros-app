@@ -7,15 +7,15 @@ import {MapsPoint} from '../utilities/class/MapsPoints';
 const MapsPage = () => {
   return (
     <Maps
-      geoJSON={[
+      geoJSON={
         new MapsLine([
           new MapsCoordinate(5.674306, 52.030944),
           new MapsCoordinate(5.675282, 52.030033),
           new MapsCoordinate(5.679166, 52.030257),
           new MapsCoordinate(5.679166, 52.033257),
           new MapsCoordinate(5.679981, 52.034237),
-        ]),
-      ]}
+        ])
+      }
       mapPoints={
         new MapsPoint([
           new MapsCoordinate(5.674306, 52.030944),
