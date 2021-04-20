@@ -1,3 +1,4 @@
+import { Geometry } from "../interface/geometry";
 import { MapsCoordinate } from "./MapsCoordinate";
 
 /**
@@ -10,7 +11,7 @@ import { MapsCoordinate } from "./MapsCoordinate";
  */
 export class MapsLine {
   type: string;
-  geometry: object;
+  geometry: Geometry;
 
   /**
    * Creates an instance of MapsLine.
@@ -23,7 +24,7 @@ export class MapsLine {
     this.type = "Feature";
     this.geometry = {
       type: "LineString",
-      coordinates: coordinates.map((item) => item.toArray()),
+      coordinates,
     };
   }
 
@@ -39,7 +40,7 @@ export class MapsLine {
   mapOverCoordinates(funct) {
     let x = new Array();
     for (let i in this.geometry.coordinates) {
-      x.push(funct(this.geometry.coordinates[i]));
+      x.push(funct(this.geometry.coordinates[i].toArray()));
     }
     return x;
   }

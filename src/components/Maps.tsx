@@ -10,6 +10,7 @@ const Maps = props => {
   const layerStyles = {
     LineStyle: {
       lineColor: '#007CBE',
+      // @ts-ignore
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,
       lineOpacity: 0.84,
@@ -17,7 +18,7 @@ const Maps = props => {
   };
 
   let geoJSON = {
-    type: 'FeatureCollection',
+    type: "FeatureCollection",
     features: () => {
       if (props.geoJSON === undefined) {
         return;
@@ -36,24 +37,21 @@ const Maps = props => {
   }
 
   return (
-    <>
-      <View style={styles.page}>
-        <View style={styles.container}>
-          <MapboxGL.MapView style={styles.map}>
-            <MapboxGL.Camera
-              zoomLevel={props.zoom ? props.zoom : 13}
-              pitch={0}
-              centerCoordinate={props.center}
-            />
-
-            <MapboxGL.ShapeSource id="routeSoucre" shape={geoJSON}>
-              <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
-            </MapboxGL.ShapeSource>
-            {genaratePoints()}
-          </MapboxGL.MapView>
-        </View>
+    <View style={styles.page}>
+      <View style={styles.container}>
+        <MapboxGL.MapView style={styles.map}>
+          <MapboxGL.Camera
+            zoomLevel={props.zoom ? props.zoom : 13}
+            pitch={0}
+            centerCoordinate={props.center}
+          />
+          <MapboxGL.ShapeSource id="routeSoucre" shape={geoJSON}>
+            <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
+          </MapboxGL.ShapeSource>
+          {genaratePoints()}
+        </MapboxGL.MapView>
       </View>
-    </>
+    </View>
   );
 };
 

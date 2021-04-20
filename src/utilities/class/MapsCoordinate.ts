@@ -28,7 +28,7 @@ export class MapsCoordinate {
    *
    * @author Robert Boudewijn
    * @date 2021/04/20
-   * @return {Array<Number>} 
+   * @return {Array<Number>}
    * @memberof MapsCoordinate
    */
   toArray(){
