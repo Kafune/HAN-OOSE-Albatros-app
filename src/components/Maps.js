@@ -2,7 +2,59 @@ import React, { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import MapboxGL from "@react-native-mapbox-gl/maps";
 
-const SF_OFFICE_COORDINATE = [5.8385909,51.9852637]; //long, lat
+
+const Maps = (props) => {
+  MapboxGL.setAccessToken("sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g");
+
+  const layerStyles = {
+    LineStyle: {
+      lineColor: '#007CBE',
+      lineCap: MapboxGL.LineJoin.Round,
+      lineWidth: 3,
+      lineOpacity: 0.84,
+    },
+  };
+
+  let geoJSON = {
+    "type": "FeatureCollection",
+    "features":
+      props.geoJSON.map((geoJson) => geoJson)
+  }
+
+
+  function genaratePoints() {
+    let points = props.mapPoints.map((point) => {
+      return <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
+    })
+    return points;
+  }
+
+  return (
+    <>
+      <View style={styles.page}>
+        <View style={styles.container}>
+          <MapboxGL.MapView style={styles.map} >
+            <MapboxGL.Camera
+              zoomLevel={((props.zoom) ? props.zoom : 13)}
+              pitch={0}
+              centerCoordinate={props.center}
+            />
+
+            <MapboxGL.ShapeSource id="routeSoucre" shape={geoJSON}>
+              <MapboxGL.LineLayer
+                id="route"
+                style={layerStyles.LineStyle}
+              />
+            </MapboxGL.ShapeSource>
+            {genaratePoints()}
+          </MapboxGL.MapView>
+        </View>
+      </View>
+    </>
+  );
+};
+
+
 
 const styles = StyleSheet.create({
   page: {
@@ -13,7 +65,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 300,
-    width: 300,
+    width: '100%',
     backgroundColor: "tomato"
   },
   map: {
@@ -21,23 +73,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const Maps = () => {
-  MapboxGL.setAccessToken("sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g");
-
-
-  return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <MapboxGL.MapView style={styles.map} >
-          <MapboxGL.Camera
-            zoomLevel={12}
-            pitch={0}
-            centerCoordinate={SF_OFFICE_COORDINATE}
-          />
-        </MapboxGL.MapView>
-      </View>
-    </View>
-  );
-};
 
 export default Maps;
