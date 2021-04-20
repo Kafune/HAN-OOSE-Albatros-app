@@ -1,6 +1,6 @@
-import { MapsCoordinate } from "../class/MapsCoordinate";
+import {MapsCoordinate} from '../class/MapsCoordinate';
 
 export interface Geometry {
-  type: String
-  coordinates: Array<MapsCoordinate>
+  type: String;
+  coordinates: Array<MapsCoordinate>;
 }

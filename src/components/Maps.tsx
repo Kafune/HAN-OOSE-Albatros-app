@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import { Geometry } from 'geojson';
+import {Geometry} from 'geojson';
 
-const Maps = props => {
+const Maps = (props: any) => {
   MapboxGL.setAccessToken(
     'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
   );
@@ -11,26 +11,23 @@ const Maps = props => {
   const layerStyles = {
     LineStyle: {
       lineColor: '#007CBE',
-      // @ts-ignore
+      // @ts-ignore We can't modify the inner code of MapboxGL.
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,
       lineOpacity: 0.84,
     },
   };
 
-
-
-  let geoJSON :Geometry   = {
+  const geoJSON: Geometry = {
     type: 'LineString',
     coordinates: props.geoJSON.getCordinates(),
-    
   };
 
   function genaratePoints() {
     if (props.mapPoints === undefined) {
       return;
     }
-    return props.mapPoints.map(point => (
+    return props.mapPoints.map((point: any) => (
       <MapboxGL.PointAnnotation
         id={point.toString()}
         coordinate={point}
@@ -57,7 +54,6 @@ const Maps = props => {
     </View>
   );
 };
-
 
 //{ type: string; features: { type: string; geometry: { type: string; coordinates: number[][]; }; }[]; }
 

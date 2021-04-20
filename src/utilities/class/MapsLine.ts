@@ -1,4 +1,4 @@
-import {Geometry} from '../interface/geometry';
+import {Geometry} from '../interface/Geometry';
 import {MapsCoordinate} from './MapsCoordinate';
 
 /**
@@ -36,6 +36,8 @@ export class MapsLine {
    * @memberof MapsLine
    */
   getCordinates() {
-    return this.geometry.coordinates.map(element=> element.toArray());
+    return this.geometry.coordinates.map((element: MapsCoordinate) =>
+      element.toArray(),
+    );
   }
 }
