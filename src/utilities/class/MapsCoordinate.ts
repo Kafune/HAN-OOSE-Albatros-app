@@ -31,8 +31,7 @@ export class MapsCoordinate {
    * @return {Array<Number>}
    * @memberof MapsCoordinate
    */
-  toArray(){
-    return [this.longitude, this.latitude]
+  toArray() {
+    return [this.longitude, this.latitude];
   }
-
 }
