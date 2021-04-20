@@ -35,7 +35,7 @@ export class MapsLine {
    * @date 2021/04/20
    * @memberof MapsLine
    */
-  getCordinates() {
+  getCoordinates() {
     return this.geometry.coordinates.map((element: MapsCoordinate) =>
       element.toArray(),
     );
