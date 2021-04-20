@@ -23,7 +23,7 @@ export class MapsPoint {
     }
 
     /**
-     *The map() method creates a new array populated with the results of calling a provided function on every element in the calling array.
+     * The map() method creates a new array populated with the results of calling a provided function on every element in the calling array.
      *
      * @author Robert Boudewijn
      * @date 2021/04/20
