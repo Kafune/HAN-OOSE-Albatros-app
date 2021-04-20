@@ -36,7 +36,7 @@ export class MapsLine {
    * @memberof MapsLine
    * todo:
    */
-  map(funct) {
+  mapOverCoordinates(funct) {
     let x = new Array();
     for (let i in this.geometry.coordinates) {
       x.push(funct(this.geometry.coordinates[i]));

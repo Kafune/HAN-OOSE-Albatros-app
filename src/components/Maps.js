@@ -22,7 +22,7 @@ const Maps = props => {
       if (props.geoJSON === undefined) {
         return;
       }
-      return props.geoJSON.map(geoJson => geoJson);
+      return props.geoJSON.mapOverCoordinates(geoJson => geoJson);
     },
   };
 
