@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import MapboxGL from "@react-native-mapbox-gl/maps";
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
+import MapboxGL from '@react-native-mapbox-gl/maps';
 
-
-const Maps = (props) => {
-  MapboxGL.setAccessToken("sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g");
+const Maps = props => {
+  MapboxGL.setAccessToken(
+    'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
+  );
 
   const layerStyles = {
     LineStyle: {
@@ -16,24 +17,22 @@ const Maps = (props) => {
   };
 
   let geoJSON = {
-    "type": "FeatureCollection",
-    "features":()=>{
-      if(props.geoJSON == undefined ){
-        return null;
+    type: 'FeatureCollection',
+    features: () => {
+      if (props.geoJSON === undefined) {
+        return;
       }
-      return props.geoJSON.map((geoJson) => geoJson)
-    }
-      
-  }
-
+      return props.geoJSON.map(geoJson => geoJson);
+    },
+  };
 
   function genaratePoints() {
-    if(props.mapPoints == undefined ){
-      return null;
+    if (props.mapPoints === undefined) {
+      return;
     }
-    let points = props.mapPoints.map((point) => {
-      return <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
-    })
+    let points = props.mapPoints.map(point => (
+      <MapboxGL.PointAnnotation coordinate={point} key={point.toString()} />
+    ));
     return points;
   }
 
@@ -41,18 +40,15 @@ const Maps = (props) => {
     <>
       <View style={styles.page}>
         <View style={styles.container}>
-          <MapboxGL.MapView style={styles.map} >
+          <MapboxGL.MapView style={styles.map}>
             <MapboxGL.Camera
-              zoomLevel={((props.zoom) ? props.zoom : 13)}
+              zoomLevel={props.zoom ? props.zoom : 13}
               pitch={0}
               centerCoordinate={props.center}
             />
 
             <MapboxGL.ShapeSource id="routeSoucre" shape={geoJSON}>
-              <MapboxGL.LineLayer
-                id="route"
-                style={layerStyles.LineStyle}
-              />
+              <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
             </MapboxGL.ShapeSource>
             {genaratePoints()}
           </MapboxGL.MapView>
@@ -62,24 +58,21 @@ const Maps = (props) => {
   );
 };
 
-
-
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
   container: {
     height: 300,
     width: '100%',
-    backgroundColor: "tomato"
+    backgroundColor: 'tomato',
   },
   map: {
-    flex: 1
+    flex: 1,
   },
 });
-
 
 export default Maps;
