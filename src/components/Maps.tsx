@@ -27,6 +27,7 @@ const Maps = (props: any) => {
     if (props.mapPoints === undefined) {
       return;
     }
+    console.log(props.mapPoints);
     return props.mapPoints.map((point: any) => (
       <MapboxGL.PointAnnotation
         id={point.toString()}

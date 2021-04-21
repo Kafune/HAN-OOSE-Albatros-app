@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
@@ -8,23 +8,24 @@ import {MapsPoint} from '../utilities/class/MapsPoints';
 import {Route} from '../utilities/interface/Route';
 
 const RoutesPage: React.FC = (): JSX.Element => {
-  // Dummy data for base geoJSON.
-  const geoJSON = new MapsLine([
-    new MapsCoordinate(5.674306, 52.030944),
-    new MapsCoordinate(5.675282, 52.030033),
-    new MapsCoordinate(5.679166, 52.030257),
-    new MapsCoordinate(5.679166, 52.033257),
-    new MapsCoordinate(5.679981, 52.034237),
-  ]);
+  const [geoJSON, setGeoJSON] = useState<MapsLine>(
+    new MapsLine([
+      new MapsCoordinate(5.674306, 52.030944),
+      new MapsCoordinate(5.675282, 52.030033),
+      new MapsCoordinate(5.679166, 52.030257),
+      new MapsCoordinate(5.679166, 52.033257),
+      new MapsCoordinate(5.679981, 52.034237),
+    ]),
+  );
 
-  // Dummy Data for base points.
-  const mapPoints = new MapsPoint([
-    new MapsCoordinate(5.674306, 52.030944),
-    new MapsCoordinate(5.679981, 52.034237),
-  ]);
+  const [mapPoints, setMapPoints] = useState<MapsPoint>(
+    new MapsPoint([
+      new MapsCoordinate(5.674306, 52.030944),
+      new MapsCoordinate(5.679981, 52.034237),
+    ]),
+  );
 
-  // Base data for center point
-  const center = [5.679166, 52.030257];
+  const [center, setCenter] = useState<number[]>([5.679166, 52.030257]);
 
   return (
     <ScrollView>
@@ -32,7 +33,13 @@ const RoutesPage: React.FC = (): JSX.Element => {
       <Text style={styles.routesTitle}>Kies een route</Text>
       {getRoutes().length > 0 &&
         getRoutes().map((route: Route) => (
-          <RouteInformation key={route.name} route={route} />
+          <RouteInformation
+            key={route.name}
+            route={route}
+            setGeoJSON={setGeoJSON}
+            setMapPoints={setMapPoints}
+            setCenter={setCenter}
+          />
         ))}
     </ScrollView>
   );
@@ -49,8 +56,8 @@ const getRoutes: Function = (): Route[] => {
       segments: [
         {
           id: 1,
-          start: {longtitude: 1, latitude: 1, altitude: 1},
-          end: {longtitude: 1, latitude: 1, altitude: 1},
+          start: {latitude: 52.037866, longitude: 5.668217, altitude: 1},
+          end: {latitude: 52.042665, longitude: 5.668078, altitude: 1},
           poi: {id: 1, description: 'POI', name: 'name'},
         },
       ],
@@ -63,8 +70,8 @@ const getRoutes: Function = (): Route[] => {
       segments: [
         {
           id: 1,
-          start: {longtitude: 1, latitude: 1, altitude: 1},
-          end: {longtitude: 1, latitude: 1, altitude: 1},
+          start: {longitude: 1, latitude: 1, altitude: 1},
+          end: {longitude: 1, latitude: 1, altitude: 1},
           poi: {id: 1, description: 'POI', name: 'name'},
         },
       ],
@@ -77,8 +84,8 @@ const getRoutes: Function = (): Route[] => {
       segments: [
         {
           id: 1,
-          start: {longtitude: 1, latitude: 1, altitude: 1},
-          end: {longtitude: 1, latitude: 1, altitude: 1},
+          start: {longitude: 1, latitude: 1, altitude: 1},
+          end: {longitude: 1, latitude: 1, altitude: 1},
           poi: {id: 1, description: 'POI', name: 'name'},
         },
       ],
@@ -91,8 +98,8 @@ const getRoutes: Function = (): Route[] => {
       segments: [
         {
           id: 1,
-          start: {longtitude: 1, latitude: 1, altitude: 1},
-          end: {longtitude: 1, latitude: 1, altitude: 1},
+          start: {longitude: 1, latitude: 1, altitude: 1},
+          end: {longitude: 1, latitude: 1, altitude: 1},
           poi: {id: 1, description: 'POI', name: 'name'},
         },
       ],
@@ -105,8 +112,8 @@ const getRoutes: Function = (): Route[] => {
       segments: [
         {
           id: 1,
-          start: {longtitude: 1, latitude: 1, altitude: 1},
-          end: {longtitude: 1, latitude: 1, altitude: 1},
+          start: {longitude: 1, latitude: 1, altitude: 1},
+          end: {longitude: 1, latitude: 1, altitude: 1},
           poi: {id: 1, description: 'POI', name: 'name'},
         },
       ],
