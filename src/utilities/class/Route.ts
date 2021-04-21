@@ -49,7 +49,7 @@ export class Route {
    * Calculates the middle points of the route based on begin and start.
    * @returns {number[]}
    */
-  getMiddlePoint() {
+  getMiddlePoint(): number[] {
     let startLongitude = this.getStartCoordinates().longitude,
       startLatitude = this.getStartCoordinates().latitude,
       endLongitude = this.getEndCoordinates().longitude,
