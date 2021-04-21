@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {NativeRouter, Route, Link} from 'react-router-native';
 import MapsPage from './pages/MapPage';
+import RoutesPage from './pages/RoutesPage';
 
 const Route1 = () => <Text>Home</Text>;
 const Route2 = () => <Text>Hello World</Text>;
@@ -19,11 +20,15 @@ const Main = () => {
         <Link to="maps-demo">
           <Text>Maps demo</Text>
         </Link>
+        <Link to="routes">
+          <Text>Routes</Text>
+        </Link>
       </View>
 
       <Route exact path="/" component={Route1} />
       <Route path="/route2" component={Route2} />
       <Route path="/maps-demo" component={MapsPage} />
+      <Route path="/routes" component={RoutesPage} />
     </NativeRouter>
   );
 };
