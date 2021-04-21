@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {Geometry} from 'geojson';
+import {Geometry, Position} from 'geojson';
 
-const Maps = (props: any) => {
+function Maps(props: React.ComponentProps<any>): JSX.Element {
   MapboxGL.setAccessToken(
     'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
   );
@@ -20,15 +20,14 @@ const Maps = (props: any) => {
 
   const geoJSON: Geometry = {
     type: 'LineString',
-    coordinates: props.geoJSON.getCordinates(),
+    coordinates: props.geoJSON.getCoordinates(),
   };
 
-  function genaratePoints() {
+  function generatePoints() {
     if (props.mapPoints === undefined) {
       return;
     }
-    console.log(props.mapPoints);
-    return props.mapPoints.map((point: any) => (
+    return props.mapPoints.map((point: Position) => (
       <MapboxGL.PointAnnotation
         id={point.toString()}
         coordinate={point}
@@ -46,17 +45,15 @@ const Maps = (props: any) => {
             pitch={0}
             centerCoordinate={props.center}
           />
-          <MapboxGL.ShapeSource id="routeSoucre" shape={geoJSON}>
+          <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
           </MapboxGL.ShapeSource>
-          {genaratePoints()}
+          {generatePoints()}
         </MapboxGL.MapView>
       </View>
     </View>
   );
-};
-
-//{ type: string; features: { type: string; geometry: { type: string; coordinates: number[][]; }; }[]; }
+}
 
 const styles = StyleSheet.create({
   page: {
