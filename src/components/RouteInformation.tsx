@@ -1,10 +1,7 @@
 import React from 'react';
-import {Route} from '../utilities/interface/Route';
+import {Route} from '../utilities/class/Route';
 import {Button, Image, StyleSheet, Text, View} from 'react-native';
-import {MapsLine} from '../utilities/class/MapsLine';
-import {MapsCoordinate} from '../utilities/class/MapsCoordinate';
-import {MapsPoint} from '../utilities/class/MapsPoints';
-import {Segment} from '../utilities/interface/Segment';
+import {RouteMapper} from '../utilities/mapper/RouteMapper';
 
 interface Props {
   route: Route;
@@ -35,75 +32,15 @@ const RouteInformation: React.FC<Props> = ({
       <View style={styles.button}>
         <Button
           onPress={() => {
-            setGeoJSON(new MapsLine(toMapsCoordinate(route)));
-            setMapPoints(new MapsPoint(getStartAndEndPoints(route)));
-            setCenter(
-              middlePoint(
-                route.segments[0].start.latitude,
-                route.segments[0].start.longitude,
-                getLast(route.segments).end.latitude,
-                getLast(route.segments).end.longitude,
-              ),
-            );
+            setGeoJSON(RouteMapper.toMapsLine(route));
+            setMapPoints(RouteMapper.toMapsPoint(route));
+            setCenter(route.getMiddlePoint());
           }}
           title="Button"
         />
       </View>
     </View>
   );
-};
-
-const toMapsCoordinate: Function = (route: Route): MapsCoordinate[] => {
-  return route.segments.map(segment => {
-    return new MapsCoordinate(segment.start.longitude, segment.start.latitude);
-  });
-};
-
-const getStartAndEndPoints = (route: Route) => {
-  return [
-    new MapsCoordinate(
-      route.segments[0].start.longitude,
-      route.segments[0].start.latitude,
-    ),
-    new MapsCoordinate(
-      getLast(route.segments).start.longitude,
-      getLast(route.segments).start.latitude,
-    ),
-  ];
-};
-
-const getLast = (array: Segment[]) => array[array.length - 1];
-
-const toRad = (number: number) => (number * Math.PI) / 180;
-
-const toDeg = (number: number) => number * (180 / Math.PI);
-
-const middlePoint = (
-  latitude1: number,
-  longitude1: number,
-  latitude2: number,
-  longitude2: number,
-): any => {
-  //-- Longitude difference
-  const dLng = toRad(longitude2 - longitude1);
-
-  //-- Convert to radians
-  latitude1 = toRad(latitude1);
-  latitude2 = toRad(latitude2);
-  longitude1 = toRad(longitude1);
-
-  const bX = Math.cos(latitude2) * Math.cos(dLng);
-  const bY = Math.cos(latitude2) * Math.sin(dLng);
-  const lat3 = Math.atan2(
-    Math.sin(latitude1) + Math.sin(latitude2),
-    Math.sqrt(
-      (Math.cos(latitude1) + bX) * (Math.cos(latitude1) + bX) + bY * bY,
-    ),
-  );
-  const lng3 = longitude1 + Math.atan2(bY, Math.cos(latitude1) + bX);
-
-  //-- Return result
-  return [toDeg(lng3), toDeg(lat3)];
 };
 
 const styles = StyleSheet.create({
