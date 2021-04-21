@@ -55,11 +55,6 @@ export class Route {
       endLongitude = this.getEndCoordinates().longitude,
       endLatitude = this.getEndCoordinates().latitude;
 
-    console.log(startLongitude);
-    console.log(startLatitude);
-    console.log(endLongitude);
-    console.log(endLatitude);
-
     const longitudeDifference = Calculator.toRadians(
       endLongitude - startLongitude,
     );
