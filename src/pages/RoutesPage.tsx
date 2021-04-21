@@ -30,14 +30,16 @@ const RoutesPage: React.FC = (): JSX.Element => {
     <ScrollView>
       <Maps geoJSON={geoJSON} mapPoints={mapPoints} center={center} zoom={13} />
       <Text style={styles.routesTitle}>Kies een route</Text>
-      {getRoutes}
+      {getRoutes().map((route: Route) => (
+        <RouteInformation route={route} />
+      ))}
     </ScrollView>
   );
 };
 
-const getRoutes: React.FC = (): JSX.Element => {
+const getRoutes: Function = (): Route[] => {
   // TODO: Gather data from back-end API.
-  const routes: Route[] = [
+  return [
     {
       name: 'Route 1',
       kilometers: 16,
@@ -69,14 +71,6 @@ const getRoutes: React.FC = (): JSX.Element => {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem doloribus est exercitationem expedita fuga incidunt ipsum magnam, natus officiis provident quas quibusdam quod, rem repellat suscipit unde veniam?',
     },
   ];
-
-  const elements: JSX.Element[] = [];
-
-  routes.forEach((route: Route) => {
-    elements.push(<RouteInformation route={route} />);
-  });
-
-  return <View>{elements}</View>;
 };
 
 const styles = StyleSheet.create({
