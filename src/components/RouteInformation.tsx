@@ -20,7 +20,9 @@ const RouteInformation: React.FC<Props> = ({route}): JSX.Element => {
           {route.description.substring(0, 60)}...
         </Text>
       </View>
-      <Text style={styles.button}>Button</Text>
+      <View style={styles.button}>
+        <Text>Button</Text>
+      </View>
     </View>
   );
 };

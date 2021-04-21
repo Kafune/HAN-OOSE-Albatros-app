@@ -30,15 +30,16 @@ const RoutesPage: React.FC = (): JSX.Element => {
     <ScrollView>
       <Maps geoJSON={geoJSON} mapPoints={mapPoints} center={center} zoom={13} />
       <Text style={styles.routesTitle}>Kies een route</Text>
-      {getRoutes().map((route: Route) => (
-        <RouteInformation key={route.name} route={route} />
-      ))}
+      {getRoutes().length > 0 &&
+        getRoutes().map((route: Route) => (
+          <RouteInformation key={route.name} route={route} />
+        ))}
     </ScrollView>
   );
 };
 
 const getRoutes: Function = (): Route[] => {
-  // TODO: Gather data from back-end API.
+  // TODO: Gather data from back-end API instead of dummy data.
   return [
     {
       name: 'Route 1',
@@ -56,7 +57,7 @@ const getRoutes: Function = (): Route[] => {
     },
     {
       name: 'Route 2',
-      kilometers: 16,
+      kilometers: 12,
       description:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem doloribus est exercitationem expedita fuga incidunt ipsum magnam, natus officiis provident quas quibusdam quod, rem repellat suscipit unde veniam?',
       segments: [
@@ -70,7 +71,35 @@ const getRoutes: Function = (): Route[] => {
     },
     {
       name: 'Route 3',
-      kilometers: 16,
+      kilometers: 36,
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem doloribus est exercitationem expedita fuga incidunt ipsum magnam, natus officiis provident quas quibusdam quod, rem repellat suscipit unde veniam?',
+      segments: [
+        {
+          id: 1,
+          start: {longtitude: 1, latitude: 1, altitude: 1},
+          end: {longtitude: 1, latitude: 1, altitude: 1},
+          poi: {id: 1, description: 'POI', name: 'name'},
+        },
+      ],
+    },
+    {
+      name: 'Route 4',
+      kilometers: 17,
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem doloribus est exercitationem expedita fuga incidunt ipsum magnam, natus officiis provident quas quibusdam quod, rem repellat suscipit unde veniam?',
+      segments: [
+        {
+          id: 1,
+          start: {longtitude: 1, latitude: 1, altitude: 1},
+          end: {longtitude: 1, latitude: 1, altitude: 1},
+          poi: {id: 1, description: 'POI', name: 'name'},
+        },
+      ],
+    },
+    {
+      name: 'Route 5',
+      kilometers: 4,
       description:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam dolorem doloribus est exercitationem expedita fuga incidunt ipsum magnam, natus officiis provident quas quibusdam quod, rem repellat suscipit unde veniam?',
       segments: [

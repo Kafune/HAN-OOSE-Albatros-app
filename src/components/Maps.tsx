@@ -39,7 +39,7 @@ const Maps = (props: any) => {
   return (
     <View style={styles.page}>
       <View style={styles.container}>
-        <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.MapView style={styles.map} logoEnabled={false}>
           <MapboxGL.Camera
             zoomLevel={props.zoom ? props.zoom : 13}
             pitch={0}
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   container: {
-    height: 300,
+    height: 250,
     width: '100%',
     backgroundColor: 'tomato',
   },
