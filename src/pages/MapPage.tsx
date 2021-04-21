@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Maps from '../components/Maps';
 import {MapsLine} from '../utilities/class/MapsLine';
 import {MapsCoordinate} from '../utilities/class/MapsCoordinate';
 import {MapsPoint} from '../utilities/class/MapsPoints';
 
-const MapsPage = () => {
+const MapsPage: FC = () => {
   return (
     <Maps
       geoJSON={
