@@ -18,6 +18,7 @@ const RouteInformation: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <View style={styles.wrapper}>
+      {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
         style={styles.image}
