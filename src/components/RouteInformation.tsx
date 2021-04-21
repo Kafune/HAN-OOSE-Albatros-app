@@ -1,12 +1,64 @@
 import React from 'react';
 import {Route} from '../utilities/interface/Route';
-import {Text} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 
 interface Props {
   route: Route;
 }
-const RouteInformation: React.FC<Props> = (): JSX.Element => {
-  return <Text>Test</Text>;
+
+const RouteInformation: React.FC<Props> = ({route}): JSX.Element => {
+  return (
+    <View style={styles.wrapper}>
+      <Image
+        source={{uri: 'https://reactjs.org/logo-og.png'}}
+        style={styles.image}
+      />
+      <View style={styles.statistics}>
+        <Text style={styles.title}>{route.name}</Text>
+        <Text style={styles.subtitle}>{route.kilometers} kilometer</Text>
+        <Text style={styles.description}>
+          {route.description.substring(0, 60)}...
+        </Text>
+      </View>
+      <Text style={styles.button}>Button</Text>
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: '#E8E8E8',
+    marginBottom: 10,
+    marginHorizontal: 10,
+    overflow: 'hidden',
+    borderRadius: 6,
+  },
+  image: {
+    width: 100,
+  },
+  statistics: {
+    width: '60%',
+    padding: 10,
+    alignSelf: 'center',
+  },
+  button: {
+    width: 'auto',
+    alignSelf: 'center',
+    alignItems: 'flex-end',
+    fontWeight: 'bold',
+  },
+  title: {
+    fontSize: 16,
+  },
+  subtitle: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  description: {
+    fontSize: 12,
+  },
+});
 
 export default RouteInformation;
