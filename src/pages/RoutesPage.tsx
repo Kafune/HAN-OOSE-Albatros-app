@@ -3,29 +3,24 @@ import {ScrollView, StyleSheet, Text} from 'react-native';
 import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
 import {MapsLine} from '../utilities/class/MapsLine';
-import {MapsCoordinate} from '../utilities/class/MapsCoordinate';
 import {MapsPoint} from '../utilities/class/MapsPoints';
 import {Route} from '../utilities/class/Route';
+import {RouteMapper} from '../utilities/mapper/RouteMapper';
 
 const RoutesPage: React.FC = (): JSX.Element => {
+  const highlightedRoute: Route = getRoutes()[0];
+
   const [geoJSON, setGeoJSON] = useState<MapsLine>(
-    new MapsLine([
-      new MapsCoordinate(5.674306, 52.030944),
-      new MapsCoordinate(5.675282, 52.030033),
-      new MapsCoordinate(5.679166, 52.030257),
-      new MapsCoordinate(5.679166, 52.033257),
-      new MapsCoordinate(5.679981, 52.034237),
-    ]),
+    RouteMapper.toMapsLine(highlightedRoute),
   );
 
   const [mapPoints, setMapPoints] = useState<MapsPoint>(
-    new MapsPoint([
-      new MapsCoordinate(5.674306, 52.030944),
-      new MapsCoordinate(5.679981, 52.034237),
-    ]),
+    RouteMapper.toMapsPoint(highlightedRoute),
   );
 
-  const [center, setCenter] = useState<number[]>([5.679166, 52.030257]);
+  const [center, setCenter] = useState<number[]>(
+    highlightedRoute.getMiddlePoint(),
+  );
 
   return (
     <ScrollView>
