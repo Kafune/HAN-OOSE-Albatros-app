@@ -13,6 +13,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
   useEffect(() => {
     RouteAPI.routes.then((fetchedRoutes: Route[]) => {
       setRoutes(fetchedRoutes);
+      // TODO: Fetch route segments to display it without errors.
       setHighlightedRoute(fetchedRoutes[0]);
     });
   }, []);
