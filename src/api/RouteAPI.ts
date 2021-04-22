@@ -1,5 +1,6 @@
 import {Route} from '../core/domain/Route';
 import RouteResponseDTO from '../core/dto/RouteResponseDTO';
+import headers from '../core/data/headers';
 
 export class RouteAPI {
   /**
@@ -7,13 +8,7 @@ export class RouteAPI {
    * @returns {Promise<Route[]>}
    */
   static getRoutes(): Promise<Route[]> {
-    return fetch('http://10.0.2.2:8080/Run_connect_war/api/routes', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
+    return fetch('http://10.0.2.2:8080/Run_connect_war/api/routes', headers)
       .then(response => response.json())
       .then((response: any) => {
         return response.map((res: RouteResponseDTO) => {
