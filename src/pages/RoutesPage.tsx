@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
