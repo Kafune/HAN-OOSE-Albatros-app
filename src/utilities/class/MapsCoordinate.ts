@@ -1,3 +1,5 @@
+import {Position} from 'geojson';
+
 /**
  * A maps coordinate
  *
@@ -7,8 +9,8 @@
  * @class MapsCoordinate
  */
 export class MapsCoordinate {
-  longitude: Number;
-  latitude: Number;
+  longitude: number;
+  latitude: number;
 
   /**
    * Creates an instance of MapsCoordinate.
@@ -18,7 +20,7 @@ export class MapsCoordinate {
    * @param {Number} latitude
    * @memberof MapsCoordinate
    */
-  constructor(longitude: Number, latitude: Number) {
+  constructor(longitude: number, latitude: number) {
     this.longitude = longitude;
     this.latitude = latitude;
   }
@@ -31,7 +33,7 @@ export class MapsCoordinate {
    * @return {Array<Number>}
    * @memberof MapsCoordinate
    */
-  toArray(): Array<Number> {
+  toArray(): Position {
     return [this.longitude, this.latitude];
   }
 }

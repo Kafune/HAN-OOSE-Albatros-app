@@ -3,34 +3,18 @@ import {Text, View, StyleSheet} from 'react-native';
 import {NativeRouter, Route, Link} from 'react-router-native';
 import MapsPage from './pages/MapPage';
 import RoutesPage from './pages/RoutesPage';
-
-function Route1() {
-  return <Text>Home</Text>;
-}
-function Route2() {
-  return <Text>Hello World</Text>;
-}
-
+C
 const Main: FC = () => {
   return (
     <NativeRouter>
       <View style={Styles.nav}>
-        <Link to="/">
-          <Text>Route 1</Text>
-        </Link>
-        <Link to="route2">
-          <Text>Route 2</Text>
-        </Link>
         <Link to="maps-demo">
           <Text>Maps demo</Text>
         </Link>
         <Link to="routes">
-          <Text>Routes</Text>
+          <Text>Route kiezen</Text>
         </Link>
       </View>
-
-      <Route exact path="/" component={Route1} />
-      <Route path="/route2" component={Route2} />
       <Route path="/maps-demo" component={MapsPage} />
       <Route path="/routes" component={RoutesPage} />
     </NativeRouter>

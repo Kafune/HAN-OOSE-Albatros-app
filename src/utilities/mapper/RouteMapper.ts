@@ -2,7 +2,7 @@ import {Route} from '../class/Route';
 import {MapsCoordinate} from '../class/MapsCoordinate';
 import {MapsPoint} from '../class/MapsPoints';
 import {MapsLine} from '../class/MapsLine';
-import {Segment} from '../interface/Segment';
+import {ISegment} from '../interface/ISegment';
 
 export class RouteMapper {
   /**
@@ -12,7 +12,7 @@ export class RouteMapper {
    */
   static toMapsLine(route: Route): MapsLine {
     return new MapsLine(
-      route.segments.map((segment: Segment) => {
+      route.segments.map((segment: ISegment) => {
         return new MapsCoordinate(
           segment.start.longitude,
           segment.start.latitude,

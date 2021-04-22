@@ -24,7 +24,12 @@ const RoutesPage: React.FC = (): JSX.Element => {
 
   return (
     <ScrollView>
-      <Maps geoJSON={geoJSON} mapPoints={mapPoints} center={center} zoom={13} />
+      <Maps
+        mapsLine={geoJSON}
+        mapsPoint={mapPoints}
+        center={center}
+        zoom={13}
+      />
       <Text style={styles.routesTitle}>Kies een route</Text>
       {getRoutes().length > 0 &&
         getRoutes().map((route: Route) => (
