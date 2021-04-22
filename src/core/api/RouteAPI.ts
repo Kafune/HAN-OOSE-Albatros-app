@@ -1,6 +1,6 @@
-import {Route} from '../core/domain/Route';
-import RouteResponseDTO from '../core/dto/RouteResponseDTO';
-import api from '../core/data/api';
+import {Route} from '../domain/Route';
+import RouteResponseDTO from '../dto/RouteResponseDTO';
+import api from '../data/api';
 
 export class RouteAPI {
   /**
@@ -10,9 +10,9 @@ export class RouteAPI {
   static get routes(): Promise<Route[]> {
     return fetch(`${api.baseUrl}/routes`, api.headers)
       .then(response => response.json())
-      .then((response: any) => {
+      .then(response => {
         return response.map((res: RouteResponseDTO) => {
-          return new Route(res.name, res.distance, 'Dummy', []);
+          return new Route(res.routeId, res.name, res.distance, 'Dummy', []);
         });
       });
 

@@ -5,5 +5,5 @@ export interface Segment {
   id: number;
   start: Coordinate;
   end: Coordinate;
-  poi: POI;
+  poi?: POI;
 }

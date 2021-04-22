@@ -3,6 +3,7 @@ import {Coordinate} from './Coordinate';
 import {Calculator} from '../helpers/Calculator';
 
 export class Route {
+  id: number;
   name: string;
   distance: number;
   description: string;
@@ -10,17 +11,20 @@ export class Route {
 
   /**
    * Constructs the Route.
+   * @param {number} id
    * @param {string} name
    * @param {number} distance
    * @param {string} description
    * @param {Segment[]} segments
    */
   constructor(
+    id: number,
     name: string,
     distance: number,
     description: string,
     segments: Segment[],
   ) {
+    this.id = id;
     this.name = name;
     this.distance = distance;
     this.description = description;

@@ -6,7 +6,7 @@ import {MapsLine} from '../core/maps/MapsLine';
 import {MapsPoint} from '../core/maps/MapsPoints';
 import {Route} from '../core/domain/Route';
 import {RouteMapper} from '../core/mapper/RouteMapper';
-import {RouteAPI} from '../api/RouteAPI';
+import {RouteAPI} from '../core/api/RouteAPI';
 
 const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[]>();
