@@ -18,9 +18,9 @@ const RoutesPage: React.FC = (): JSX.Element => {
     RouteMapper.toMapsPoint(highlightedRoute),
   );
 
-  const [center, setCenter] = useState<number[]>(
-    highlightedRoute.middlePoint,
-  );
+  const [center, setCenter] = useState<number[]>(highlightedRoute.middlePoint);
+
+  console.log(geoJSON);
 
   return (
     <ScrollView>

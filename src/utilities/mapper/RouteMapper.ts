@@ -11,14 +11,19 @@ export class RouteMapper {
    * @returns {MapsLine}
    */
   static toMapsLine(route: Route): MapsLine {
-    return new MapsLine(
-      route.segments.map((segment: ISegment) => {
-        return new MapsCoordinate(
-          segment.start.longitude,
-          segment.start.latitude,
-        );
-      }),
+    const startPoints = route.segments.map((segment: ISegment) => {
+      return new MapsCoordinate(
+        segment.start.longitude,
+        segment.start.latitude,
+      );
+    });
+
+    const endPoint = new MapsCoordinate(
+      route.endCoordinates.longitude,
+      route.endCoordinates.latitude,
     );
+
+    return new MapsLine([...startPoints, endPoint]);
   }
 
   /**
