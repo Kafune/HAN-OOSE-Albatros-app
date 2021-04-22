@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
+import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {NativeRouter, Route, Link} from 'react-router-native';
 import MapsPage from './pages/MapPage';
 import RoutesPage from './pages/RoutesPage';
 
-const Main: FC = () => {
+const Main: React.FC = () => {
   return (
     <NativeRouter>
       <View style={Styles.nav}>
