@@ -1,22 +1,17 @@
 import React from 'react';
 import {Route} from '../core/domain/Route';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {RouteMapper} from '../core/mapper/RouteMapper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
 
 interface Props {
   route: Route;
-  setGeoJSON: Function;
-  setMapPoints: Function;
-  setCenter: Function;
+  setHighlightedRoute: Function;
 }
 
 const RouteInformation: React.FC<Props> = ({
   route,
-  setGeoJSON,
-  setMapPoints,
-  setCenter,
+  setHighlightedRoute,
 }): JSX.Element => {
   return (
     <View style={styles.wrapper}>
@@ -37,11 +32,7 @@ const RouteInformation: React.FC<Props> = ({
           name="chevron-right"
           size={30}
           color={colors.main}
-          onPress={() => {
-            setGeoJSON(RouteMapper.toMapsLine(route));
-            setMapPoints(RouteMapper.toMapsPoint(route));
-            setCenter(route.middlePoint);
-          }}
+          onPress={() => setHighlightedRoute(route)}
         />
       </View>
     </View>
