@@ -20,8 +20,6 @@ const RoutesPage: React.FC = (): JSX.Element => {
 
   const [center, setCenter] = useState<number[]>(highlightedRoute.middlePoint);
 
-  console.log(geoJSON);
-
   return (
     <ScrollView>
       <Maps
