@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     height: 250,
     width: '100%',
-    backgroundColor: 'tomato',
+    backgroundColor: '#F0F0F1FF',
   },
   map: {
     flex: 1,
