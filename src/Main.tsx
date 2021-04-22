@@ -29,8 +29,12 @@ const Main: React.FC = () => {
             component={RoutesPage}
             options={{
               tabBarLabel: 'Routes',
-              tabBarIcon: ({color, size}) => (
-                <MaterialCommunityIcons name="map" size={size} color={color} />
+              tabBarIcon: ({size}) => (
+                <MaterialCommunityIcons
+                  name="map"
+                  size={size}
+                  color="#0CA596"
+                />
               ),
             }}
           />
