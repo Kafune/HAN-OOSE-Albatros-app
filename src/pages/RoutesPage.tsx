@@ -8,14 +8,13 @@ import {Route} from '../core/domain/Route';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {RouteAPI} from '../api/RouteAPI';
 
-const RoutesPage: () => JSX.Element = (): JSX.Element => {
+const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[]>();
-  const [highlightedRoute, sethighlightedRoute] = useState<Route | undefined>(
-    undefined,
-  );
+
+  const [highlightedRoute, sethighlightedRoute] = useState<Route>();
 
   useEffect(() => {
-    RouteAPI.getRoutes().then((fetchedRoutes: Route[]) => {
+    RouteAPI.routes.then((fetchedRoutes: Route[]) => {
       setRoutes(fetchedRoutes);
       sethighlightedRoute(fetchedRoutes[0]);
     });

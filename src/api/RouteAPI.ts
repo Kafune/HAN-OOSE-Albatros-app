@@ -1,14 +1,14 @@
 import {Route} from '../core/domain/Route';
 import RouteResponseDTO from '../core/dto/RouteResponseDTO';
-import headers from '../core/data/headers';
+import api from '../core/data/api';
 
 export class RouteAPI {
   /**
    * Get's all the routes from the TomEE API.
    * @returns {Promise<Route[]>}
    */
-  static getRoutes(): Promise<Route[]> {
-    return fetch('http://10.0.2.2:8080/Run_connect_war/api/routes', headers)
+  static get routes(): Promise<Route[]> {
+    return fetch(`${api.baseUrl}/routes`, api.headers)
       .then(response => response.json())
       .then((response: any) => {
         return response.map((res: RouteResponseDTO) => {
