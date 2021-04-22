@@ -2,8 +2,8 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Geometry, Position} from 'geojson';
-import {MapsLine} from '../utilities/class/MapsLine';
-import {MapsPoint} from '../utilities/class/MapsPoints';
+import {MapsLine} from '../core/maps/MapsLine';
+import {MapsPoint} from '../core/maps/MapsPoints';
 
 interface Props {
   mapsLine: MapsLine;
@@ -34,7 +34,7 @@ const Maps: React.FC<Props> = ({
 
   const geoJSON: Geometry = {
     type: 'LineString',
-    coordinates: mapsLine.coordinates,
+    coordinates: mapsLine.mapLineCoordinates,
   };
 
   return (

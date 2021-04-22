@@ -1,25 +1,25 @@
-import {ISegment} from '../interface/ISegment';
-import {ICoordinate} from '../interface/ICoordinate';
-import {Calculator} from './Calculator';
+import {Segment} from './Segment';
+import {Coordinate} from './Coordinate';
+import {Calculator} from '../helpers/Calculator';
 
 export class Route {
   name: string;
   kilometers: number;
   description: string;
-  segments: ISegment[];
+  segments: Segment[];
 
   /**
    * Constructs the Route.
    * @param {string} name
    * @param {number} kilometers
    * @param {string} description
-   * @param {ISegment[]} segments
+   * @param {Segment[]} segments
    */
   constructor(
     name: string,
     kilometers: number,
     description: string,
-    segments: ISegment[],
+    segments: Segment[],
   ) {
     this.name = name;
     this.kilometers = kilometers;
@@ -29,18 +29,18 @@ export class Route {
 
   /**
    * Get's the very first coordinates from the route.
-   * @returns {ICoordinate}
+   * @returns {Coordinate}
    */
-  get startCoordinates(): ICoordinate {
+  get startCoordinates(): Coordinate {
     const array = require('lodash/array');
     return array.first(this.segments)?.start;
   }
 
   /**
    * Get's the very last coordinates from the route.
-   * @returns {ICoordinate}
+   * @returns {Coordinate}
    */
-  get endCoordinates(): ICoordinate {
+  get endCoordinates(): Coordinate {
     const array = require('lodash/array');
     return array.last(this.segments)?.end;
   }

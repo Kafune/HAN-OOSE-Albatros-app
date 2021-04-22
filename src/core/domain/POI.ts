@@ -1,4 +1,4 @@
-export interface IPOI {
+export interface POI {
   id: number;
   name: string;
   description: string;

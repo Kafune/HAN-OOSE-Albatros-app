@@ -1,7 +1,7 @@
 import React from 'react';
-import {Route} from '../utilities/class/Route';
+import {Route} from '../core/domain/Route';
 import {Button, Image, StyleSheet, Text, View} from 'react-native';
-import {RouteMapper} from '../utilities/mapper/RouteMapper';
+import {RouteMapper} from '../core/mapper/RouteMapper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {

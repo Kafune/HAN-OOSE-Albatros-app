@@ -1,8 +1,8 @@
-import {Route} from '../class/Route';
-import {MapsCoordinate} from '../class/MapsCoordinate';
-import {MapsPoint} from '../class/MapsPoints';
-import {MapsLine} from '../class/MapsLine';
-import {ISegment} from '../interface/ISegment';
+import {Route} from '../domain/Route';
+import {MapsCoordinate} from '../maps/MapsCoordinate';
+import {MapsPoint} from '../maps/MapsPoints';
+import {MapsLine} from '../maps/MapsLine';
+import {Segment} from '../domain/Segment';
 
 export class RouteMapper {
   /**
@@ -11,7 +11,7 @@ export class RouteMapper {
    * @returns {MapsLine}
    */
   static toMapsLine(route: Route): MapsLine {
-    const startPoints = route.segments.map((segment: ISegment) => {
+    const startPoints = route.segments.map((segment: Segment) => {
       return new MapsCoordinate(
         segment.start.longitude,
         segment.start.latitude,

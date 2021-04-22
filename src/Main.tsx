@@ -12,7 +12,12 @@ const Main: React.FC = () => {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="viewMaps">
+        <Tab.Navigator
+          initialRouteName="viewMaps"
+          tabBarOptions={{
+            activeTintColor: '#0CA596',
+            safeAreaInsets: {bottom: 5},
+          }}>
           <Tab.Screen
             name="viewMaps"
             component={MapsPage}
@@ -29,12 +34,8 @@ const Main: React.FC = () => {
             component={RoutesPage}
             options={{
               tabBarLabel: 'Routes',
-              tabBarIcon: ({size}) => (
-                <MaterialCommunityIcons
-                  name="map"
-                  size={size}
-                  color="#0CA596"
-                />
+              tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name="map" size={size} color={color} />
               ),
             }}
           />
