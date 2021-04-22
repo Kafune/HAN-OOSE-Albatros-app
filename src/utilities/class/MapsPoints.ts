@@ -6,7 +6,7 @@ import {MapsCoordinate} from './MapsCoordinate';
  * @class MapsLine
  */
 export class MapsPoint {
-  coordinates: Array<Number[]>;
+  coordinates: number[][];
 
   /**
    * Creates an instance of MapsLine.
