@@ -29,12 +29,12 @@ export class RouteMapper {
   static toMapsPoint(route: Route): MapsPoint {
     return new MapsPoint([
       new MapsCoordinate(
-        route.getStartCoordinates().longitude,
-        route.getStartCoordinates().latitude,
+        route.startCoordinates.longitude,
+        route.startCoordinates.latitude,
       ),
       new MapsCoordinate(
-        route.getEndCoordinates().longitude,
-        route.getEndCoordinates().latitude,
+        route.endCoordinates.longitude,
+        route.endCoordinates.latitude,
       ),
     ]);
   }

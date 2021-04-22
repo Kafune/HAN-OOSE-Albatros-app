@@ -31,7 +31,7 @@ export class Route {
    * Get's the very first coordinates from the route.
    * @returns {ICoordinate}
    */
-  getStartCoordinates(): ICoordinate {
+  get startCoordinates(): ICoordinate {
     const array = require('lodash/array');
     return array.first(this.segments)?.start;
   }
@@ -40,7 +40,7 @@ export class Route {
    * Get's the very last coordinates from the route.
    * @returns {ICoordinate}
    */
-  getEndCoordinates(): ICoordinate {
+  get endCoordinates(): ICoordinate {
     const array = require('lodash/array');
     return array.last(this.segments)?.end;
   }
@@ -49,11 +49,11 @@ export class Route {
    * Calculates the middle points of the route based on begin and start.
    * @returns {number[]}
    */
-  getMiddlePoint(): number[] {
-    let startLongitude = this.getStartCoordinates().longitude,
-      startLatitude = this.getStartCoordinates().latitude,
-      endLongitude = this.getEndCoordinates().longitude,
-      endLatitude = this.getEndCoordinates().latitude;
+  get middlePoint(): number[] {
+    let startLongitude = this.startCoordinates.longitude,
+      startLatitude = this.startCoordinates.latitude,
+      endLongitude = this.endCoordinates.longitude,
+      endLatitude = this.endCoordinates.latitude;
 
     const longitudeDifference = Calculator.toRadians(
       endLongitude - startLongitude,

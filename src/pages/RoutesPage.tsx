@@ -19,7 +19,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
   );
 
   const [center, setCenter] = useState<number[]>(
-    highlightedRoute.getMiddlePoint(),
+    highlightedRoute.middlePoint,
   );
 
   return (

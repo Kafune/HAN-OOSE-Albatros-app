@@ -27,7 +27,7 @@ export class MapsLine {
    * Gets the coordinates from a MapsLine.
    * @returns {Position}
    */
-  getCoordinates(): Position[] {
+  get coordinates(): Position[] {
     return this.geometry.coordinates.map((element: MapsCoordinate) =>
       element.toArray(),
     );

@@ -24,7 +24,7 @@ const Maps: React.FC<Props> = ({
 
   const layerStyles = {
     LineStyle: {
-      lineColor: '#007CBE',
+      lineColor: '#0CA596',
       // @ts-ignore We can't modify the inner code of MapboxGL.
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,
@@ -34,20 +34,7 @@ const Maps: React.FC<Props> = ({
 
   const geoJSON: Geometry = {
     type: 'LineString',
-    coordinates: mapsLine.getCoordinates(),
-  };
-
-  const generatePoints: Function = (): JSX.Element[] | undefined => {
-    if (mapsPoint === undefined) {
-      return;
-    }
-    return mapsPoint.map((point: Position) => (
-      <MapboxGL.PointAnnotation
-        id={point.toString()}
-        coordinate={point}
-        key={point.toString()}
-      />
-    ));
+    coordinates: mapsLine.coordinates,
   };
 
   return (
@@ -62,7 +49,14 @@ const Maps: React.FC<Props> = ({
           <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
           </MapboxGL.ShapeSource>
-          {generatePoints()}
+          {mapsPoint !== undefined &&
+            mapsPoint.map((point: Position) => (
+              <MapboxGL.PointAnnotation
+                id={point.toString()}
+                coordinate={point}
+                key={point.toString()}
+              />
+            ))}
         </MapboxGL.MapView>
       </View>
     </View>

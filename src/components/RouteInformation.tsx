@@ -36,7 +36,7 @@ const RouteInformation: React.FC<Props> = ({
           onPress={() => {
             setGeoJSON(RouteMapper.toMapsLine(route));
             setMapPoints(RouteMapper.toMapsPoint(route));
-            setCenter(route.getMiddlePoint());
+            setCenter(route.middlePoint);
           }}
           title="Button"
         />
