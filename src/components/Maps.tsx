@@ -2,8 +2,22 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Geometry, Position} from 'geojson';
+import {MapsLine} from '../utilities/class/MapsLine';
+import {MapsPoint} from '../utilities/class/MapsPoints';
 
-function Maps(props: React.ComponentProps<any>): JSX.Element {
+interface Props {
+  mapsLine: MapsLine;
+  mapsPoint: MapsPoint;
+  zoom: number;
+  center: number[];
+}
+
+const Maps: React.FC<Props> = ({
+  mapsLine,
+  mapsPoint,
+  zoom,
+  center,
+}): JSX.Element => {
   MapboxGL.setAccessToken(
     'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
   );
@@ -20,30 +34,30 @@ function Maps(props: React.ComponentProps<any>): JSX.Element {
 
   const geoJSON: Geometry = {
     type: 'LineString',
-    coordinates: props.geoJSON.getCoordinates(),
+    coordinates: mapsLine.getCoordinates(),
   };
 
-  function generatePoints() {
-    if (props.mapPoints === undefined) {
+  const generatePoints: Function = (): JSX.Element[] | undefined => {
+    if (mapsPoint === undefined) {
       return;
     }
-    return props.mapPoints.map((point: Position) => (
+    return mapsPoint.map((point: Position) => (
       <MapboxGL.PointAnnotation
         id={point.toString()}
         coordinate={point}
         key={point.toString()}
       />
     ));
-  }
+  };
 
   return (
     <View style={styles.page}>
       <View style={styles.container}>
-        <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.MapView style={styles.map} logoEnabled={false}>
           <MapboxGL.Camera
-            zoomLevel={props.zoom ? props.zoom : 13}
+            zoomLevel={zoom ? zoom : 13}
             pitch={0}
-            centerCoordinate={props.center}
+            centerCoordinate={center}
           />
           <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   container: {
-    height: 300,
+    height: 250,
     width: '100%',
     backgroundColor: 'tomato',
   },

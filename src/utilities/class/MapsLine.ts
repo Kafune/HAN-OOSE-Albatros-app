@@ -1,24 +1,19 @@
-import {Geometry} from '../interface/Geometry';
+import {IGeometry} from '../interface/IGeometry';
 import {MapsCoordinate} from './MapsCoordinate';
+import {Position} from 'geojson';
 
 /**
  * MapsLine a object that can be used as GEOJson for a line
- *
- * @author Robert Boudewijn
- * @date 2021/04/20
  * @export
  * @class MapsLine
  */
 export class MapsLine {
   type: string;
-  geometry: Geometry;
+  geometry: IGeometry;
 
   /**
    * Creates an instance of MapsLine.
-   * @author Robert Boudewijn
-   * @date 2021/04/20
    * @param {Array<MapsCoordinate>} coordinates
-   * @memberof MapsLine
    */
   constructor(coordinates: Array<MapsCoordinate>) {
     this.type = 'Feature';
@@ -29,13 +24,10 @@ export class MapsLine {
   }
 
   /**
-   * getter
-   *
-   * @author Robert Boudewijn
-   * @date 2021/04/20
-   * @memberof MapsLine
+   * Gets the coordinates from a MapsLine.
+   * @returns {Position}
    */
-  getCoordinates() {
+  getCoordinates(): Position[] {
     return this.geometry.coordinates.map((element: MapsCoordinate) =>
       element.toArray(),
     );
