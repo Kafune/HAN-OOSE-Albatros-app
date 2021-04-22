@@ -4,6 +4,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Geometry, Position} from 'geojson';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsPoint} from '../core/maps/MapsPoints';
+import colors from '../styles/colors';
 
 interface Props {
   mapsLine: MapsLine;
@@ -24,7 +25,7 @@ const Maps: React.FC<Props> = ({
 
   const layerStyles = {
     LineStyle: {
-      lineColor: '#0CA596',
+      lineColor: colors.main,
       // @ts-ignore We can't modify the inner code of MapboxGL.
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,

@@ -3,6 +3,7 @@ import {Route} from '../core/domain/Route';
 import {Button, Image, StyleSheet, Text, View} from 'react-native';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from '../styles/colors';
 
 interface Props {
   route: Route;
@@ -32,15 +33,16 @@ const RouteInformation: React.FC<Props> = ({
         </Text>
       </View>
       <View style={styles.button}>
-        <Button
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={30}
+          color={colors.main}
           onPress={() => {
             setGeoJSON(RouteMapper.toMapsLine(route));
             setMapPoints(RouteMapper.toMapsPoint(route));
             setCenter(route.middlePoint);
           }}
-          title="Button"
         />
-        <MaterialCommunityIcons name="map" size={12} color={'black'} />
       </View>
     </View>
   );
