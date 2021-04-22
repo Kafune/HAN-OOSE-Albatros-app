@@ -55,7 +55,7 @@ const Maps: React.FC<Props> = ({
       <View style={styles.container}>
         <MapboxGL.MapView style={styles.map} logoEnabled={false}>
           <MapboxGL.Camera
-            zoomLevel={zoom ? zoom : 13}
+            zoomLevel={zoom ?? 13}
             pitch={0}
             centerCoordinate={center}
           />
@@ -67,7 +67,7 @@ const Maps: React.FC<Props> = ({
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   page: {

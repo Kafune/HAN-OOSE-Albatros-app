@@ -2,6 +2,7 @@ import React from 'react';
 import {Route} from '../utilities/class/Route';
 import {Button, Image, StyleSheet, Text, View} from 'react-native';
 import {RouteMapper} from '../utilities/mapper/RouteMapper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   route: Route;
@@ -39,6 +40,7 @@ const RouteInformation: React.FC<Props> = ({
           }}
           title="Button"
         />
+        <MaterialCommunityIcons name="map" size={12} color={'black'} />
       </View>
     </View>
   );
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#FFFFFF',
     marginBottom: 10,
     marginHorizontal: 10,
     overflow: 'hidden',
