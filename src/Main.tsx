@@ -1,43 +1,34 @@
 import React, {FC} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import {NativeRouter, Route, Link} from 'react-router-native';
 import MapsPage from './pages/MapPage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-function Route1() {
-  return <Text>Home</Text>;
-}
-function Route2() {
-  return <Text>Hello World</Text>;
-}
+const Tab = createBottomTabNavigator();
 
 const Main: FC = () => {
   return (
-    <NativeRouter>
-      <View style={Styles.nav}>
-        <Link to="/">
-          <Text>Route 1</Text>
-        </Link>
-        <Link to="route2">
-          <Text>Route 2</Text>
-        </Link>
-        <Link to="maps-demo">
-          <Text>Maps demo</Text>
-        </Link>
-      </View>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+        initialRouteName="viewMaps">
 
-      <Route exact path="/" component={Route1} />
-      <Route path="/route2" component={Route2} />
-      <Route path="/maps-demo" component={MapsPage} />
-    </NativeRouter>
+          <Tab.Screen
+            name="viewMaps"
+            component={MapsPage}
+            options={{
+              tabBarLabel: 'View Maps',
+              tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name="map" size={size} color={color} />
+              )
+            }}
+          />
+
+        </Tab.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
-
-const Styles = StyleSheet.create({
-  nav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginVertical: 32,
-  },
-});
 
 export default Main;
