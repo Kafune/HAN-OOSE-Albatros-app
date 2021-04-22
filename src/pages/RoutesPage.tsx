@@ -9,9 +9,17 @@ import {RouteMapper} from '../core/mapper/RouteMapper';
 import {RouteAPI} from '../api/RouteAPI';
 
 const RoutesPage: () => JSX.Element = (): JSX.Element => {
-  const routes = RouteAPI.getRoutes();
+  const [routes, setRoutes] = useState<Route[]>();
+  const [highlightedRoute, sethighlightedRoute] = useState<Route | undefined>(
+    undefined,
+  );
 
-  const highlightedRoute: Route = routes[0];
+  useEffect(() => {
+    RouteAPI.getRoutes().then((fetchedRoutes: Route[]) => {
+      setRoutes(fetchedRoutes);
+      sethighlightedRoute(fetchedRoutes[0]);
+    });
+  }, []);
 
   const [geoJSON, setGeoJSON] = useState<MapsLine>(
     RouteMapper.toMapsLine(highlightedRoute),
@@ -32,7 +40,7 @@ const RoutesPage: () => JSX.Element = (): JSX.Element => {
         zoom={13}
       />
       <Text style={styles.routesTitle}>Kies een route</Text>
-      {routes.length > 0 &&
+      {routes !== undefined &&
         routes.map((route: Route) => (
           <RouteInformation
             key={route.name}

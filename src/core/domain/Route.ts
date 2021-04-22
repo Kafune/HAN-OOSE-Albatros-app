@@ -4,25 +4,25 @@ import {Calculator} from '../helpers/Calculator';
 
 export class Route {
   name: string;
-  kilometers: number;
+  distance: number;
   description: string;
   segments: Segment[];
 
   /**
    * Constructs the Route.
    * @param {string} name
-   * @param {number} kilometers
+   * @param {number} distance
    * @param {string} description
    * @param {Segment[]} segments
    */
   constructor(
     name: string,
-    kilometers: number,
+    distance: number,
     description: string,
     segments: Segment[],
   ) {
     this.name = name;
-    this.kilometers = kilometers;
+    this.distance = distance;
     this.description = description;
     this.segments = segments;
   }

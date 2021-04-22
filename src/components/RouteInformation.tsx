@@ -27,7 +27,7 @@ const RouteInformation: React.FC<Props> = ({
       />
       <View style={styles.statistics}>
         <Text style={styles.title}>{route.name}</Text>
-        <Text style={styles.subtitle}>{route.kilometers} kilometer</Text>
+        <Text style={styles.subtitle}>{route.distance} kilometer</Text>
         <Text style={styles.description}>
           {route.description.substring(0, 60)}...
         </Text>
