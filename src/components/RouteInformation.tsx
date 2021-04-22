@@ -1,7 +1,9 @@
 import React from 'react';
-import {Route} from '../utilities/class/Route';
-import {Button, Image, StyleSheet, Text, View} from 'react-native';
-import {RouteMapper} from '../utilities/mapper/RouteMapper';
+import {Route} from '../core/domain/Route';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {RouteMapper} from '../core/mapper/RouteMapper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from '../styles/colors';
 
 interface Props {
   route: Route;
@@ -31,13 +33,15 @@ const RouteInformation: React.FC<Props> = ({
         </Text>
       </View>
       <View style={styles.button}>
-        <Button
+        <MaterialCommunityIcons
+          name="chevron-right"
+          size={30}
+          color={colors.main}
           onPress={() => {
             setGeoJSON(RouteMapper.toMapsLine(route));
             setMapPoints(RouteMapper.toMapsPoint(route));
-            setCenter(route.getMiddlePoint());
+            setCenter(route.middlePoint);
           }}
-          title="Button"
         />
       </View>
     </View>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
   wrapper: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#FFFFFF',
     marginBottom: 10,
     marginHorizontal: 10,
     overflow: 'hidden',

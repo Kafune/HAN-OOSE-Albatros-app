@@ -2,8 +2,9 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Geometry, Position} from 'geojson';
-import {MapsLine} from '../utilities/class/MapsLine';
-import {MapsPoint} from '../utilities/class/MapsPoints';
+import {MapsLine} from '../core/maps/MapsLine';
+import {MapsPoint} from '../core/maps/MapsPoints';
+import colors from '../styles/colors';
 
 interface Props {
   mapsLine: MapsLine;
@@ -24,7 +25,7 @@ const Maps: React.FC<Props> = ({
 
   const layerStyles = {
     LineStyle: {
-      lineColor: '#007CBE',
+      lineColor: colors.main,
       // @ts-ignore We can't modify the inner code of MapboxGL.
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,
@@ -34,20 +35,7 @@ const Maps: React.FC<Props> = ({
 
   const geoJSON: Geometry = {
     type: 'LineString',
-    coordinates: mapsLine.getCoordinates(),
-  };
-
-  const generatePoints: Function = (): JSX.Element[] | undefined => {
-    if (mapsPoint === undefined) {
-      return;
-    }
-    return mapsPoint.map((point: Position) => (
-      <MapboxGL.PointAnnotation
-        id={point.toString()}
-        coordinate={point}
-        key={point.toString()}
-      />
-    ));
+    coordinates: mapsLine.mapLineCoordinates,
   };
 
   return (
@@ -55,19 +43,26 @@ const Maps: React.FC<Props> = ({
       <View style={styles.container}>
         <MapboxGL.MapView style={styles.map} logoEnabled={false}>
           <MapboxGL.Camera
-            zoomLevel={zoom ? zoom : 13}
+            zoomLevel={zoom ?? 13}
             pitch={0}
             centerCoordinate={center}
           />
           <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
           </MapboxGL.ShapeSource>
-          {generatePoints()}
+          {mapsPoint !== undefined &&
+            mapsPoint.map((point: Position) => (
+              <MapboxGL.PointAnnotation
+                id={point.toString()}
+                coordinate={point}
+                key={point.toString()}
+              />
+            ))}
         </MapboxGL.MapView>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   page: {
@@ -79,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     height: 250,
     width: '100%',
-    backgroundColor: 'tomato',
+    backgroundColor: '#F0F0F1FF',
   },
   map: {
     flex: 1,

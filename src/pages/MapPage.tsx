@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import Maps from '../components/Maps';
-import {MapsLine} from '../utilities/class/MapsLine';
-import {MapsCoordinate} from '../utilities/class/MapsCoordinate';
-import {MapsPoint} from '../utilities/class/MapsPoints';
+import {MapsLine} from '../core/maps/MapsLine';
+import {MapsCoordinate} from '../core/maps/MapsCoordinate';
+import {MapsPoint} from '../core/maps/MapsPoints';
 
 const MapsPage: FC = () => {
   return (
