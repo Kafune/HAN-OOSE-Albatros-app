@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from '../core/domain/Route';
-import {Button, Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
