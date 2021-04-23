@@ -9,25 +9,29 @@ import {RouteAPI} from '../core/api/RouteAPI';
 const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
+  const [firstLoad] = useState<boolean>(true);
 
   useEffect(() => {
-    RouteAPI.routes.then((fetchedRoutes: Route[]) => {
+    const getAllRoutes: Function = async (): Promise<void> => {
+      const fetchedRoutes = await RouteAPI.getRoutes();
       setRoutes(fetchedRoutes);
-      // TODO: Fetch route segments to display it without errors.
       setHighlightedRoute(fetchedRoutes[0]);
-    });
-  }, []);
+    };
+
+    getAllRoutes();
+  }, [firstLoad]);
 
   return (
     <ScrollView>
-      {highlightedRoute !== undefined && (
-        <Maps
-          mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
-          mapsPoint={RouteMapper.toMapsPoint(highlightedRoute)}
-          center={highlightedRoute.middlePoint}
-          zoom={13}
-        />
-      )}
+      {highlightedRoute !== undefined &&
+        highlightedRoute.segments.length > 0 && (
+          <Maps
+            mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
+            mapsPoint={RouteMapper.toMapsPoint(highlightedRoute)}
+            center={highlightedRoute.middlePoint}
+            zoom={13}
+          />
+        )}
       <Text style={styles.routesTitle}>Kies een route</Text>
       {routes !== undefined &&
         routes.map((route: Route) => (
