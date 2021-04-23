@@ -6,7 +6,6 @@ const NewRoutesPage: FC = () => {
   // const [selectCor, setSelectCor] = useState<boolean>(false);
 
   function addCordinate(coordinate: Coordinate) {
-
     console.log(coordinate);
   }
 

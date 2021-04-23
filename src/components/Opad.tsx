@@ -1,7 +1,8 @@
 import React, {FunctionComponent} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import colors2, {brittishPalette}from '../styles/colors';
+// import colors2 from '../styles/colors';
+import {brittishPalette} from '../styles/colors';
 
 type Props = {
   onPressUp: Function;
@@ -74,7 +75,10 @@ export const Opad: FunctionComponent<Props> = props => {
 //Not so real malkander boys:
 // const colors = {buttonColor: '#333333', background: '#ccc'};
 //brittishPalette boys:
-const colors = {buttonColor: brittishPalette.gray, background: brittishPalette.darkgray};
+const colors = {
+  buttonColor: brittishPalette.gray,
+  background: brittishPalette.darkgray,
+};
 //Real malkander boys:
 // const colors = {buttonColor: colors2.secondary, background: colors2.main};
 

@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Pressable, Text, Alert} from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Pressable,
+  Text,
+  Alert,
+} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -39,17 +46,17 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
     switch (button) {
       case 'up':
         // console.log(0.01 / -zoom);
-        console.log( (0.25/zoom**3 ));
-        setMapsPoint([mapsPoint[0], mapsPoint[1] + (0.25/zoom**3 )]);
+        console.log(0.25 / zoom ** 3);
+        setMapsPoint([mapsPoint[0], mapsPoint[1] + 0.25 / zoom ** 3]);
         break;
       case 'left':
-        setMapsPoint([mapsPoint[0] - (0.25/zoom**3 ), mapsPoint[1]]);
+        setMapsPoint([mapsPoint[0] - 0.25 / zoom ** 3, mapsPoint[1]]);
         break;
       case 'right':
-        setMapsPoint([mapsPoint[0] + (0.25/zoom**3 ), mapsPoint[1]]);
+        setMapsPoint([mapsPoint[0] + 0.25 / zoom ** 3, mapsPoint[1]]);
         break;
       case 'down':
-        setMapsPoint([mapsPoint[0], mapsPoint[1] - (0.25/zoom**3 )]);
+        setMapsPoint([mapsPoint[0], mapsPoint[1] - 0.25 / zoom ** 3]);
         break;
       default:
         //nothing
@@ -64,86 +71,91 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   return (
-    <View style={styles.page}>
-      <View style={styles.container}>
-        <MapboxGL.MapView style={styles.map} logoEnabled={false}>
-          <MapboxGL.Camera
-            zoomLevel={zoom}
-            pitch={0}
-            centerCoordinate={mapsPoint}
-          />
-
-          <MapboxGL.PointAnnotation
-            id={mapsPoint.toString()}
-            coordinate={mapsPoint}
-            key={mapsPoint.toString()}
-          />
-        </MapboxGL.MapView>
-      </View>
-
-      <View style={styles.boxes}>
-        <View style={[{...styles.box}, {...styles.boxIs1}]}>
-          <MaterialCommunityIcons
-            name="arrow-left"
-            size={30}
-            color={colors.main}
-            onPress={() => {
-              props.cancel();
-            }}
-          />
-        </View>
-
-        <View style={[{...styles.box}, {...styles.boxIs8}, {...styles.button}]}>
-          <Pressable onPress={() => setCurrentGps()} style={styles.buttonInner}>
-            <MaterialCommunityIcons
-              name="map-marker"
-              size={30}
-              color={colors.main}
+    <ScrollView>
+      <View style={styles.page}>
+        <View style={styles.container}>
+          <MapboxGL.MapView style={styles.map} logoEnabled={false}>
+            <MapboxGL.Camera
+              zoomLevel={zoom}
+              pitch={0}
+              centerCoordinate={mapsPoint}
             />
 
-            <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
-          </Pressable>
+            <MapboxGL.PointAnnotation
+              id={mapsPoint.toString()}
+              coordinate={mapsPoint}
+              key={mapsPoint.toString()}
+            />
+          </MapboxGL.MapView>
         </View>
-        <View style={[{...styles.box}, {...styles.boxIs1}]} />
-      </View>
 
-      <Opad
-        onPressUp={() => handleOpad('up')}
-        onPressDown={() => handleOpad('down')}
-        onPressMiddle={() => safe()}
-        onPressLeft={() => handleOpad('left')}
-        onPressRight={() => handleOpad('right')}
-      />
+        <View style={styles.boxes}>
+          <View style={[{...styles.box}, {...styles.boxIs1}]}>
+            <MaterialCommunityIcons
+              name="arrow-left"
+              size={30}
+              color={colors.main}
+              onPress={() => {
+                props.cancel();
+              }}
+            />
+          </View>
 
-      <View style={styles.boxes}>
-        <View style={[{...styles.box}, {...styles.boxIs1}]} />
-        <View style={[{...styles.box}, {...styles.boxIs1}]}>
-          <MaterialCommunityIcons
-            name="magnify-minus-outline" //search-web //map-search-outline
-            size={35}
-            color={colors.main}
-          />
+          <View
+            style={[{...styles.box}, {...styles.boxIs8}, {...styles.button}]}>
+            <Pressable
+              onPress={() => setCurrentGps()}
+              style={styles.buttonInner}>
+              <MaterialCommunityIcons
+                name="map-marker"
+                size={30}
+                color={colors.main}
+              />
+
+              <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
+            </Pressable>
+          </View>
+          <View style={[{...styles.box}, {...styles.boxIs1}]} />
         </View>
-        <View style={[{...styles.box}, {...styles.boxIs6}]}>
-          <Slider
-            style={{width: '100%', height: 40}}
-            value={zoom}
-            minimumValue={4}
-            maximumValue={18}
-            minimumTrackTintColor="#000000" //{colors.secondary}
-            maximumTrackTintColor="#000000" //{colors.secondary} //
-            onValueChange={value => setZoom(value)}
-          />
-        </View>
-        <View style={[{...styles.box}, {...styles.boxIs2}]}>
-          <MaterialCommunityIcons
-            name="magnify-plus-outline" //home-search
-            size={35}
-            color={colors.main}
-          />
+
+        <Opad
+          onPressUp={() => handleOpad('up')}
+          onPressDown={() => handleOpad('down')}
+          onPressMiddle={() => safe()}
+          onPressLeft={() => handleOpad('left')}
+          onPressRight={() => handleOpad('right')}
+        />
+
+        <View style={styles.boxes}>
+          <View style={[{...styles.box}, {...styles.boxIs1}]} />
+          <View style={[{...styles.box}, {...styles.boxIs1}]}>
+            <MaterialCommunityIcons
+              name="magnify-minus-outline" //search-web //map-search-outline
+              size={35}
+              color={colors.main}
+            />
+          </View>
+          <View style={[{...styles.box}, {...styles.boxIs6}]}>
+            <Slider
+              style={{width: '100%', height: 40}}
+              value={zoom}
+              minimumValue={4}
+              maximumValue={18}
+              minimumTrackTintColor="#000000" //{colors.secondary}
+              maximumTrackTintColor="#000000" //{colors.secondary} //
+              onValueChange={value => setZoom(value)}
+            />
+          </View>
+          <View style={[{...styles.box}, {...styles.boxIs2}]}>
+            <MaterialCommunityIcons
+              name="magnify-plus-outline" //home-search
+              size={35}
+              color={colors.main}
+            />
+          </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
