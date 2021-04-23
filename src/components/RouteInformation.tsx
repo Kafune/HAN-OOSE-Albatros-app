@@ -50,16 +50,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     overflow: 'hidden',
     borderRadius: 6,
+    borderWidth: 2,
+    borderStyle: 'solid',
   },
   active: {
-    borderWidth: 2,
     borderColor: colors.main,
-    borderStyle: 'solid',
   },
   inactive: {
-    borderWidth: 2,
     borderColor: '#f0f0f1',
-    borderStyle: 'solid',
   },
   image: {
     width: 100,
