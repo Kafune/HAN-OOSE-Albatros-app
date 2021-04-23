@@ -7,14 +7,16 @@ import colors from '../styles/colors';
 interface Props {
   route: Route;
   setHighlightedRoute: Function;
+  isActive: boolean;
 }
 
 const RouteInformation: React.FC<Props> = ({
   route,
   setHighlightedRoute,
+  isActive,
 }): JSX.Element => {
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, isActive ? styles.active : styles.inactive]}>
       {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
@@ -48,6 +50,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     overflow: 'hidden',
     borderRadius: 6,
+  },
+  active: {
+    borderWidth: 2,
+    borderColor: colors.main,
+    borderStyle: 'solid',
+  },
+  inactive: {
+    borderWidth: 2,
+    borderColor: '#f0f0f1',
+    borderStyle: 'solid',
   },
   image: {
     width: 100,

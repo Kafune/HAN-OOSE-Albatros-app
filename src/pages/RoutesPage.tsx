@@ -9,7 +9,6 @@ import {RouteAPI} from '../core/api/RouteAPI';
 const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
-  const [firstLoad] = useState<boolean>(true);
 
   useEffect(() => {
     const getAllRoutes: Function = async (): Promise<void> => {
@@ -19,7 +18,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
     };
 
     getAllRoutes();
-  }, [firstLoad]);
+  }, []);
 
   return (
     <ScrollView>
@@ -36,6 +35,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
       {routes !== undefined &&
         routes.map((route: Route) => (
           <RouteInformation
+            isActive={route.id === highlightedRoute?.id}
             key={route.name}
             route={route}
             setHighlightedRoute={setHighlightedRoute}
