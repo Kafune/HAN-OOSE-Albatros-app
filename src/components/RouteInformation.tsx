@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route} from '../core/domain/Route';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
 
@@ -16,7 +16,9 @@ const RouteInformation: React.FC<Props> = ({
   isActive,
 }): JSX.Element => {
   return (
-    <View style={[styles.wrapper, isActive ? styles.active : styles.inactive]}>
+    <TouchableOpacity
+      style={[styles.wrapper, isActive ? styles.active : styles.inactive]}
+      onPress={() => setHighlightedRoute(route)}>
       {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
@@ -34,10 +36,9 @@ const RouteInformation: React.FC<Props> = ({
           name="chevron-right"
           size={30}
           color={colors.main}
-          onPress={() => setHighlightedRoute(route)}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
