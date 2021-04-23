@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Pressable, Text} from 'react-native';
+import {View, StyleSheet, Pressable, Text, Alert} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Slider from '@react-native-community/slider';
 import getLocation from '../core/maps/GetLocation';
 import colors from '../styles/colors';
 import {Opad} from './Opad';
@@ -17,7 +18,44 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
     'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
   );
   const [mapsPoint, setMapsPoint] = useState<Position>([5.6679899, 52.0430533]);
-  const [zoom, setZoom] = useState<number>(13);
+  const [zoom, setZoom] = useState<number>(17.5);
+
+  const safe = (): void => {
+    Alert.alert(
+      'Wil je hier een punt opslaan?',
+      'Longitude: ' + mapsPoint[0] + ',latitude: ' + mapsPoint[1],
+      [
+        {
+          text: 'Nee',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {text: 'Opslaan', onPress: () => props.addCordinate(mapsPoint)},
+      ],
+    );
+  };
+
+  const handleOpad = (button: String) => {
+    switch (button) {
+      case 'up':
+        // console.log(0.01 / -zoom);
+        console.log( (0.25/zoom**3 ));
+        setMapsPoint([mapsPoint[0], mapsPoint[1] + (0.25/zoom**3 )]);
+        break;
+      case 'left':
+        setMapsPoint([mapsPoint[0] - (0.25/zoom**3 ), mapsPoint[1]]);
+        break;
+      case 'right':
+        setMapsPoint([mapsPoint[0] + (0.25/zoom**3 ), mapsPoint[1]]);
+        break;
+      case 'down':
+        setMapsPoint([mapsPoint[0], mapsPoint[1] - (0.25/zoom**3 )]);
+        break;
+      default:
+        //nothing
+        break;
+    }
+  };
 
   const setCurrentGps = async () => {
     const location = await getLocation();
@@ -63,37 +101,47 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               color={colors.main}
             />
 
-            <Text>Neem huidige locatie over.</Text>
+            <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
           </Pressable>
         </View>
         <View style={[{...styles.box}, {...styles.boxIs1}]} />
       </View>
+
       <Opad
-        onPressUp={() => {
-          console.log('Click!');
-        }}
-        onPressDown={() => {
-          console.log('Click!');
-        }}
-        onPressMiddle={() => {
-          console.log('Click!');
-        }}
-        onPressLeft={() => {
-          console.log('Click!');
-        }}
-        onPressRight={() => {
-          console.log('Click!');
-        }}
+        onPressUp={() => handleOpad('up')}
+        onPressDown={() => handleOpad('down')}
+        onPressMiddle={() => safe()}
+        onPressLeft={() => handleOpad('left')}
+        onPressRight={() => handleOpad('right')}
       />
 
       <View style={styles.boxes}>
-        <View style={[{...styles.box}, {...styles.boxIs3}]} />
-        <View style={[{...styles.box}, {...styles.boxIs4}, {...styles.button}]}>
-          <Pressable onPress={() => props.addCordinate()}>
-            <Text>Opslaan</Text>
-          </Pressable>
+        <View style={[{...styles.box}, {...styles.boxIs1}]} />
+        <View style={[{...styles.box}, {...styles.boxIs1}]}>
+          <MaterialCommunityIcons
+            name="magnify-minus-outline" //search-web //map-search-outline
+            size={35}
+            color={colors.main}
+          />
         </View>
-        <View style={[{...styles.box}, {...styles.boxIs3}]} />
+        <View style={[{...styles.box}, {...styles.boxIs6}]}>
+          <Slider
+            style={{width: '100%', height: 40}}
+            value={zoom}
+            minimumValue={4}
+            maximumValue={18}
+            minimumTrackTintColor="#000000" //{colors.secondary}
+            maximumTrackTintColor="#000000" //{colors.secondary} //
+            onValueChange={value => setZoom(value)}
+          />
+        </View>
+        <View style={[{...styles.box}, {...styles.boxIs2}]}>
+          <MaterialCommunityIcons
+            name="magnify-plus-outline" //home-search
+            size={35}
+            color={colors.main}
+          />
+        </View>
       </View>
     </View>
   );
@@ -120,15 +168,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     display: 'flex',
     borderRadius: 5,
-    padding: 5,
+    padding: 8,
   },
   buttonInner: {
     justifyContent: 'center',
     display: 'flex',
     flexDirection: 'row',
   },
+  buttonText: {
+    paddingTop: 2,
+    fontSize: 18,
+    color: colors.main,
+    fontWeight: 'bold',
+  },
   boxes: {
-    marginTop: 5,
+    marginTop: 12,
     display: 'flex',
     flexWrap: 'nowrap',
     flexDirection: 'row',

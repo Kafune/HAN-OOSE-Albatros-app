@@ -1,6 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors2, {brittishPalette}from '../styles/colors';
 
 type Props = {
   onPressUp: Function;
@@ -40,7 +41,7 @@ export const Opad: FunctionComponent<Props> = props => {
         onPress={() => props.onPressMiddle()}
         style={styles.box}>
         <MaterialCommunityIcons
-          name="arrow-expand"
+          name="floppy" //arrow-expand"
           size={50}
           color={colors.buttonColor}
         />
@@ -70,8 +71,12 @@ export const Opad: FunctionComponent<Props> = props => {
     </View>
   );
 };
-
-const colors = {buttonColor: '#333333', background: '#ccc'};
+//Not so real malkander boys:
+// const colors = {buttonColor: '#333333', background: '#ccc'};
+//brittishPalette boys:
+const colors = {buttonColor: brittishPalette.gray, background: brittishPalette.darkgray};
+//Real malkander boys:
+// const colors = {buttonColor: colors2.secondary, background: colors2.main};
 
 const styles = StyleSheet.create({
   container: {
@@ -80,16 +85,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     flexDirection: 'row',
     backgroundColor: colors.background,
-    borderRadius: 50,
+    borderRadius: 100,
   },
   box: {
-    minHeight: 80,
+    minHeight: 100,
     minWidth: '26.6%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
 });
-
 
 const size = 55;
