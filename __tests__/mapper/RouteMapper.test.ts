@@ -1,7 +1,7 @@
 import 'react-native';
-import {Route} from '../src/core/domain/Route';
-import {RouteMapper} from '../src/core/mapper/RouteMapper';
-import RouteResponseDTO from '../src/core/dto/RouteResponseDTO';
+import {Route} from '../../src/core/domain/Route';
+import {RouteMapper} from '../../src/core/mapper/RouteMapper';
+import RouteResponseDTO from '../../src/core/dto/RouteResponseDTO';
 
 const routeDomain = new Route(1, 'Route 1', 12, 'Een route', [
   {
