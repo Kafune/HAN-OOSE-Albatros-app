@@ -3,26 +3,38 @@ import {View, StyleSheet, Pressable, Text} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import getLocation from '../core/maps/GetLocation';
 import colors from '../styles/colors';
+import {Opad} from './Opad';
 
 interface Props {
   addCordinate: Function;
+  cancel: Function;
 }
 
-const SelectCordinate: React.FC<Props> = ({addCordinate}): JSX.Element => {
+const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
   MapboxGL.setAccessToken(
     'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
   );
+  const [mapsPoint, setMapsPoint] = useState<Position>([5.6679899, 52.0430533]);
+  const [zoom, setZoom] = useState<number>(13);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [mapsPoint, setMapsPoint] = useState<Position>([0, 0.0]);
+  const setCurrentGps = async () => {
+    const location = await getLocation();
+    console.log(location);
+    setMapsPoint([location.longitude, location.latitude]);
+  };
 
   return (
     <View style={styles.page}>
       <View style={styles.container}>
         <MapboxGL.MapView style={styles.map} logoEnabled={false}>
-          <MapboxGL.Camera zoomLevel={13} pitch={0} />
-          {/*centerCoordinate={center}*/}
+          <MapboxGL.Camera
+            zoomLevel={zoom}
+            pitch={0}
+            centerCoordinate={mapsPoint}
+          />
+
           <MapboxGL.PointAnnotation
             id={mapsPoint.toString()}
             coordinate={mapsPoint}
@@ -30,6 +42,7 @@ const SelectCordinate: React.FC<Props> = ({addCordinate}): JSX.Element => {
           />
         </MapboxGL.MapView>
       </View>
+
       <View style={styles.boxes}>
         <View style={[{...styles.box}, {...styles.boxIs1}]}>
           <MaterialCommunityIcons
@@ -37,29 +50,46 @@ const SelectCordinate: React.FC<Props> = ({addCordinate}): JSX.Element => {
             size={30}
             color={colors.main}
             onPress={() => {
-              console.log('lel');
+              props.cancel();
             }}
           />
         </View>
+
         <View style={[{...styles.box}, {...styles.boxIs8}, {...styles.button}]}>
-          <Pressable onPress={() => addCordinate()} style={styles.buttonInner}>
+          <Pressable onPress={() => setCurrentGps()} style={styles.buttonInner}>
             <MaterialCommunityIcons
               name="map-marker"
               size={30}
               color={colors.main}
-              onPress={() => {
-                console.log('lel');
-              }}
             />
+
             <Text>Neem huidige locatie over.</Text>
           </Pressable>
         </View>
         <View style={[{...styles.box}, {...styles.boxIs1}]} />
       </View>
+      <Opad
+        onPressUp={() => {
+          console.log('Click!');
+        }}
+        onPressDown={() => {
+          console.log('Click!');
+        }}
+        onPressMiddle={() => {
+          console.log('Click!');
+        }}
+        onPressLeft={() => {
+          console.log('Click!');
+        }}
+        onPressRight={() => {
+          console.log('Click!');
+        }}
+      />
+
       <View style={styles.boxes}>
         <View style={[{...styles.box}, {...styles.boxIs3}]} />
         <View style={[{...styles.box}, {...styles.boxIs4}, {...styles.button}]}>
-          <Pressable onPress={() => addCordinate()}>
+          <Pressable onPress={() => props.addCordinate()}>
             <Text>Opslaan</Text>
           </Pressable>
         </View>
