@@ -11,13 +11,13 @@ const RoutesPage: React.FC = (): JSX.Element => {
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
 
   useEffect(() => {
-    const getAllRoutes: Function = async (): Promise<void> => {
+    const fetchRoutes: Function = async (): Promise<void> => {
       const fetchedRoutes = await RouteAPI.getRoutes();
       setRoutes(fetchedRoutes);
       setHighlightedRoute(fetchedRoutes[0]);
     };
 
-    getAllRoutes();
+    fetchRoutes();
   }, []);
 
   return (

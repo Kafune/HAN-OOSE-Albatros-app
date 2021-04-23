@@ -2,7 +2,6 @@ import {Route} from '../domain/Route';
 import {MapsCoordinate} from '../maps/MapsCoordinate';
 import {MapsPoint} from '../maps/MapsPoints';
 import {MapsLine} from '../maps/MapsLine';
-import {Segment} from '../domain/Segment';
 import RouteResponseDTO from '../dto/RouteResponseDTO';
 
 export class RouteMapper {
@@ -12,7 +11,7 @@ export class RouteMapper {
    * @returns {MapsLine}
    */
   static toMapsLine(route: Route): MapsLine {
-    const startPoints = route.segments.map((segment: Segment) => {
+    const startPoints = route.segments.map(segment => {
       return new MapsCoordinate(
         segment.start.longitude,
         segment.start.latitude,
@@ -60,6 +59,6 @@ export class RouteMapper {
    * @returns {Route}
    */
   static multipleToDomain(routes: RouteResponseDTO[]): Route[] {
-    return routes.map((route: RouteResponseDTO) => this.toDomain(route));
+    return routes.map(route => this.toDomain(route));
   }
 }

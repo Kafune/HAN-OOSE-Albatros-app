@@ -13,7 +13,7 @@ export class MapsPoint {
    * @param {MapsCoordinate[]} coordinates
    */
   constructor(coordinates: MapsCoordinate[]) {
-    this.coordinates = coordinates.map(item => item.toArray());
+    this.coordinates = coordinates.map(coordinate => coordinate.toArray());
   }
 
   /**

@@ -22,6 +22,6 @@ export class SegmentMapper {
    * @returns {Segment[]}
    */
   static multipleToDomain(DTOs: SegmentResponseDTO[]): Segment[] {
-    return DTOs.map((segment: SegmentResponseDTO) => this.toDomain(segment));
+    return DTOs.map(DTO => this.toDomain(DTO));
   }
 }
