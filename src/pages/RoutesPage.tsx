@@ -35,7 +35,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
         routes.map(route => (
           <RouteInformation
             isActive={route.id === highlightedRoute?.id}
-            key={route.name}
+            key={route.id}
             route={route}
             setHighlightedRoute={setHighlightedRoute}
           />

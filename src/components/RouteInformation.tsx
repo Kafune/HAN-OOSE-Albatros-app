@@ -17,8 +17,11 @@ const RouteInformation: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <TouchableOpacity
+      disabled={isActive}
       style={[styles.wrapper, isActive ? styles.active : styles.inactive]}
-      onPress={() => setHighlightedRoute(route)}>
+      onPress={() => {
+        !isActive ? setHighlightedRoute(route) : null;
+      }}>
       {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
