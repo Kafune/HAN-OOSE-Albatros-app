@@ -22,18 +22,17 @@ const RoutesPage: React.FC = (): JSX.Element => {
 
   return (
     <ScrollView>
-      {highlightedRoute !== undefined &&
-        highlightedRoute.segments.length > 0 && (
-          <Maps
-            mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
-            mapsPoint={RouteMapper.toMapsPoint(highlightedRoute)}
-            center={highlightedRoute.middlePoint}
-            zoom={13}
-          />
-        )}
+      {highlightedRoute !== undefined && (
+        <Maps
+          mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
+          mapsPoint={RouteMapper.toMapsPoint(highlightedRoute)}
+          center={highlightedRoute.middlePoint}
+          zoom={highlightedRoute.zoomLevel}
+        />
+      )}
       <Text style={styles.routesTitle}>Kies een route</Text>
       {routes !== undefined &&
-        routes.map((route: Route) => (
+        routes.map(route => (
           <RouteInformation
             isActive={route.id === highlightedRoute?.id}
             key={route.name}

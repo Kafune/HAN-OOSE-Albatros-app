@@ -50,6 +50,19 @@ export class Route {
   }
 
   /**
+   * Calculates the zoom level based on start and end difference.
+   * @returns {number}
+   */
+  get zoomLevel(): number {
+    const startDiff =
+      this.startCoordinates.longitude - this.startCoordinates.latitude;
+    const endDiff =
+      this.endCoordinates.longitude - this.endCoordinates.latitude;
+
+    return Math.abs(startDiff + endDiff / 2) / 5;
+  }
+
+  /**
    * Calculates the middle points of the route based on begin and start.
    * @returns {number[]}
    */
