@@ -33,8 +33,8 @@ const DTOs: RouteResponseDTO[] = [
 
 const array = require('lodash/array');
 
-describe('Route Mapper', () => {
-  it('Map to maps line correctly', () => {
+describe('Route Mapper tests', () => {
+  it('Maps to maps line correctly', () => {
     const mapsLine = RouteMapper.toMapsLine(routeDomain);
 
     expect(array.first(mapsLine.coordinates).longitude).toBe(
@@ -54,7 +54,7 @@ describe('Route Mapper', () => {
     );
   });
 
-  it('Map to maps point correctly', () => {
+  it('Maps to maps point correctly', () => {
     const mapsPoint = RouteMapper.toMapsPoint(routeDomain);
 
     expect(array.first(mapsPoint.coordinates)[0]).toBe(
@@ -74,7 +74,7 @@ describe('Route Mapper', () => {
     );
   });
 
-  it('Map DTO to domain correctly', () => {
+  it('Maps DTO to domain correctly', () => {
     const domain = RouteMapper.toDomain(DTOs[0]);
 
     expect(domain.id).toBe(DTOs[0].routeId);
@@ -83,7 +83,7 @@ describe('Route Mapper', () => {
     expect(domain.segments).toStrictEqual(DTOs[0].segments);
   });
 
-  it('Map DTOs to domains correctly', () => {
+  it('Maps DTOs to domains correctly', () => {
     const domains = RouteMapper.multipleToDomain(DTOs);
 
     for (let i = 0; i > domains.length; i++) {
