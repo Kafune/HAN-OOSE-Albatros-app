@@ -43,20 +43,83 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
   };
 
   const handleOpad = (button: String) => {
+    const phaseOne = {breakPoint: 16, amount: 0.25};
+    const PhaseTwo = {breakPoint: 12, amount: 0.7};
+    const phaseThree = {breakPoint: -1, amount: 1.5};
+
     switch (button) {
       case 'up':
-        // console.log(0.01 / -zoom);
-        console.log(0.25 / zoom ** 3);
-        setMapsPoint([mapsPoint[0], mapsPoint[1] + 0.25 / zoom ** 3]);
+        if (zoom >= phaseOne.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] + phaseOne.amount / zoom ** 3,
+          ]);
+        } else if (zoom >= PhaseTwo.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] + PhaseTwo.amount / zoom ** 3,
+          ]);
+        } else {
+          console.log(1.5 / zoom ** 3);
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] + phaseThree.amount / zoom ** 3,
+          ]);
+        }
         break;
       case 'left':
-        setMapsPoint([mapsPoint[0] - 0.25 / zoom ** 3, mapsPoint[1]]);
+        if (zoom >= phaseOne.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0] - phaseOne.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        } else if (zoom >= PhaseTwo.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0] - PhaseTwo.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        } else {
+          setMapsPoint([
+            mapsPoint[0] - phaseThree.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        }
         break;
       case 'right':
-        setMapsPoint([mapsPoint[0] + 0.25 / zoom ** 3, mapsPoint[1]]);
+        if (zoom >= phaseOne.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0] + phaseOne.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        } else if (zoom >= PhaseTwo.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0] + PhaseTwo.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        } else {
+          setMapsPoint([
+            mapsPoint[0] + phaseThree.amount / zoom ** 3,
+            mapsPoint[1],
+          ]);
+        }
         break;
       case 'down':
-        setMapsPoint([mapsPoint[0], mapsPoint[1] - 0.25 / zoom ** 3]);
+        if (zoom >= phaseOne.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] - phaseOne.amount / zoom ** 3,
+          ]);
+        } else if (zoom >= PhaseTwo.breakPoint) {
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] - PhaseTwo.amount / zoom ** 3,
+          ]);
+        } else {
+          setMapsPoint([
+            mapsPoint[0],
+            mapsPoint[1] - phaseThree.amount / zoom ** 3,
+          ]);
+        }
         break;
       default:
         //nothing
