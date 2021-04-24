@@ -15,18 +15,4 @@ export class MapsPoint {
   constructor(coordinates: MapsCoordinate[]) {
     this.coordinates = coordinates.map(coordinate => coordinate.toArray());
   }
-
-  /**
-   * The map() method creates a new array populated with the results
-   * of calling a provided function on every element in the calling array.
-   * @param {Function} funct
-   * @returns {any[]}
-   */
-  map(funct: Function) {
-    let x = [];
-    for (let i in this.coordinates) {
-      x.push(funct(this.coordinates[i]));
-    }
-    return x;
-  }
 }

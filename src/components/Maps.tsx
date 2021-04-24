@@ -51,7 +51,7 @@ const Maps: React.FC<Props> = ({
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
           </MapboxGL.ShapeSource>
           {mapsPoint !== undefined &&
-            mapsPoint.map((point: Position) => (
+            mapsPoint.coordinates.map(point => (
               <MapboxGL.PointAnnotation
                 id={point.toString()}
                 coordinate={point}
