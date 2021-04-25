@@ -4,7 +4,7 @@ import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
 import {Route} from '../core/domain/Route';
 import {RouteMapper} from '../core/mapper/RouteMapper';
-import {RouteAPI} from '../core/api/RouteAPI';
+import {RouteController} from '../core/controller/RouteController';
 
 const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
@@ -12,7 +12,7 @@ const RoutesPage: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     const fetchRoutes: Function = async (): Promise<void> => {
-      const fetchedRoutes = await RouteAPI.getRoutes();
+      const fetchedRoutes = await RouteController.index();
       setRoutes(fetchedRoutes);
       setHighlightedRoute(fetchedRoutes[0]);
     };
