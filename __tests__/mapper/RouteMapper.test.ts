@@ -27,8 +27,20 @@ const routeDomain = new Route(1, 'Route 1', 12, 'Een route', [
 ]);
 
 const DTOs: RouteResponseDTO[] = [
-  {routeId: 1, name: 'Route response 1', distance: 11, segments: []},
-  {routeId: 2, name: 'Route response 2', distance: 22, segments: []},
+  {
+    routeId: 1,
+    name: 'Route response 1',
+    distance: 11,
+    description: 'Description 1',
+    segments: [],
+  },
+  {
+    routeId: 2,
+    name: 'Route response 2',
+    distance: 22,
+    description: 'Description 1',
+    segments: [],
+  },
 ];
 
 const array = require('lodash/array');
@@ -80,6 +92,7 @@ describe('Route Mapper tests', () => {
     expect(domain.id).toBe(DTOs[0].routeId);
     expect(domain.name).toBe(DTOs[0].name);
     expect(domain.distance).toBe(DTOs[0].distance);
+    expect(domain.description).toBe(DTOs[0].description);
     expect(domain.segments).toStrictEqual(DTOs[0].segments);
   });
 
@@ -90,6 +103,7 @@ describe('Route Mapper tests', () => {
       expect(domains[i].id).toBe(DTOs[i].routeId);
       expect(domains[i].name).toBe(DTOs[i].name);
       expect(domains[i].distance).toBe(DTOs[i].distance);
+      expect(domains[i].description).toBe(DTOs[i].description);
       expect(domains[i].segments).toStrictEqual(DTOs[i].segments);
     }
   });
