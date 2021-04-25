@@ -50,7 +50,13 @@ export class RouteMapper {
    * @returns {Route}
    */
   static toDomain(route: RouteResponseDTO): Route {
-    return new Route(route.routeId, route.name, route.distance, 'Dummy', []);
+    return new Route(
+      route.routeId,
+      route.name,
+      route.distance,
+      route.description,
+      [],
+    );
   }
 
   /**
