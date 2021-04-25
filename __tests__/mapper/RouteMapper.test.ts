@@ -38,7 +38,7 @@ const DTOs: RouteResponseDTO[] = [
     routeId: 2,
     name: 'Route response 2',
     distance: 22,
-    description: 'Description 1',
+    description: 'Description 2',
     segments: [],
   },
 ];
