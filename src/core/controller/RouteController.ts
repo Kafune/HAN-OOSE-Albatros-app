@@ -6,7 +6,7 @@ import {SegmentMapper} from '../mapper/SegmentMapper';
 
 export class RouteController {
   /**
-   * Get's all the routes from the TomEE API.
+   * Fetches an index of all the Routes.
    * @returns {Promise<Route[]>}
    */
   static async index(): Promise<Route[]> {
@@ -22,7 +22,7 @@ export class RouteController {
   }
 
   /**
-   * Get's all the segments from the TomEE API based on the route id.
+   * Fetches all the segments that belong to a route based.
    * @param {number} routeId
    * @returns {Promise<Segment[]>}
    */
