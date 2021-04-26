@@ -14,7 +14,6 @@ import getLocation from '../core/maps/GetLocation';
 import colors, {brittishPalette} from '../styles/colors';
 import {Opad} from './Opad';
 import {HandleOpad} from '../core/handlers/HandleOpad';
-
 import Maps from './Maps';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsCoordinate} from '../core/maps/MapsCoordinate';
@@ -48,6 +47,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
     try {
       const location = await getLocation();
       console.log(location);
+      // @ts-ignore
       setMapsPoint([location.longitude, location.latitude]);
     } catch {}
   };
@@ -67,7 +67,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
         </View>
 
         <View style={styles.boxes}>
-          <View style={[{...styles.box}, {...styles.boxIs1}]}>
+          <View style={styles.boxIs1}>
             <MaterialCommunityIcons
               name="arrow-left"
               size={30}
@@ -79,7 +79,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
           </View>
 
           <View
-            style={[{...styles.box}, {...styles.boxIs8}, {...styles.button}]}>
+            style={[styles.boxIs8, styles.button]}>
             <Pressable
               onPress={() => setCurrentGps()}
               style={styles.buttonInner}>
@@ -92,7 +92,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
             </Pressable>
           </View>
-          <View style={[{...styles.box}, {...styles.boxIs1}]} />
+          <View style={styles.boxIs1} />
         </View>
 
         <Opad
@@ -104,15 +104,15 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
         />
 
         <View style={styles.boxes}>
-          <View style={[{...styles.box}, {...styles.boxIs1}]} />
-          <View style={[{...styles.box}, {...styles.boxIs1}]}>
+          <View style={styles.boxIs1} />
+          <View style={styles.boxIs1}>
             <MaterialCommunityIcons
               name="map-search-outline"
               size={35}
               color={colors.main}
             />
           </View>
-          <View style={[{...styles.box}, {...styles.boxIs6}]}>
+          <View style={styles.boxIs6}>
             <Slider
               style={styles.slider}
               value={zoom}
@@ -120,10 +120,10 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               maximumValue={18}
               minimumTrackTintColor={brittishPalette.darkgray}
               maximumTrackTintColor={brittishPalette.darkgray}
-              onValueChange={value => setZoom(value)}
+              onValueChange={(value: number) => setZoom(value)}
             />
           </View>
-          <View style={[{...styles.box}, {...styles.boxIs2}]}>
+          <View style={styles.boxIs2}>
             <MaterialCommunityIcons
               name="home-search"
               size={35}
@@ -176,12 +176,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexWrap: 'nowrap',
     flexDirection: 'row',
-  },
-  box: {
-    // flexBasis: 0,
-    // flexGrow: 1,
-    // flexShrink: 1,
-    // padding: 0,
   },
   boxIs1: {
     minWidth: '10%',

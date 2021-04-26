@@ -1,15 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Coordinate} from '../core/domain/Coordinate';
 import SelectCordinate from '../components/SelectCoordinate';
 
-const NewRoutesPage: FC = () => {
+const NewRoutesPage: React.FC = () => {
   const [selectCor, setSelectCor] = useState<boolean>(true);
 
-  function addCoordinate(coordinate: Coordinate) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const addCoordinate = (coordinate: Coordinate) => {
     setSelectCor(false);
-    console.log(coordinate);
-  }
+  };
 
   if (selectCor) {
     return (

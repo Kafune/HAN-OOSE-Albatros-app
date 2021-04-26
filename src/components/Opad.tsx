@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import colors2 from '../styles/colors';
 import {brittishPalette} from '../styles/colors';
 
 type Props = {
@@ -42,7 +41,7 @@ export const Opad: FunctionComponent<Props> = props => {
         onPress={() => props.onPressMiddle()}
         style={styles.box}>
         <MaterialCommunityIcons
-          name="floppy" //arrow-expand"
+          name="floppy"
           size={50}
           color={colors.buttonColor}
         />
@@ -72,16 +71,10 @@ export const Opad: FunctionComponent<Props> = props => {
     </View>
   );
 };
-//Not so real malkander boys:
-// const colors = {buttonColor: '#333333', background: '#ccc'};
-//brittishPalette boys:
 const colors = {
   buttonColor: brittishPalette.gray,
   background: brittishPalette.darkgray,
 };
-//Real malkander boys:
-// const colors = {buttonColor: colors2.secondary, background: colors2.main};
-
 const styles = StyleSheet.create({
   container: {
     margin: '10%',

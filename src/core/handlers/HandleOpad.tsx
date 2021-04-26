@@ -4,11 +4,11 @@ import {Position} from 'geojson';
  * In this class is chosen to not inlude zoom because it changes to many times. Due to that, it has become a parameter
  */
 export class HandleOpad {
-  phaseOne = {breakPoint: 16, amount: 0.25};
-  phaseTwo = {breakPoint: 12, amount: 0.7};
-  phaseThree = {breakPoint: -1, amount: 1.5};
+  PHASE_ONE = {breakPoint: 16, amount: 0.25};
+  PHASE_TWO = {breakPoint: 12, amount: 0.7};
+  PHASE_THREE = {breakPoint: -1, amount: 1.5};
   mapsPoint: Position;
-  exponent: number = 3;
+  EXPONENT: number = 3;
 
   /**
    * Creates an instance of HandleOpad.
@@ -27,20 +27,20 @@ export class HandleOpad {
    * @memberof HandleOpad
    */
   handleUp(zoom: number): Position {
-    if (zoom >= this.phaseOne.breakPoint) {
+    if (zoom >= this.PHASE_ONE.breakPoint) {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] + this.phaseOne.amount / zoom ** this.exponent,
+        this.mapsPoint[1] + this.PHASE_ONE.amount / zoom ** this.EXPONENT,
       ];
-    } else if (zoom >= this.phaseTwo.breakPoint) {
+    } else if (zoom >= this.PHASE_TWO.breakPoint) {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] + this.phaseTwo.amount / zoom ** this.exponent,
+        this.mapsPoint[1] + this.PHASE_TWO.amount / zoom ** this.EXPONENT,
       ];
     } else {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] + this.phaseThree.amount / zoom ** this.exponent,
+        this.mapsPoint[1] + this.PHASE_THREE.amount / zoom ** this.EXPONENT,
       ];
     }
   }
@@ -53,19 +53,19 @@ export class HandleOpad {
    * @memberof HandleOpad
    */
   handleLeft(zoom: number): Position {
-    if (zoom >= this.phaseOne.breakPoint) {
+    if (zoom >= this.PHASE_ONE.breakPoint) {
       return [
-        this.mapsPoint[0] - this.phaseOne.amount / zoom ** this.exponent,
+        this.mapsPoint[0] - this.PHASE_ONE.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
-    } else if (zoom >= this.phaseTwo.breakPoint) {
+    } else if (zoom >= this.PHASE_TWO.breakPoint) {
       return [
-        this.mapsPoint[0] - this.phaseTwo.amount / zoom ** this.exponent,
+        this.mapsPoint[0] - this.PHASE_TWO.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
     } else {
       return [
-        this.mapsPoint[0] - this.phaseThree.amount / zoom ** this.exponent,
+        this.mapsPoint[0] - this.PHASE_THREE.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
     }
@@ -78,19 +78,19 @@ export class HandleOpad {
    * @memberof HandleOpad
    */
   handleRight(zoom: number): Position {
-    if (zoom >= this.phaseOne.breakPoint) {
+    if (zoom >= this.PHASE_ONE.breakPoint) {
       return [
-        this.mapsPoint[0] + this.phaseOne.amount / zoom ** this.exponent,
+        this.mapsPoint[0] + this.PHASE_ONE.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
-    } else if (zoom >= this.phaseTwo.breakPoint) {
+    } else if (zoom >= this.PHASE_TWO.breakPoint) {
       return [
-        this.mapsPoint[0] + this.phaseTwo.amount / zoom ** this.exponent,
+        this.mapsPoint[0] + this.PHASE_TWO.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
     } else {
       return [
-        this.mapsPoint[0] + this.phaseThree.amount / zoom ** this.exponent,
+        this.mapsPoint[0] + this.PHASE_THREE.amount / zoom ** this.EXPONENT,
         this.mapsPoint[1],
       ];
     }
@@ -103,20 +103,20 @@ export class HandleOpad {
    * @memberof HandleOpad
    */
   handleDown(zoom: number): Position {
-    if (zoom >= this.phaseOne.breakPoint) {
+    if (zoom >= this.PHASE_ONE.breakPoint) {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] - this.phaseOne.amount / zoom ** this.exponent,
+        this.mapsPoint[1] - this.PHASE_ONE.amount / zoom ** this.EXPONENT,
       ];
-    } else if (zoom >= this.phaseTwo.breakPoint) {
+    } else if (zoom >= this.PHASE_TWO.breakPoint) {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] - this.phaseTwo.amount / zoom ** this.exponent,
+        this.mapsPoint[1] - this.PHASE_TWO.amount / zoom ** this.EXPONENT,
       ];
     } else {
       return [
         this.mapsPoint[0],
-        this.mapsPoint[1] - this.phaseThree.amount / zoom ** this.exponent,
+        this.mapsPoint[1] - this.PHASE_THREE.amount / zoom ** this.EXPONENT,
       ];
     }
   }
