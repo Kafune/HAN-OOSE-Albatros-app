@@ -22,7 +22,7 @@ export class RouteController {
   }
 
   /**
-   * Fetches all the segments that belong to a route based.
+   * Fetches all the segments that belong to a route based on the route ID.
    * @param {number} routeId
    * @returns {Promise<Segment[]>}
    */
