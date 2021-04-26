@@ -5,9 +5,7 @@ const getLocation: Function = () => {
     enableHighAccuracy: true,
     timeout: 15000,
   })
-    .then((location: Object) => {
-      return location;
-    })
+    .then((location: Object) => location)
     .catch((error: any) => {
       const {code, message} = error;
       console.warn(code, message);
