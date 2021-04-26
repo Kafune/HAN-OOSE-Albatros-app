@@ -1,6 +1,5 @@
 import SegmentResponseDTO from '../../src/core/dto/SegmentResponseDTO';
 import {SegmentMapper} from '../../src/core/mapper/SegmentMapper';
-import {RouteMapper} from '../../src/core/mapper/RouteMapper';
 
 const segmentDTOs: SegmentResponseDTO[] = [
   {
