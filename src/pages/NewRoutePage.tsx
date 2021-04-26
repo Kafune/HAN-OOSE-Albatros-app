@@ -11,7 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
 
-const NewRoutesPage: FC = () => {
+const NewRoutePage: FC = () => {
     const geoData = GeoData.getGeoData();
 
     const [selectCor, setSelectCor] = useState<boolean>(false);
@@ -55,13 +55,12 @@ const NewRoutesPage: FC = () => {
 
     if (selectCor) {
         return (
-            <View></View>
-            // <SelectCoordinate
-            //     addCoordinate={addCoordinate}
-            //     cancel={() => {
-            //         setSelectCor(false);
-            //     }}
-            // />
+            <SelectCoordinate
+                addCoordinate={addCoordinate}
+                cancel={() => {
+                    setSelectCor(false);
+                }}
+            />
         );
     } else {
         return <ScrollView>
@@ -202,4 +201,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NewRoutesPage;
+export default NewRoutePage;

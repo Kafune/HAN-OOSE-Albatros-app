@@ -21,6 +21,6 @@ export class MapsLine {
    * @returns {Position}
    */
   get mapLineCoordinates(): number[][] {
-    return this.coordinates.map((element: MapsCoordinate) => element.toArray());
+    return this.coordinates.map(coordinate => coordinate.toArray());
   }
 }

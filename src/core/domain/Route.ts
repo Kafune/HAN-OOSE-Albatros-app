@@ -3,26 +3,30 @@ import {Coordinate} from './Coordinate';
 import {Calculator} from '../helpers/Calculator';
 
 export class Route {
+  id: number;
   name: string;
-  kilometers: number;
+  distance: number;
   description: string;
   segments: Segment[];
 
   /**
    * Constructs the Route.
+   * @param {number} id
    * @param {string} name
-   * @param {number} kilometers
+   * @param {number} distance
    * @param {string} description
    * @param {Segment[]} segments
    */
   constructor(
+    id: number,
     name: string,
-    kilometers: number,
+    distance: number,
     description: string,
     segments: Segment[],
   ) {
+    this.id = id;
     this.name = name;
-    this.kilometers = kilometers;
+    this.distance = distance;
     this.description = description;
     this.segments = segments;
   }
@@ -43,6 +47,19 @@ export class Route {
   get endCoordinates(): Coordinate {
     const array = require('lodash/array');
     return array.last(this.segments)?.end;
+  }
+
+  /**
+   * Calculates the zoom level based on start and end difference.
+   * @returns {number}
+   */
+  get zoomLevel(): number {
+    const startDiff =
+      this.startCoordinates.longitude - this.startCoordinates.latitude;
+    const endDiff =
+      this.endCoordinates.longitude - this.endCoordinates.latitude;
+
+    return Math.abs(startDiff + endDiff / 2) / 5;
   }
 
   /**

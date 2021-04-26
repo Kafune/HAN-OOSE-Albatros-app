@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {Geometry, Position} from 'geojson';
+import {Geometry} from 'geojson';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsPoint} from '../core/maps/MapsPoints';
 import colors from '../styles/colors';
@@ -51,7 +51,7 @@ const Maps: React.FC<Props> = ({
             <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
           </MapboxGL.ShapeSource>
           {mapsPoint !== undefined &&
-            mapsPoint.map((point: Position) => (
+            mapsPoint.coordinates.map(point => (
               <MapboxGL.PointAnnotation
                 id={point.toString()}
                 coordinate={point}
