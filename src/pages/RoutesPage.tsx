@@ -2,44 +2,42 @@ import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text} from 'react-native';
 import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
-import {MapsLine} from '../core/maps/MapsLine';
-import {MapsPoint} from '../core/maps/MapsPoints';
 import {Route} from '../core/domain/Route';
 import {RouteMapper} from '../core/mapper/RouteMapper';
-import {RouteAPI} from '../api/RouteAPI';
+import {RouteController} from '../core/controller/RouteController';
 
-const RoutesPage: () => JSX.Element = (): JSX.Element => {
-  const routes = RouteAPI.getRoutes();
+const RoutesPage: React.FC = (): JSX.Element => {
+  const [routes, setRoutes] = useState<Route[] | undefined>();
+  const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
 
-  const highlightedRoute: Route = routes[0];
+  useEffect(() => {
+    const fetchRoutes: Function = async (): Promise<void> => {
+      const fetchedRoutes = await RouteController.index();
+      setRoutes(fetchedRoutes);
+      setHighlightedRoute(fetchedRoutes[0]);
+    };
 
-  const [geoJSON, setGeoJSON] = useState<MapsLine>(
-    RouteMapper.toMapsLine(highlightedRoute),
-  );
-
-  const [mapPoints, setMapPoints] = useState<MapsPoint>(
-    RouteMapper.toMapsPoint(highlightedRoute),
-  );
-
-  const [center, setCenter] = useState<number[]>(highlightedRoute.middlePoint);
+    fetchRoutes();
+  }, []);
 
   return (
     <ScrollView>
-      <Maps
-        mapsLine={geoJSON}
-        mapsPoint={mapPoints}
-        center={center}
-        zoom={13}
-      />
+      {highlightedRoute !== undefined && (
+        <Maps
+          mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
+          mapsPoint={RouteMapper.toMapsPoint(highlightedRoute)}
+          center={highlightedRoute.middlePoint}
+          zoom={highlightedRoute.zoomLevel}
+        />
+      )}
       <Text style={styles.routesTitle}>Kies een route</Text>
-      {routes.length > 0 &&
-        routes.map((route: Route) => (
+      {routes !== undefined &&
+        routes.map(route => (
           <RouteInformation
-            key={route.name}
+            isActive={route.id === highlightedRoute?.id}
+            key={route.id}
             route={route}
-            setGeoJSON={setGeoJSON}
-            setMapPoints={setMapPoints}
-            setCenter={setCenter}
+            setHighlightedRoute={setHighlightedRoute}
           />
         ))}
     </ScrollView>
