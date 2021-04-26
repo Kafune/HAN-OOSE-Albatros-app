@@ -7,7 +7,6 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import MapboxGL from '@react-native-mapbox-gl/maps';
 import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
@@ -16,15 +15,17 @@ import colors, {brittishPalette} from '../styles/colors';
 import {Opad} from './Opad';
 import {HandleOpad} from '../core/handlers/HandleOpad';
 
+import Maps from './Maps';
+import {MapsLine} from '../core/maps/MapsLine';
+import {MapsCoordinate} from '../core/maps/MapsCoordinate';
+import {MapsPoint} from '../core/maps/MapsPoints';
+
 interface Props {
   addCoordinate: Function;
   cancel: Function;
 }
 
 const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
-  MapboxGL.setAccessToken(
-    'sk.eyJ1Ijoibnh0dHgiLCJhIjoiY2tub283bDJuMHEzeTJ1bGFncXhhcDdtMCJ9.-sPoE4Vm2kF1K5PEqBnR9g',
-  );
   const [mapsPoint, setMapsPoint] = useState<Position>([5.6679899, 52.0430533]);
   const [zoom, setZoom] = useState<number>(17.5);
   const handleOpad = new HandleOpad(mapsPoint);
@@ -55,19 +56,14 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
     <ScrollView>
       <View style={styles.page}>
         <View style={styles.container}>
-          <MapboxGL.MapView style={styles.map} logoEnabled={false}>
-            <MapboxGL.Camera
-              zoomLevel={zoom}
-              pitch={0}
-              centerCoordinate={mapsPoint}
-            />
-
-            <MapboxGL.PointAnnotation
-              id={mapsPoint.toString()}
-              coordinate={mapsPoint}
-              key={mapsPoint.toString()}
-            />
-          </MapboxGL.MapView>
+          <Maps
+            mapsLine={new MapsLine([])}
+            mapsPoint={
+              new MapsPoint([new MapsCoordinate(mapsPoint[0], mapsPoint[1])])
+            }
+            zoom={zoom}
+            center={mapsPoint}
+          />
         </View>
 
         <View style={styles.boxes}>
@@ -118,12 +114,12 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
           </View>
           <View style={[{...styles.box}, {...styles.boxIs6}]}>
             <Slider
-              style={{width: '100%', height: 40}}
+              style={styles.slider}
               value={zoom}
               minimumValue={4}
               maximumValue={18}
-              minimumTrackTintColor={brittishPalette.gray}
-              maximumTrackTintColor={brittishPalette.gray}
+              minimumTrackTintColor={brittishPalette.darkgray}
+              maximumTrackTintColor={brittishPalette.darkgray}
               onValueChange={value => setZoom(value)}
             />
           </View>
@@ -174,6 +170,7 @@ const styles = StyleSheet.create({
     color: brittishPalette.white,
     fontWeight: 'bold',
   },
+  slider: {width: '100%', height: 40},
   boxes: {
     marginTop: 12,
     display: 'flex',
