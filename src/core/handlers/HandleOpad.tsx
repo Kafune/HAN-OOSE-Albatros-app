@@ -10,6 +10,11 @@ export class HandleOpad {
   mapsPoint: Position;
   exponent: number = 3;
 
+  /**
+   * Creates an instance of HandleOpad.
+   * @param {Position} mapsPoint
+   * @memberof HandleOpad
+   */
   constructor(mapsPoint: Position) {
     this.mapsPoint = mapsPoint;
   }
