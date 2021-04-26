@@ -1,14 +1,14 @@
 import GetLocation from 'react-native-get-location';
 
-const getLocation = () => {
+const getLocation: Function = () => {
   return GetLocation.getCurrentPosition({
     enableHighAccuracy: true,
     timeout: 15000,
   })
-    .then(location => {
+    .then((location: Object) => {
       return location;
     })
-    .catch(error => {
+    .catch((error: any) => {
       const {code, message} = error;
       console.warn(code, message);
     });
