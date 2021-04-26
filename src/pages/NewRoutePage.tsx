@@ -23,7 +23,8 @@ const NewRoutePage: FC = () => {
     const [currentPOIName, setCurrentPOIName] = useState("");
     const [currentPOIDescription, setCurrentPOIDescription] = useState("");
 
-    function addCoordinate(coordinate: Coordinate) {
+    function addCoordinate(coordinate) {
+        setMapPoints([...mapPoints, coordinate])
         setSelectCor(false);
     }
 
