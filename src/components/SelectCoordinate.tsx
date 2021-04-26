@@ -47,7 +47,6 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
     try {
       const location = await getLocation();
       console.log(location);
-      // @ts-ignore
       setMapsPoint([location.longitude, location.latitude]);
     } catch {}
   };
