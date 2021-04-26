@@ -1,22 +1,28 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
+import {View} from 'react-native';
 import {Coordinate} from '../core/domain/Coordinate';
-import SelectCordinate from '../components/SelectCordinate';
+import SelectCordinate from '../components/SelectCoordinate';
 
 const NewRoutesPage: FC = () => {
-  // const [selectCor, setSelectCor] = useState<boolean>(false);
+  const [selectCor, setSelectCor] = useState<boolean>(true);
 
-  function addCordinate(coordinate: Coordinate) {
+  function addCoordinate(coordinate: Coordinate) {
+    setSelectCor(false);
     console.log(coordinate);
   }
 
-  return (
-    <SelectCordinate
-      addCordinate={addCordinate}
-      cancel={() => {
-        console.log('cancel');
-      }}
-    />
-  );
+  if (selectCor) {
+    return (
+      <SelectCordinate
+        addCoordinate={addCoordinate}
+        cancel={() => {
+          setSelectCor(false);
+        }}
+      />
+    );
+  } else {
+    return <View />;
+  }
 };
 
 export default NewRoutesPage;

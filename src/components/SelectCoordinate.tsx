@@ -12,11 +12,12 @@ import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import getLocation from '../core/maps/GetLocation';
-import colors from '../styles/colors';
+import colors, {brittishPalette} from '../styles/colors';
 import {Opad} from './Opad';
+import {HandleOpad} from '../core/handlers/HandleOpad';
 
 interface Props {
-  addCordinate: Function;
+  addCoordinate: Function;
   cancel: Function;
 }
 
@@ -26,7 +27,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
   );
   const [mapsPoint, setMapsPoint] = useState<Position>([5.6679899, 52.0430533]);
   const [zoom, setZoom] = useState<number>(17.5);
-
+  const handleOpad = new HandleOpad(mapsPoint);
   const safe = (): void => {
     Alert.alert(
       'Wil je hier een punt opslaan?',
@@ -37,100 +38,17 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
           onPress: () => {},
           style: 'cancel',
         },
-        {text: 'Opslaan', onPress: () => props.addCordinate(mapsPoint)},
+        {text: 'Opslaan', onPress: () => props.addCoordinate(mapsPoint)},
       ],
     );
   };
 
-  const handleOpad = (button: String) => {
-    const phaseOne = {breakPoint: 16, amount: 0.25};
-    const PhaseTwo = {breakPoint: 12, amount: 0.7};
-    const phaseThree = {breakPoint: -1, amount: 1.5};
-
-    switch (button) {
-      case 'up':
-        if (zoom >= phaseOne.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] + phaseOne.amount / zoom ** 3,
-          ]);
-        } else if (zoom >= PhaseTwo.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] + PhaseTwo.amount / zoom ** 3,
-          ]);
-        } else {
-          console.log(1.5 / zoom ** 3);
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] + phaseThree.amount / zoom ** 3,
-          ]);
-        }
-        break;
-      case 'left':
-        if (zoom >= phaseOne.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0] - phaseOne.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        } else if (zoom >= PhaseTwo.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0] - PhaseTwo.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        } else {
-          setMapsPoint([
-            mapsPoint[0] - phaseThree.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        }
-        break;
-      case 'right':
-        if (zoom >= phaseOne.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0] + phaseOne.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        } else if (zoom >= PhaseTwo.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0] + PhaseTwo.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        } else {
-          setMapsPoint([
-            mapsPoint[0] + phaseThree.amount / zoom ** 3,
-            mapsPoint[1],
-          ]);
-        }
-        break;
-      case 'down':
-        if (zoom >= phaseOne.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] - phaseOne.amount / zoom ** 3,
-          ]);
-        } else if (zoom >= PhaseTwo.breakPoint) {
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] - PhaseTwo.amount / zoom ** 3,
-          ]);
-        } else {
-          setMapsPoint([
-            mapsPoint[0],
-            mapsPoint[1] - phaseThree.amount / zoom ** 3,
-          ]);
-        }
-        break;
-      default:
-        //nothing
-        break;
-    }
-  };
-
   const setCurrentGps = async () => {
-    const location = await getLocation();
-    console.log(location);
-    setMapsPoint([location.longitude, location.latitude]);
+    try {
+      const location = await getLocation();
+      console.log(location);
+      setMapsPoint([location.longitude, location.latitude]);
+    } catch {}
   };
 
   return (
@@ -172,7 +90,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               <MaterialCommunityIcons
                 name="map-marker"
                 size={30}
-                color={colors.main}
+                color={brittishPalette.white}
               />
 
               <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
@@ -182,18 +100,18 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
         </View>
 
         <Opad
-          onPressUp={() => handleOpad('up')}
-          onPressDown={() => handleOpad('down')}
+          onPressUp={() => setMapsPoint(handleOpad.handleUp(zoom))}
+          onPressDown={() => setMapsPoint(handleOpad.handleDown(zoom))}
           onPressMiddle={() => safe()}
-          onPressLeft={() => handleOpad('left')}
-          onPressRight={() => handleOpad('right')}
+          onPressLeft={() => setMapsPoint(handleOpad.handleLeft(zoom))}
+          onPressRight={() => setMapsPoint(handleOpad.handleRight(zoom))}
         />
 
         <View style={styles.boxes}>
           <View style={[{...styles.box}, {...styles.boxIs1}]} />
           <View style={[{...styles.box}, {...styles.boxIs1}]}>
             <MaterialCommunityIcons
-              name="magnify-minus-outline" //search-web //map-search-outline
+              name="map-search-outline"
               size={35}
               color={colors.main}
             />
@@ -204,14 +122,14 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               value={zoom}
               minimumValue={4}
               maximumValue={18}
-              minimumTrackTintColor="#000000" //{colors.secondary}
-              maximumTrackTintColor="#000000" //{colors.secondary} //
+              minimumTrackTintColor={brittishPalette.gray}
+              maximumTrackTintColor={brittishPalette.gray}
               onValueChange={value => setZoom(value)}
             />
           </View>
           <View style={[{...styles.box}, {...styles.boxIs2}]}>
             <MaterialCommunityIcons
-              name="magnify-plus-outline" //home-search
+              name="home-search"
               size={35}
               color={colors.main}
             />
@@ -238,7 +156,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.main,
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
@@ -253,7 +171,7 @@ const styles = StyleSheet.create({
   buttonText: {
     paddingTop: 2,
     fontSize: 18,
-    color: colors.main,
+    color: brittishPalette.white,
     fontWeight: 'bold',
   },
   boxes: {
