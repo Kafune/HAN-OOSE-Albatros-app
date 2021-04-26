@@ -54,4 +54,3 @@ describe('Route tests', () => {
     expect(end.altitude).toBe(6);
   });
 });
-A
