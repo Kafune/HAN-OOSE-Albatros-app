@@ -115,7 +115,7 @@ const NewRoutePage: FC = () => {
                       </View>
                     </View>
                     <View>
-                      <Text>Lengtergaad: {mapPoint[0]}</Text>
+                      <Text>Lengtegaad: {mapPoint[0]}</Text>
                       <Text>Breedtegraad: {mapPoint[1]}</Text>
                     </View>
                     {!POIArray.find(POI => POI[0] === index + 1) && (
