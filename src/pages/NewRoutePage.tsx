@@ -78,143 +78,143 @@ const NewRoutePage: FC = () => {
         }}
       />
     );
-  } else {
-    return (
-      <ScrollView>
-        <View>
-          <Maps
-            mapsLine={new MapsLine(mapCoordinateMapper())}
-            mapsPoint={new MapsPoint(mapCoordinateMapper())}
-            center={centerPoint}
-            zoom={13}
-          />
-        </View>
-        <View style={styles.wrapper}>
-          {mapPoints.length > 0 && (
-            <Text style={styles.title}>Segmenten in routes</Text>
-          )}
-          {mapPoints.map((mapPoint, index) => {
-            return (
-              <Fragment key={JSON.stringify(mapPoint)}>
-                <TouchableOpacity
-                  style={styles.segment}
-                  onPress={() => {
-                    setCenterPoint([mapPoint[0], mapPoint[1]]);
-                  }}>
-                  <View style={styles.cardInner}>
-                    <View style={styles.heading}>
-                      <MaterialCommunityIcons
-                        name="map-marker"
-                        size={30}
-                        color={colors.red}
-                      />
-                      <View>
-                        <Text style={styles.segmentTitle}>
-                          Segment {index + 1}
-                        </Text>
-                      </View>
-                    </View>
+  }
+
+  return (
+    <ScrollView>
+      <View>
+        <Maps
+          mapsLine={new MapsLine(mapCoordinateMapper())}
+          mapsPoint={new MapsPoint(mapCoordinateMapper())}
+          center={centerPoint}
+          zoom={13}
+        />
+      </View>
+      <View style={styles.wrapper}>
+        {mapPoints.length > 0 && (
+          <Text style={styles.title}>Segmenten in routes</Text>
+        )}
+        {mapPoints.map((mapPoint, index) => {
+          return (
+            <Fragment key={JSON.stringify(mapPoint)}>
+              <TouchableOpacity
+                style={styles.segment}
+                onPress={() => {
+                  setCenterPoint([mapPoint[0], mapPoint[1]]);
+                }}>
+                <View style={styles.cardInner}>
+                  <View style={styles.heading}>
+                    <MaterialCommunityIcons
+                      name="map-marker"
+                      size={30}
+                      color={colors.red}
+                    />
                     <View>
-                      <Text>Lengtegaad: {mapPoint[0]}</Text>
-                      <Text>Breedtegraad: {mapPoint[1]}</Text>
-                    </View>
-                    {!POIArray.find(POI => POI[0] === index + 1) && (
-                      <TouchableOpacity
-                        style={styles.poiButton}
-                        onPress={() => showPOIDialog(mapPoint)}>
-                        <Text style={styles.poiButtonText}>
-                          Bezienswaardigheid toevoegen
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                    <View style={styles.segmentButton}>
-                      <MaterialCommunityIcons
-                        name="close-circle-outline"
-                        size={24}
-                        color={colors.red}
-                        onPress={() => {}}
-                      />
+                      <Text style={styles.segmentTitle}>
+                        Segment {index + 1}
+                      </Text>
                     </View>
                   </View>
-                  {POIArray.map(POI => {
-                    if (POI[0] === index + 1) {
-                      return (
-                        <View style={styles.poi}>
-                          <View key={JSON.stringify(POI[0])}>
-                            <View>
-                              <View style={styles.poiData}>
-                                <MaterialCommunityIcons
-                                  name="information"
-                                  size={30}
-                                  color={colors.darkgray}
-                                />
-                                <Text style={styles.poiHeading}>{POI[1]}</Text>
-                              </View>
-                              <Text style={styles.poiDescription}>
-                                {POI[2]}
-                              </Text>
-                              <View
-                                style={[styles.poiIcons, styles.poiButtons]}>
-                                <MaterialCommunityIcons
-                                  name="square-edit-outline"
-                                  size={24}
-                                  color={colors.primary}
-                                  onPress={() => {}}
-                                />
-                                <MaterialCommunityIcons
-                                  name="close-circle-outline"
-                                  size={24}
-                                  color={colors.red}
-                                  onPress={() => {}}
-                                />
-                              </View>
+                  <View>
+                    <Text>Lengtegaad: {mapPoint[0]}</Text>
+                    <Text>Breedtegraad: {mapPoint[1]}</Text>
+                  </View>
+                  {!POIArray.find(POI => POI[0] === index + 1) && (
+                    <TouchableOpacity
+                      style={styles.poiButton}
+                      onPress={() => showPOIDialog(mapPoint)}>
+                      <Text style={styles.poiButtonText}>
+                        Bezienswaardigheid toevoegen
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  <View style={styles.segmentButton}>
+                    <MaterialCommunityIcons
+                      name="close-circle-outline"
+                      size={24}
+                      color={colors.red}
+                      onPress={() => {}}
+                    />
+                  </View>
+                </View>
+                {POIArray.map(POI => {
+                  if (POI[0] === index + 1) {
+                    return (
+                      <View style={styles.poi}>
+                        <View key={JSON.stringify(POI[0])}>
+                          <View>
+                            <View style={styles.poiData}>
+                              <MaterialCommunityIcons
+                                name="information"
+                                size={30}
+                                color={colors.darkgray}
+                              />
+                              <Text style={styles.poiHeading}>{POI[1]}</Text>
+                            </View>
+                            <Text style={styles.poiDescription}>
+                              {POI[2]}
+                            </Text>
+                            <View
+                              style={[styles.poiIcons, styles.poiButtons]}>
+                              <MaterialCommunityIcons
+                                name="square-edit-outline"
+                                size={24}
+                                color={colors.primary}
+                                onPress={() => {}}
+                              />
+                              <MaterialCommunityIcons
+                                name="close-circle-outline"
+                                size={24}
+                                color={colors.red}
+                                onPress={() => {}}
+                              />
                             </View>
                           </View>
                         </View>
-                      );
-                    }
-                  })}
-                </TouchableOpacity>
-              </Fragment>
-            );
-          })}
-        </View>
+                      </View>
+                    );
+                  }
+                })}
+              </TouchableOpacity>
+            </Fragment>
+          );
+        })}
+      </View>
 
-        <View>
-          <Dialog.Container visible={POIDialog}>
-            <Dialog.Title>Set a new POI</Dialog.Title>
-            <Dialog.Input
-              label="Name"
-              onChangeText={name => setCurrentPOIName(name)}
-            />
-            <Dialog.Input
-              label="Description"
-              onChangeText={description =>
-                setCurrentPOIDescription(description)
-              }
-            />
-            <Dialog.Button label="Cancel" onPress={() => handleCancel()} />
-            <Dialog.Button
-              label="Create"
-              onPress={() =>
-                handleCreatePOI(currentPOIName, currentPOIDescription)
-              }
-            />
-          </Dialog.Container>
-        </View>
-
-        <View style={styles.button}>
-          <Button
-            title="Een punt toevoegen"
-            onPress={() => setSelectCor(true)}
+      <View>
+        <Dialog.Container visible={POIDialog}>
+          <Dialog.Title>Set a new POI</Dialog.Title>
+          <Dialog.Input
+            label="Name"
+            onChangeText={name => setCurrentPOIName(name)}
           />
-        </View>
-        <View style={styles.button}>
-          <Button title="Route opslaan" onPress={() => saveNewRoute()} />
-        </View>
-      </ScrollView>
-    );
-  }
+          <Dialog.Input
+            label="Description"
+            onChangeText={description =>
+              setCurrentPOIDescription(description)
+            }
+          />
+          <Dialog.Button label="Cancel" onPress={() => handleCancel()} />
+          <Dialog.Button
+            label="Create"
+            onPress={() =>
+              handleCreatePOI(currentPOIName, currentPOIDescription)
+            }
+          />
+        </Dialog.Container>
+      </View>
+
+      <View style={styles.button}>
+        <Button
+          title="Een punt toevoegen"
+          onPress={() => setSelectCor(true)}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button title="Route opslaan" onPress={() => saveNewRoute()} />
+      </View>
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({
