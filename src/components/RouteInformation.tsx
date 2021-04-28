@@ -36,7 +36,7 @@ const RouteInformation: React.FC<Props> = ({
         <MaterialCommunityIcons
           name="chevron-right"
           size={30}
-          color={colors.main}
+          color={colors.primary}
         />
       </View>
     </TouchableOpacity>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
   },
   active: {
-    borderColor: colors.main,
+    borderColor: colors.primary,
   },
   inactive: {
     borderColor: '#f0f0f1',

@@ -25,7 +25,7 @@ const Maps: React.FC<Props> = ({
 
   const layerStyles = {
     LineStyle: {
-      lineColor: colors.main,
+      lineColor: colors.primary,
       // @ts-ignore We can't modify the inner code of MapboxGL.
       lineCap: MapboxGL.LineJoin.Round,
       lineWidth: 3,

@@ -11,7 +11,7 @@ import {Position} from 'geojson';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Slider from '@react-native-community/slider';
 import getLocation from '../core/maps/GetLocation';
-import colors, {brittishPalette} from '../styles/colors';
+import colors from '../styles/colors';
 import {Opad} from './Opad';
 import {HandleOpad} from '../core/handlers/HandleOpad';
 import Maps from './Maps';
@@ -70,22 +70,21 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
             <MaterialCommunityIcons
               name="arrow-left"
               size={30}
-              color={colors.main}
+              color={colors.primary}
               onPress={() => {
                 props.cancel();
               }}
             />
           </View>
 
-          <View
-            style={[styles.boxIs8, styles.button]}>
+          <View style={[styles.boxIs8, styles.button]}>
             <Pressable
               onPress={() => setCurrentGps()}
               style={styles.buttonInner}>
               <MaterialCommunityIcons
                 name="map-marker"
                 size={30}
-                color={brittishPalette.white}
+                color={colors.white}
               />
 
               <Text style={styles.buttonText}>Neem huidige locatie over.</Text>
@@ -108,7 +107,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
             <MaterialCommunityIcons
               name="map-search-outline"
               size={35}
-              color={colors.main}
+              color={colors.primary}
             />
           </View>
           <View style={styles.boxIs6}>
@@ -117,8 +116,8 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
               value={zoom}
               minimumValue={4}
               maximumValue={18}
-              minimumTrackTintColor={brittishPalette.darkgray}
-              maximumTrackTintColor={brittishPalette.darkgray}
+              minimumTrackTintColor={colors.darkgray}
+              maximumTrackTintColor={colors.darkgray}
               onValueChange={(value: number) => setZoom(value)}
             />
           </View>
@@ -126,7 +125,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
             <MaterialCommunityIcons
               name="home-search"
               size={35}
-              color={colors.main}
+              color={colors.primary}
             />
           </View>
         </View>
@@ -151,7 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    backgroundColor: colors.main,
+    backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
   buttonText: {
     paddingTop: 2,
     fontSize: 18,
-    color: brittishPalette.white,
+    color: colors.white,
     fontWeight: 'bold',
   },
   slider: {width: '100%', height: 40},

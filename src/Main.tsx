@@ -17,7 +17,7 @@ const Main: React.FC = () => {
         <Tab.Navigator
           initialRouteName="viewMaps"
           tabBarOptions={{
-            activeTintColor: colors.main,
+            activeTintColor: colors.primary,
             safeAreaInsets: {bottom: 5},
           }}>
           <Tab.Screen
