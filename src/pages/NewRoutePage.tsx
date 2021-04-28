@@ -119,13 +119,13 @@ const NewRoutePage: FC = () => {
                       <Text>Breedtegraad: {mapPoint[1]}</Text>
                     </View>
                     {!POIArray.find(POI => POI[0] === index + 1) && (
-                      <Pressable
-                        style={styles.POIButton}
+                      <TouchableOpacity
+                        style={styles.poiButton}
                         onPress={() => showPOIDialog(mapPoint)}>
-                        <View>
-                          <Text>Add POI</Text>
-                        </View>
-                      </Pressable>
+                        <Text style={styles.poiButtonText}>
+                          Bezienswaardigheid toevoegen
+                        </Text>
+                      </TouchableOpacity>
                     )}
                     <View style={styles.segmentButton}>
                       <MaterialCommunityIcons
@@ -153,7 +153,8 @@ const NewRoutePage: FC = () => {
                               <Text style={styles.poiDescription}>
                                 {POI[2]}
                               </Text>
-                              <View style={[styles.poiIcons, styles.poiButton]}>
+                              <View
+                                style={[styles.poiIcons, styles.poiButtons]}>
                                 <MaterialCommunityIcons
                                   name="square-edit-outline"
                                   size={24}
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     right: 10,
     top: 10,
   },
-  poiButton: {
+  poiButtons: {
     position: 'absolute',
     right: 0,
     top: 0,
@@ -287,8 +288,15 @@ const styles = StyleSheet.create({
   poiIcons: {
     flexDirection: 'row',
   },
-  POIButton: {
+  poiButton: {
     backgroundColor: colors.primary,
+    padding: 10,
+    marginTop: 10,
+  },
+  poiButtonText: {
+    textAlign: 'center',
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
 });
 
