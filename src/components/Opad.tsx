@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {brittishPalette} from '../styles/colors';
+import colors from '../styles/colors';
 
 type Props = {
   onPressUp: Function;
@@ -21,7 +21,7 @@ export const Opad: FunctionComponent<Props> = props => {
         <MaterialCommunityIcons
           name="arrow-up"
           size={size}
-          color={colors.buttonColor}
+          color={colors.gray}
         />
       </Pressable>
       <View style={styles.box} />
@@ -33,18 +33,14 @@ export const Opad: FunctionComponent<Props> = props => {
         <MaterialCommunityIcons
           name="arrow-left"
           size={size}
-          color={colors.buttonColor}
+          color={colors.gray}
         />
       </Pressable>
       <Pressable
         key={'OpadMiddle'}
         onPress={() => props.onPressMiddle()}
         style={styles.box}>
-        <MaterialCommunityIcons
-          name="floppy"
-          size={50}
-          color={colors.buttonColor}
-        />
+        <MaterialCommunityIcons name="floppy" size={50} color={colors.gray} />
       </Pressable>
       <Pressable
         key={'OpadRight'}
@@ -53,7 +49,7 @@ export const Opad: FunctionComponent<Props> = props => {
         <MaterialCommunityIcons
           name="arrow-right"
           size={size}
-          color={colors.buttonColor}
+          color={colors.gray}
         />
       </Pressable>
       <View style={styles.box} />
@@ -64,16 +60,12 @@ export const Opad: FunctionComponent<Props> = props => {
         <MaterialCommunityIcons
           name="arrow-down"
           size={size}
-          color={colors.buttonColor}
+          color={colors.gray}
         />
       </Pressable>
       <View style={styles.box} />
     </View>
   );
-};
-const colors = {
-  buttonColor: brittishPalette.gray,
-  background: brittishPalette.darkgray,
 };
 const styles = StyleSheet.create({
   container: {
@@ -81,7 +73,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    backgroundColor: colors.background,
+    backgroundColor: colors.darkgray,
     borderRadius: 100,
   },
   box: {

@@ -6,6 +6,7 @@ import {
   Text,
   ScrollView,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import Maps from '../components/Maps';
 import SelectCoordinate from '../components/SelectCoordinate';
@@ -88,81 +89,95 @@ const NewRoutePage: FC = () => {
             zoom={13}
           />
         </View>
-        {mapPoints.map((mapPoint, index) => {
-          return (
-            <Fragment key={JSON.stringify(mapPoint)}>
-              <Pressable
-                style={styles.wrapper}
-                onPress={() => {
-                  setCenterPoint([mapPoint[0], mapPoint[1]]);
-                }}>
-                <MaterialCommunityIcons
-                  name="map-marker"
-                  size={30}
-                  color={colors.main}
-                />
-                <View style={styles.segmentData}>
-                  <Text>
-                    Latitude: {mapPoint[1]}
-                    {'\n'}
-                  </Text>
-                  <Text>
-                    Longtitude: {mapPoint[0]}
-                    {'\n'}
-                  </Text>
-                </View>
-                {!POIArray.find(POI => {
-                  return POI[0] === index + 1;
-                }) && (
-                  <Pressable
-                    style={styles.POIButton}
-                    onPress={() => showPOIDialog(mapPoint)}>
-                    <View>
-                      <Text>Add POI</Text>
-                    </View>
-                  </Pressable>
-                )}
-                <View style={styles.button}>
-                  <MaterialCommunityIcons
-                    name="close-outline"
-                    size={30}
-                    color={colors.main}
-                    onPress={() => {}}
-                  />
-                </View>
-              </Pressable>
-              {POIArray.map(POI => {
-                if (POI[0] === index + 1) {
-                  return (
-                    <View
-                      key={JSON.stringify(POI[0])}
-                      style={[styles.wrapper, styles.POIWrapper]}>
-                      <View style={styles.segmentData}>
-                        <Text>POI nr: {POI[0]}</Text>
-                        <Text>POI name: {POI[1]}</Text>
-                        <Text>POI Description: {POI[2]}</Text>
-                        <View style={styles.POI_Icons}>
-                          <MaterialCommunityIcons
-                            name="pencil"
-                            size={30}
-                            color={colors.main}
-                            onPress={() => {}}
-                          />
-                          <MaterialCommunityIcons
-                            name="close-outline"
-                            size={30}
-                            color={colors.main}
-                            onPress={() => {}}
-                          />
-                        </View>
+        <View style={styles.wrapper}>
+          {mapPoints.length && (
+            <Text style={styles.title}>Segmenten in routes</Text>
+          )}
+          {mapPoints.map((mapPoint, index) => {
+            return (
+              <Fragment key={JSON.stringify(mapPoint)}>
+                <TouchableOpacity
+                  style={styles.segment}
+                  onPress={() => {
+                    setCenterPoint([mapPoint[0], mapPoint[1]]);
+                  }}>
+                  <View style={styles.cardInner}>
+                    <View style={styles.heading}>
+                      <MaterialCommunityIcons
+                        name="map-marker"
+                        size={30}
+                        color={colors.red}
+                      />
+                      <View>
+                        <Text style={styles.segmentTitle}>
+                          Segment {index + 1}
+                        </Text>
                       </View>
                     </View>
-                  );
-                }
-              })}
-            </Fragment>
-          );
-        })}
+                    <View>
+                      <Text>Lengtergaad: {mapPoint[0]}</Text>
+                      <Text>Breedtegraad: {mapPoint[1]}</Text>
+                    </View>
+                    {!POIArray.find(POI => POI[0] === index + 1) && (
+                      <Pressable
+                        style={styles.POIButton}
+                        onPress={() => showPOIDialog(mapPoint)}>
+                        <View>
+                          <Text>Add POI</Text>
+                        </View>
+                      </Pressable>
+                    )}
+                    <View style={styles.segmentButton}>
+                      <MaterialCommunityIcons
+                        name="close-circle-outline"
+                        size={24}
+                        color={colors.red}
+                        onPress={() => {}}
+                      />
+                    </View>
+                  </View>
+                  {POIArray.map(POI => {
+                    if (POI[0] === index + 1) {
+                      return (
+                        <View style={styles.poi}>
+                          <View key={JSON.stringify(POI[0])}>
+                            <View>
+                              <View style={styles.poiData}>
+                                <MaterialCommunityIcons
+                                  name="information"
+                                  size={30}
+                                  color={colors.darkgray}
+                                />
+                                <Text style={styles.poiHeading}>{POI[1]}</Text>
+                              </View>
+                              <Text style={styles.poiDescription}>
+                                {POI[2]}
+                              </Text>
+                              <View style={[styles.poiIcons, styles.poiButton]}>
+                                <MaterialCommunityIcons
+                                  name="square-edit-outline"
+                                  size={24}
+                                  color={colors.primary}
+                                  onPress={() => {}}
+                                />
+                                <MaterialCommunityIcons
+                                  name="close-circle-outline"
+                                  size={24}
+                                  color={colors.red}
+                                  onPress={() => {}}
+                                />
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      );
+                    }
+                  })}
+                </TouchableOpacity>
+              </Fragment>
+            );
+          })}
+        </View>
 
         <View>
           <Dialog.Container visible={POIDialog}>
@@ -209,41 +224,78 @@ const NewRoutePage: FC = () => {
 };
 
 const styles = StyleSheet.create({
+  title: {
+    textAlign: 'center',
+    marginVertical: 18,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  wrapper: {
+    paddingHorizontal: 10,
+  },
+  segmentButton: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+  },
+  poiButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+  },
   button: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 25,
   },
-  wrapper: {
+  poi: {
+    position: 'relative',
+    paddingTop: 10,
+    paddingHorizontal: 10,
+    borderTopColor: colors.gray,
+    borderTopWidth: 1,
+  },
+  poiData: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 10,
-    padding: 5,
-    overflow: 'hidden',
-    borderRadius: 6,
-  },
-  POIWrapper: {
+    alignItems: 'center',
     marginBottom: 10,
   },
-  segmentNumber: {
-    borderWidth: 1,
-    borderRadius: 100,
-    width: 20,
-    height: 20,
-    marginRight: 10,
-    paddingLeft: 5,
+  poiDescription: {
+    margin: 0,
   },
-  segmentData: {
-    flex: 3,
+  poiHeading: {
+    fontWeight: '700',
+    fontSize: 18,
+    marginLeft: 5,
+  },
+  segment: {
+    display: 'flex',
     flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
+    marginBottom: 20,
+    paddingBottom: 10,
+    borderRadius: 6,
   },
-  POI_Icons: {
+  cardInner: {
+    padding: 10,
+  },
+  heading: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  segmentTitle: {
+    fontWeight: '700',
+    fontSize: 18,
+    marginLeft: 5,
+  },
+  poiIcons: {
     flexDirection: 'row',
   },
   POIButton: {
-    backgroundColor: colors.main,
+    backgroundColor: colors.primary,
   },
 });
 
