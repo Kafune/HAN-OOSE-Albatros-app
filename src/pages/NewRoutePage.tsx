@@ -17,22 +17,10 @@ import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
 
 const NewRoutePage: FC = () => {
-
   const [selectCor, setSelectCor] = useState<boolean>(false);
   const [centerPoint, setCenterPoint] = useState([5.6679899, 52.0430533]);
-  const [mapPoints, setMapPoints] = useState([
-    [5.6679899, 52.0430533],
-    [5.664037711124264, 52.04006754102576],
-    [5.668078, 51.042665],
-  ]);
-  const [POIArray, setPOIArray] = useState([
-    [
-      1,
-      'Kerk',
-      'Een mooie middeleeuwse kerk. Dit is een lange beschrijving van een point of interest.',
-    ],
-    [2, 'TestPOI', 'Dit is een test POI'],
-  ]);
+  const [mapPoints, setMapPoints] = useState<number[][]>([]);
+  const [POIArray, setPOIArray] = useState<(number | string)[][]>([]);
   const [POIDialog, setPOIDialog] = useState(false);
   const [currentMapPoint, setCurrentMapPoint] = useState<number[]>([]);
   const [currentPOIName, setCurrentPOIName] = useState<string>('');
@@ -123,10 +111,8 @@ const NewRoutePage: FC = () => {
                     {'\n'}
                   </Text>
                 </View>
-                {!POIArray.filter(POI => {
-                  console.log(POI);
-                  console.log(index);
-                  return POI[0] === index;
+                {!POIArray.find(POI => {
+                  return POI[0] === index + 1;
                 }) && (
                   <Pressable
                     style={styles.POIButton}
