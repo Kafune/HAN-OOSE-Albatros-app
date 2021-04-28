@@ -90,7 +90,7 @@ const NewRoutePage: FC = () => {
           />
         </View>
         <View style={styles.wrapper}>
-          {mapPoints.length && (
+          {mapPoints.length > 0 && (
             <Text style={styles.title}>Segmenten in routes</Text>
           )}
           {mapPoints.map((mapPoint, index) => {
@@ -205,18 +205,11 @@ const NewRoutePage: FC = () => {
         <View style={styles.button}>
           <Button
             title="Een punt toevoegen"
-            onPress={() => {
-              setSelectCor(true);
-            }}
+            onPress={() => setSelectCor(true)}
           />
         </View>
         <View style={styles.button}>
-          <Button
-            title="Route opslaan"
-            onPress={() => {
-              saveNewRoute();
-            }}
-          />
+          <Button title="Route opslaan" onPress={() => saveNewRoute()} />
         </View>
       </ScrollView>
     );
