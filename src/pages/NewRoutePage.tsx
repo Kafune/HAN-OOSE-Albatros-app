@@ -17,7 +17,8 @@ const NewRoutePage: FC = () => {
     const [selectCor, setSelectCor] = useState<boolean>(false);
     const [centerPoint, setCenterPoint] = useState([5.6679899, 52.0430533]);
     const [mapPoints, setMapPoints] = useState([[5.6679899, 52.0430533], [5.664037711124264, 52.04006754102576]]);
-    const [POIArray, setPOIArray] = useState([[1, "Kerk", "Een mooie middeleeuwse kerk. Dit is een lange beschrijving van een point of interest."]]);
+    const [POIArray, setPOIArray] = useState([[1, "Kerk", "Een mooie middeleeuwse kerk. Dit is een lange beschrijving van een point of interest."],
+                                              [2, "TestPOI", "Dit is een test POI"]]);
     const [POIDialog, setPOIDialog] = useState(false);
     const [currentMapPoint, setCurrentMapPoint] = useState([]);
     const [currentPOIName, setCurrentPOIName] = useState("");
@@ -51,6 +52,10 @@ const NewRoutePage: FC = () => {
         setCurrentPOIName("");
         setCurrentPOIDescription("");
         setPOIDialog(false);
+    }
+
+    const saveNewRoute = () => {
+
     }
 
 
@@ -95,11 +100,17 @@ const NewRoutePage: FC = () => {
                             <Text>Latitude: {mapPoint[1]}{"\n"}</Text>
                             <Text>Longtitude: {mapPoint[0]}{"\n"}</Text>
                         </View>
-                        <Pressable style={styles.POIButton} onPress={() => showPOIDialog(mapPoint)}>
-                            <View>
-                                <Text>Add POI</Text>
-                            </View>
-                        </Pressable>
+                        {!POIArray.filter(POI => {
+                            console.log(POI)
+                            console.log(index)
+                            return POI[0] == index;
+                        }) &&
+                            <Pressable style={styles.POIButton} onPress={() => showPOIDialog(mapPoint)}>
+                                <View>
+                                    <Text>Add POI</Text>
+                                </View>
+                            </Pressable>
+                        }
                         <View style={styles.button}>
                             <MaterialCommunityIcons
                                 name="close-outline"
@@ -157,7 +168,7 @@ const NewRoutePage: FC = () => {
                 <Button title="Een punt toevoegen" onPress={() => { setSelectCor(true) }} />
             </View>
             <View style={styles.button}>
-                <Button title="Route opslaan" onPress={() => { }} />
+                <Button title="Route opslaan" onPress={() => { saveNewRoute() }} />
             </View>
         </ScrollView>
     }
