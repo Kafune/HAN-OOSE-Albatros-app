@@ -151,11 +151,8 @@ const NewRoutePage: FC = () => {
                               />
                               <Text style={styles.poiHeading}>{POI[1]}</Text>
                             </View>
-                            <Text style={styles.poiDescription}>
-                              {POI[2]}
-                            </Text>
-                            <View
-                              style={[styles.poiIcons, styles.poiButtons]}>
+                            <Text style={styles.poiDescription}>{POI[2]}</Text>
+                            <View style={[styles.poiIcons, styles.poiButtons]}>
                               <MaterialCommunityIcons
                                 name="square-edit-outline"
                                 size={24}
@@ -183,20 +180,20 @@ const NewRoutePage: FC = () => {
 
       <View>
         <Dialog.Container visible={POIDialog}>
-          <Dialog.Title>Set a new POI</Dialog.Title>
+          <Dialog.Title>
+            Nieuwe bezienswaardigheid op segment toevoegen
+          </Dialog.Title>
           <Dialog.Input
-            label="Name"
+            label="Naam"
             onChangeText={name => setCurrentPOIName(name)}
           />
           <Dialog.Input
-            label="Description"
-            onChangeText={description =>
-              setCurrentPOIDescription(description)
-            }
+            label="Beschrijving"
+            onChangeText={description => setCurrentPOIDescription(description)}
           />
-          <Dialog.Button label="Cancel" onPress={() => handleCancel()} />
+          <Dialog.Button label="Annuleren" onPress={() => handleCancel()} />
           <Dialog.Button
-            label="Create"
+            label="Aanmaken"
             onPress={() =>
               handleCreatePOI(currentPOIName, currentPOIDescription)
             }
@@ -205,10 +202,7 @@ const NewRoutePage: FC = () => {
       </View>
 
       <View style={styles.button}>
-        <Button
-          title="Een punt toevoegen"
-          onPress={() => setSelectCor(true)}
-        />
+        <Button title="Een punt toevoegen" onPress={() => setSelectCor(true)} />
       </View>
       <View style={styles.button}>
         <Button title="Route opslaan" onPress={() => saveNewRoute()} />
