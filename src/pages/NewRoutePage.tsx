@@ -180,9 +180,7 @@ const NewRoutePage: FC = () => {
 
       <View>
         <Dialog.Container visible={POIDialog}>
-          <Dialog.Title>
-            Nieuwe bezienswaardigheid op segment toevoegen
-          </Dialog.Title>
+          <Dialog.Title>Nieuwe bezienswaardigheid toevoegen</Dialog.Title>
           <Dialog.Input
             label="Naam"
             onChangeText={name => setCurrentPOIName(name)}
@@ -193,7 +191,7 @@ const NewRoutePage: FC = () => {
           />
           <Dialog.Button label="Annuleren" onPress={() => handleCancel()} />
           <Dialog.Button
-            label="Aanmaken"
+            label="Toevoegen"
             onPress={() =>
               handleCreatePOI(currentPOIName, currentPOIDescription)
             }
