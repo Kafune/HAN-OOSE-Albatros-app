@@ -5,19 +5,21 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  Pressable,
   TouchableOpacity,
 } from 'react-native';
 import Maps from '../components/Maps';
 import SelectCoordinate from '../components/SelectCoordinate';
-import {MapsLine} from '../core/maps/MapsLine';
-import {MapsCoordinate} from '../core/maps/MapsCoordinate';
-import {MapsPoint} from '../core/maps/MapsPoints';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
+import {PointOfInterest} from '../core/domain/PointOfInterest';
+import {Route} from '../core/domain/Route';
+import {RouteMapper} from '../core/mapper/RouteMapper';
 
 const NewRoutePage: FC = () => {
+  // New
+  const [newRoute, setNewRoute] = useState<Route>(new Route(0, '', 0, '', []));
+
   const [selectCor, setSelectCor] = useState<boolean>(false);
   const [centerPoint, setCenterPoint] = useState([5.6679899, 52.0430533]);
   const [mapPoints, setMapPoints] = useState<number[][]>([]);
@@ -29,15 +31,26 @@ const NewRoutePage: FC = () => {
     '',
   );
 
-  function addCoordinate(coordinate: number[]) {
-    setMapPoints([...mapPoints, coordinate]);
-    setSelectCor(false);
-  }
+  // New
+  const addPoint: Function = (coordinates: number[]): void => {
+    const route = newRoute;
+    route?.addSegment({
+      latitude: coordinates[0],
+      longitude: coordinates[1],
+      altitude: 0,
+    });
 
-  const mapCoordinateMapper = () => {
-    return mapPoints.map(
-      mapPoint => new MapsCoordinate(mapPoint[0], mapPoint[1]),
-    );
+    setNewRoute(route);
+  };
+
+  // New
+  const addPOI: Function = (POI: PointOfInterest, segmentId: number): void => {
+    const route = newRoute;
+    route.segments.map(segment => {
+      if (segment.id === segmentId) {
+        segment.poi = POI;
+      }
+    });
   };
 
   const showPOIDialog = (mapPoint: number[]) => {
@@ -50,15 +63,15 @@ const NewRoutePage: FC = () => {
     setPOIDialog(false);
   };
 
-  const handleCreatePOI = (name: string, description: string) => {
+  const handleCreatePOI = (POI: PointOfInterest) => {
     //TODO: zorg ervoor dat de POI in de correcte segment komt.
     setPOIArray([
-      ...POIArray,
+      ...RPOIArray,
       [
         mapPoints.findIndex(currentPoint => currentPoint === currentMapPoint) +
           1,
-        name,
-        description,
+        POI.name,
+        POI.description,
       ],
     ]);
     setCurrentMapPoint([]);
@@ -72,10 +85,8 @@ const NewRoutePage: FC = () => {
   if (selectCor) {
     return (
       <SelectCoordinate
-        addCoordinate={addCoordinate}
-        cancel={() => {
-          setSelectCor(false);
-        }}
+        addCoordinate={addPoint}
+        cancel={() => setSelectCor(false)}
       />
     );
   }
@@ -84,8 +95,8 @@ const NewRoutePage: FC = () => {
     <ScrollView>
       <View>
         <Maps
-          mapsLine={new MapsLine(mapCoordinateMapper())}
-          mapsPoint={new MapsPoint(mapCoordinateMapper())}
+          mapsLine={RouteMapper.toMapsLine(newRoute) || null}
+          mapsPoint={RouteMapper.toMapsPoint(newRoute) || null}
           center={centerPoint}
           zoom={13}
         />
@@ -138,8 +149,8 @@ const NewRoutePage: FC = () => {
                   </View>
                 </View>
                 {POIArray.map(POI => {
-                  if (POI[0] === index + 1) {
-                    return (
+                  return (
+                    POI[0] === index + 1 && (
                       <View style={styles.poi}>
                         <View key={JSON.stringify(POI[0])}>
                           <View>
@@ -169,8 +180,8 @@ const NewRoutePage: FC = () => {
                           </View>
                         </View>
                       </View>
-                    );
-                  }
+                    )
+                  );
                 })}
               </TouchableOpacity>
             </Fragment>
@@ -193,7 +204,10 @@ const NewRoutePage: FC = () => {
           <Dialog.Button
             label="Toevoegen"
             onPress={() =>
-              handleCreatePOI(currentPOIName, currentPOIDescription)
+              handleCreatePOI({
+                name: currentPOIName,
+                description: currentPOIDescription,
+              })
             }
           />
         </Dialog.Container>

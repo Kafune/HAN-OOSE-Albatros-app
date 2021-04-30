@@ -10,7 +10,11 @@ export class RouteMapper {
    * @param {Route} route
    * @returns {MapsLine}
    */
-  static toMapsLine(route: Route): MapsLine {
+  static toMapsLine(route: Route): MapsLine | void {
+    if (route.segments.length <= 1) {
+      return;
+    }
+
     const startPoints = route.segments.map(segment => {
       return new MapsCoordinate(
         segment.start.longitude,
@@ -31,7 +35,11 @@ export class RouteMapper {
    * @param {Route} route
    * @returns {MapsPoint}
    */
-  static toMapsPoint(route: Route): MapsPoint {
+  static toMapsPoint(route: Route): MapsPoint | void {
+    if (route.segments.length <= 0) {
+      return;
+    }
+
     return new MapsPoint([
       new MapsCoordinate(
         route.startCoordinates.longitude,

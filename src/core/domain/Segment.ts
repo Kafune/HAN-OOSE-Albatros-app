@@ -1,9 +1,9 @@
 import {Coordinate} from './Coordinate';
-import {POI} from './POI';
+import {PointOfInterest} from './PointOfInterest';
 
 export interface Segment {
   id: number;
   start: Coordinate;
-  end: Coordinate;
-  poi?: POI;
+  end?: Coordinate;
+  poi?: PointOfInterest;
 }

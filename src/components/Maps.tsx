@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
-import {Geometry} from 'geojson';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsPoint} from '../core/maps/MapsPoints';
 import colors from '../styles/colors';
+import {MapsLineMapper} from '../core/mapper/MapsLineMapper';
 
 interface Props {
-  mapsLine: MapsLine;
-  mapsPoint: MapsPoint;
+  mapsLine: MapsLine | null;
+  mapsPoint: MapsPoint | null;
   zoom: number;
   center: number[];
 }
@@ -33,10 +33,7 @@ const Maps: React.FC<Props> = ({
     },
   };
 
-  const geoJSON: Geometry = {
-    type: 'LineString',
-    coordinates: mapsLine.mapLineCoordinates,
-  };
+  const geoJSON = MapsLineMapper.toGeoJSON(mapsLine);
 
   return (
     <View style={styles.page}>
@@ -47,10 +44,12 @@ const Maps: React.FC<Props> = ({
             pitch={0}
             centerCoordinate={center}
           />
-          <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
-            <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
-          </MapboxGL.ShapeSource>
-          {mapsPoint !== undefined &&
+          {geoJSON && (
+            <MapboxGL.ShapeSource id="routeSource" shape={geoJSON}>
+              <MapboxGL.LineLayer id="route" style={layerStyles.LineStyle} />
+            </MapboxGL.ShapeSource>
+          )}
+          {mapsPoint !== null &&
             mapsPoint.coordinates.map(point => (
               <MapboxGL.PointAnnotation
                 id={point.toString()}

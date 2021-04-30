@@ -31,6 +31,17 @@ export class Route {
     this.segments = segments;
   }
 
+  addSegment(coordinate: Coordinate) {
+    const lastPoint = this.endCoordinates;
+
+    if (lastPoint) {
+      this.segments.push({id: 0, start: lastPoint, end: coordinate});
+    } else {
+      // If it is the only point, we only want to set the start.
+      this.segments.push({id: 0, start: coordinate});
+    }
+  }
+
   /**
    * Get's the very first coordinates from the route.
    * @returns {Coordinate}
@@ -46,7 +57,10 @@ export class Route {
    */
   get endCoordinates(): Coordinate {
     const array = require('lodash/array');
-    return array.last(this.segments)?.end;
+    const endOfLastIndex = array.last(this.segments)?.end;
+    const startOfLastIndex = array.last(this.segments)?.start;
+
+    return endOfLastIndex ? endOfLastIndex : startOfLastIndex;
   }
 
   /**
