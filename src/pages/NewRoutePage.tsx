@@ -66,7 +66,7 @@ const NewRoutePage: FC = () => {
   const handleCreatePOI = (POI: PointOfInterest) => {
     //TODO: zorg ervoor dat de POI in de correcte segment komt.
     setPOIArray([
-      ...RPOIArray,
+      ...POIArray,
       [
         mapPoints.findIndex(currentPoint => currentPoint === currentMapPoint) +
           1,
