@@ -23,4 +23,24 @@ export class MapsLine {
   get mapLineCoordinates(): number[][] {
     return this.coordinates.map(coordinate => coordinate.toArray());
   }
+
+  /**
+   * Gets the last coordinate of the array of coordinates.
+   *
+   * @return {MapsCoordinate}
+   * @memberof MapsLine
+   */
+  getLastCoordinate(): MapsCoordinate {
+    return this.coordinates[this.coordinates.length - 1];
+  }
+
+  /**
+   * pushes a MapsCoordinate in the coordinates array
+   *
+   * @param {MapsCoordinate} mapsCoordinate
+   * @memberof MapsLine
+   */
+  pushCoordinate(mapsCoordinate: MapsCoordinate) {
+    this.coordinates.push(mapsCoordinate);
+  }
 }

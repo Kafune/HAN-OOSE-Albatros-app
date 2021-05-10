@@ -3,7 +3,7 @@ import GetLocation from 'react-native-get-location';
 const getLocation: Function = () => {
   return GetLocation.getCurrentPosition({
     enableHighAccuracy: true,
-    timeout: 15000,
+    timeout: 150000,
   })
     .then((location: Object) => location)
     .catch((error: any) => {

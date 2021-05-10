@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RoutesPage from './pages/RoutesPage';
 import colors from './styles/colors';
+import RecordActivity from './pages/RecordActivity';
 import NewRoutePage from './pages/NewRoutePage';
 
 const Tab = createBottomTabNavigator();
@@ -26,6 +27,20 @@ const Main: React.FC = () => {
               tabBarLabel: 'Routes',
               tabBarIcon: ({color, size}) => (
                 <MaterialCommunityIcons name="map" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Record"
+            component={RecordActivity}
+            options={{
+              tabBarLabel: 'Record',
+              tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons
+                  name="record-circle"
+                  size={size}
+                  color={color}
+                />
               ),
             }}
           />
