@@ -52,9 +52,9 @@ const LoginPage: FC = ({navigation}) => {
           <Text style={styles.slogan}>Samen in Beweging</Text>
         </View>
         <GoogleSigninButton
-          style={{width: 192, height: 48}}
+          style={styles.googleSignIn}
           size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
+          color={GoogleSigninButton.Color.Light}
           onPress={signIn}
         />
       </View>
@@ -63,6 +63,10 @@ const LoginPage: FC = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  googleSignIn: {
+    width: 225,
+    height: 52,
+  },
   wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
