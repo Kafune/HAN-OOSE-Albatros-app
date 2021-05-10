@@ -31,13 +31,13 @@ const LoginPage: FC = ({navigation}) => {
       navigation.navigate('app');
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('sign in cancelled');
+        console.log('sign in cancelled: ', error);
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('in progress');
+        console.log('in progress: ', error);
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('play services not available');
+        console.log('play services not available: ', error);
       } else {
-        console.log('something else happened', error);
+        console.log('something else happened: ', error);
       }
     }
   };
