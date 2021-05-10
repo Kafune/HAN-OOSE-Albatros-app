@@ -4,6 +4,7 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {StyleSheet, Text, View} from 'react-native';
 
 const LoginPage: FC = ({navigation}) => {
   const [userInfo, setUserInfo] = useState({});
@@ -42,15 +43,43 @@ const LoginPage: FC = ({navigation}) => {
   };
 
   return (
-    <>
-      <GoogleSigninButton
-        style={{width: 192, height: 48}}
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={signIn}
-      />
-    </>
+    <View style={styles.wrapper}>
+      <View style={styles.imageWrapper}>
+        <Text style={styles.runConnectText}>RunConnect</Text>
+      </View>
+      <View>
+        <View>
+          <Text style={styles.slogan}>Samen in Beweging</Text>
+        </View>
+        <GoogleSigninButton
+          style={{width: 192, height: 48}}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={signIn}
+        />
+      </View>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageWrapper: {
+    height: '75%',
+  },
+  runConnectText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  slogan: {
+    fontSize: 18,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginBottom: 32,
+  },
+});
 
 export default LoginPage;

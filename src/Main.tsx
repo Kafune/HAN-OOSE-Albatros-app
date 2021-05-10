@@ -15,7 +15,10 @@ const Tab = createBottomTabNavigator();
 const StackContainer = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
         <Stack.Screen name="login" component={LoginPage} />
         <Stack.Screen name="app" component={MainContainer} />
       </Stack.Navigator>
