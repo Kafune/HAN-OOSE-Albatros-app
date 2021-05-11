@@ -1,14 +1,16 @@
 import React, {FC, useState, useEffect} from 'react';
-import {Button} from 'react-native';
+import {Button, View, Text, StyleSheet, Pressable} from 'react-native';
 import TrackMap from '../components/TrackMap';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsCoordinate} from '../core/maps/MapsCoordinate';
 import {MapsPoint} from '../core/maps/MapsPoints';
 import getLocation from '../core/maps/GetLocation';
 import {Error} from '../components/Error';
+import colors, {brittishPalette} from '../styles/colors';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const RecordActivity: FC = () => {
-  const GPS_INTERVAL = 2500; // get GPS every 2500ms
+  const GPS_INTERVAL = 5000; // get GPS every 5000ms
   const [intervalNr, setIntervalNr] = useState<Number>(0);
   const [tracking, setTracking] = useState<boolean>(true);
   const [route, setRoute] = useState<MapsLine>(
@@ -67,23 +69,63 @@ const RecordActivity: FC = () => {
         trackGPS();
       }, GPS_INTERVAL),
     );
-  }, [intervalNr, route, walkedRoute]);
+  }, []); // the array is supposed to be empty. It should only run once.
+
   console.log(intervalNr);
 
   return (
     <>
-      {tracking ? <></> : <Error errorCode={500} message={undefined} />}
-      {Map}
-      <Button
-        onPress={() => {
-          //@ts-ignore - In normal js (also here) setInterval returns a number.
-          //ESLint thinks that it isnt a number but a Datatype that doesn't excists.
-          clearInterval(intervalNr);
-        }}
-        title="stoppen"
-      />
+      <View style={styles.page}>
+        {tracking ? <></> : <Error errorCode={500} message={undefined} />}
+        <View style={styles.container}>{Map}</View>
+        <View style={styles.boxes}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              //@ts-ignore - In normal js (also here) setInterval returns a number.
+              //ESLint thinks that it isnt a number but a Datatype that doesn't excists.
+              clearInterval(intervalNr);
+              console.log('Stopped!');
+            }}>
+            <MaterialCommunityIcons
+              name="square"
+              size={30}
+              color={brittishPalette.white}
+            />
+          </Pressable>
+          <Pressable style={styles.button}>
+            <MaterialCommunityIcons
+              name="pause"
+              size={30}
+              color={brittishPalette.white}
+            />
+          </Pressable>
+        </View>
+      </View>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  page: {
+    backgroundColor: '#F5FCFF',
+  },
+  container: {
+    height: 250,
+    width: '100%',
+    backgroundColor: '#F0F0F1FF',
+  },
+  boxes: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    backgroundColor: colors.main,
+    borderRadius: 200,
+    padding: 30,
+  },
+});
 
 export default RecordActivity;
