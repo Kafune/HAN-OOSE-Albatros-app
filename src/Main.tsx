@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RoutesPage from './pages/RoutesPage';
 import colors from './styles/colors';
 import NewRoutePage from './pages/NewRoutePage';
+import MapPage from './pages/MapPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +20,16 @@ const Main: React.FC = () => {
             activeTintColor: colors.main,
             safeAreaInsets: {bottom: 5},
           }}>
+          <Tab.Screen
+            name="temp"
+            component={MapPage}
+            options={{
+              tabBarLabel: 'temp',
+              tabBarIcon: ({color, size}) => (
+                <MaterialCommunityIcons name="map" size={size} color={color} />
+              ),
+            }}
+          />
           <Tab.Screen
             name="routesMaps"
             component={RoutesPage}
