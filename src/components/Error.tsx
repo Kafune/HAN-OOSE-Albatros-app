@@ -88,17 +88,17 @@ export const Error: FunctionComponent<Props> = props => {
           </>
         );
       case 500:
-        setBackgroundColor(brittishPalette.green);
+        setBackgroundColor(brittishPalette.yellow);
         return (
           <>
             {createBody(
               'server-network-off',
-              message ?? 'Alles is goed gegaan',
+              message ?? 'We kunnen de server niet bereiken',
             )}
           </>
         );
       case 503:
-        setBackgroundColor(brittishPalette.green);
+        setBackgroundColor(brittishPalette.yellow);
         return (
           <>
             {createBody(
