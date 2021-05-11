@@ -20,11 +20,11 @@ export const Error: FunctionComponent<Props> = props => {
     brittishPalette.darkgray,
   );
 
-  function setBackgroundColor(color: string) {
+  const setBackgroundColor = (color: string) => {
     if (messageBackgroundColor !== color) {
       setMsgBGC(color);
     }
-  }
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -45,7 +45,21 @@ export const Error: FunctionComponent<Props> = props => {
     },
   });
 
-  function handler(code: Number, message: string | undefined) {
+  const createBody = (icon: String, message: string) => {
+    return (
+      <View style={styles.boxes}>
+        <MaterialCommunityIcons
+          // @ts-ignore, Because it also works with a string but ESLint wants a Icon
+          name={icon}
+          size={20}
+          color={brittishPalette.white}
+        />
+        <Text style={styles.baseText}>{message}</Text>
+      </View>
+    );
+  };
+
+  const handler = (code: Number, message: string | undefined) => {
     switch (code) {
       case 200:
         setBackgroundColor(brittishPalette.green);
@@ -113,21 +127,7 @@ export const Error: FunctionComponent<Props> = props => {
           <>{createBody('alert-box', message ?? 'Er is iets misgegaan')}</>
         );
     }
-  }
-
-  function createBody(icon: String, message: string) {
-    return (
-      <View style={styles.boxes}>
-        <MaterialCommunityIcons
-          // @ts-ignore, Because it also works with a string but ESLint wants a Icon
-          name={icon}
-          size={20}
-          color={brittishPalette.white}
-        />
-        <Text style={styles.baseText}>{message}</Text>
-      </View>
-    );
-  }
+  };
 
   return (
     <View style={styles.container}>
