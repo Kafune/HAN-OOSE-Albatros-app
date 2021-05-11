@@ -5,8 +5,16 @@ import {brittishPalette} from '../styles/colors';
 
 type Props = {
   errorCode: Number;
-  message: String | undefined;
+  message: string | undefined;
 };
+
+/**
+ * Error message bar.
+ * @prop {Number} errorCode
+ * @prop {string | undefined} message
+ * @param {*} props
+ * @return {JSX}
+ */
 export const Error: FunctionComponent<Props> = props => {
   const [messageBackgroundColor, setMsgBGC] = useState<string>(
     brittishPalette.darkgray,
@@ -102,7 +110,7 @@ export const Error: FunctionComponent<Props> = props => {
       default:
         setBackgroundColor(brittishPalette.yellow);
         return (
-          <>{createBody('lock-question', message ?? 'Er is iets misgegaan')}</>
+          <>{createBody('alert-box', message ?? 'Er is iets misgegaan')}</>
         );
     }
   }
