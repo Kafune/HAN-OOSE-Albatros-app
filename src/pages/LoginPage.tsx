@@ -5,6 +5,7 @@ import {
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 import {StyleSheet, Text, View} from 'react-native';
+import api from '../core/data/api';
 
 const LoginPage: FC = ({navigation}) => {
   const [userInfo, setUserInfo] = useState({});
@@ -22,13 +23,32 @@ const LoginPage: FC = ({navigation}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const googleUserInfo = await GoogleSignin.signIn();
-      setUserInfo(googleUserInfo);
 
-      //Testing console log
-      console.log(googleUserInfo);
+      const newData = {
+        firstName: googleUserInfo.user.givenName,
+        lastName: googleUserInfo.user.familyName,
+        emailAddress: googleUserInfo.user.email,
+        username: googleUserInfo.user.name,
+        googleId: googleUserInfo.idToken,
+        imageUrl: googleUserInfo.user.photo,
+      };
 
-      // Navigate to app page
-      navigation.navigate('app');
+      await fetch(`${api.baseUrl}/registration`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newData),
+      }).then(result => {
+        //save data in state
+        setUserInfo(result);
+
+        //testing console.log
+        console.log(result);
+
+        //send user to navigation
+        navigation.navigate('app');
+      });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('sign in cancelled: ', error);
