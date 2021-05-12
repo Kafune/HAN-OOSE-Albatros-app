@@ -51,16 +51,8 @@ const NewRoutePage: FC = () => {
         segment.poi = POI;
       }
     });
-  };
 
-  const showPOIDialog = (mapPoint: number[]) => {
-    setCurrentMapPoint(mapPoint);
-    setPOIDialog(true);
-  };
-
-  const handleCancel = () => {
-    setCurrentMapPoint([]);
-    setPOIDialog(false);
+    setNewRoute(route);
   };
 
   const handleCreatePOI = (POI: PointOfInterest) => {
@@ -79,8 +71,6 @@ const NewRoutePage: FC = () => {
     setCurrentPOIDescription('');
     setPOIDialog(false);
   };
-
-  const saveNewRoute = () => {};
 
   if (selectCor) {
     return (
@@ -133,7 +123,10 @@ const NewRoutePage: FC = () => {
                   {!POIArray.find(POI => POI[0] === index + 1) && (
                     <TouchableOpacity
                       style={styles.poiButton}
-                      onPress={() => showPOIDialog(mapPoint)}>
+                      onPress={() => {
+                        setCurrentMapPoint(mapPoint);
+                        setPOIDialog(true);
+                      }}>
                       <Text style={styles.poiButtonText}>
                         Bezienswaardigheid toevoegen
                       </Text>
@@ -200,7 +193,10 @@ const NewRoutePage: FC = () => {
             label="Beschrijving"
             onChangeText={description => setCurrentPOIDescription(description)}
           />
-          <Dialog.Button label="Annuleren" onPress={() => handleCancel()} />
+          <Dialog.Button
+            label="Annuleren"
+            onPress={() => setPOIDialog(false)}
+          />
           <Dialog.Button
             label="Toevoegen"
             onPress={() =>
@@ -217,7 +213,7 @@ const NewRoutePage: FC = () => {
         <Button title="Een punt toevoegen" onPress={() => setSelectCor(true)} />
       </View>
       <View style={styles.button}>
-        <Button title="Route opslaan" onPress={() => saveNewRoute()} />
+        <Button title="Route opslaan" onPress={() => null} />
       </View>
     </ScrollView>
   );

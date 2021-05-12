@@ -33,11 +33,7 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
       'Wil je hier een punt opslaan?',
       'Longitude: ' + mapsPoint[0] + ',latitude: ' + mapsPoint[1],
       [
-        {
-          text: 'Nee',
-          onPress: () => {},
-          style: 'cancel',
-        },
+        {text: 'Nee', onPress: () => {}, style: 'cancel'},
         {text: 'Opslaan', onPress: () => props.addCoordinate(mapsPoint)},
       ],
     );

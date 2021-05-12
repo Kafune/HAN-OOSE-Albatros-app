@@ -64,6 +64,17 @@ export class Route {
   }
 
   /**
+   * Gets all of the points in a route.
+   * @returns {Coordinate[]}
+   */
+  get points(): Coordinate[] {
+    let points: Coordinate[] = [];
+    this.segments.forEach(segment => points.push(segment.start));
+
+    return [...points, this.endCoordinates];
+  }
+
+  /**
    * Calculates the zoom level based on start and end difference.
    * @returns {number}
    */

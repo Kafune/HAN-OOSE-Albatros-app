@@ -10,9 +10,9 @@ export class RouteMapper {
    * @param {Route} route
    * @returns {MapsLine}
    */
-  static toMapsLine(route: Route): MapsLine | void {
+  static toMapsLine(route: Route): MapsLine | null {
     if (route.segments.length <= 1) {
-      return;
+      return null;
     }
 
     const startPoints = route.segments.map(segment => {
@@ -35,9 +35,9 @@ export class RouteMapper {
    * @param {Route} route
    * @returns {MapsPoint}
    */
-  static toMapsPoint(route: Route): MapsPoint | void {
+  static toMapsPoint(route: Route): MapsPoint | null {
     if (route.segments.length <= 0) {
-      return;
+      return null;
     }
 
     return new MapsPoint([
