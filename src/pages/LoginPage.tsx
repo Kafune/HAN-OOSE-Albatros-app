@@ -8,6 +8,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import api from '../core/data/api';
 import {useDispatch} from 'react-redux';
 import {setStoreUser} from '../core/redux/actions/userActions';
+import {SliderBox} from 'react-native-image-slider-box';
 
 const LoginPage: FC = ({navigation}) => {
   const dispatch = useDispatch();
@@ -64,8 +65,17 @@ const LoginPage: FC = ({navigation}) => {
     <View style={styles.wrapper}>
       <View style={styles.imageWrapper}>
         <Text style={styles.runConnectText}>RunConnect</Text>
+        <SliderBox
+          disableOnPress
+          sliderBoxHeight={'100%'}
+          images={[
+            'https://placekitten.com/200/300',
+            'https://placekitten.com/200/300',
+            'https://placekitten.com/200/300',
+          ]}
+        />
       </View>
-      <View>
+      <View style={styles.buttonWrapper}>
         <View>
           <Text style={styles.slogan}>Samen in Beweging</Text>
         </View>
@@ -84,23 +94,32 @@ const styles = StyleSheet.create({
   googleSignIn: {
     width: 225,
     height: 52,
+    top: '25%',
   },
   wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   imageWrapper: {
-    height: '75%',
+    height: '50%',
   },
   runConnectText: {
-    fontSize: 28,
+    fontSize: 32,
+    padding: 12,
+    marginBottom: 16,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   slogan: {
     fontSize: 18,
     fontStyle: 'italic',
     textAlign: 'center',
     marginBottom: 32,
+    marginTop: 16,
+  },
+  buttonWrapper: {
+    top: '15%',
+    height: '25%',
   },
 });
 
