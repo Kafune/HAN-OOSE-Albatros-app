@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Button, View, ScrollView, StyleSheet, Text, Pressable } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Maps from '../components/Maps';
 import RouteInformation from '../components/RouteInformation';
-import {Route} from '../core/domain/Route';
-import {RouteMapper} from '../core/mapper/RouteMapper';
-import {RouteController} from '../core/controller/RouteController';
+import { Route } from '../core/domain/Route';
+import { RouteMapper } from '../core/mapper/RouteMapper';
+import { RouteController } from '../core/controller/RouteController';
+import colors, { brittishPalette } from '../styles/colors';
 
 const RoutesPage: React.FC = (): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
@@ -40,6 +42,19 @@ const RoutesPage: React.FC = (): JSX.Element => {
             setHighlightedRoute={setHighlightedRoute}
           />
         ))}
+      <View
+        style={[styles.boxIs8, styles.button]}>
+        <Pressable
+          onPress={() => console.log("Test knop")}
+          style={styles.buttonInner}>
+          <MaterialCommunityIcons
+            name="map-marker"
+            size={30}
+            color={brittishPalette.white}
+          />
+          <Text style={styles.buttonText}>Kies route.</Text>
+        </Pressable>
+      </View>
     </ScrollView>
   );
 };
@@ -50,6 +65,29 @@ const styles = StyleSheet.create({
     marginVertical: 18,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  button: {
+    backgroundColor: colors.main,
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    borderRadius: 5,
+    padding: 8,
+    margin: 10
+  },
+  buttonInner: {
+    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  buttonText: {
+    paddingTop: 2,
+    fontSize: 18,
+    color: brittishPalette.white,
+    fontWeight: 'bold',
+  },
+  boxIs8: {
+    minWidth: '80%',
   },
 });
 
