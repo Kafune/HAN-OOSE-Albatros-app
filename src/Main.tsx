@@ -9,7 +9,7 @@ import colors from './styles/colors';
 import LoginPage from './pages/LoginPage';
 import NewRoutesPage from './pages/NewRoutePage';
 import {PersistGate} from 'redux-persist/integration/react';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 
 import {store, persistor} from './core/redux/store/Store';
 
@@ -17,14 +17,18 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackContainer = () => {
+  const userLoggedIn = useSelector(state => state.user.username)
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="login" component={LoginPage} />
-        <Stack.Screen name="app" component={MainContainer} />
+        { userLoggedIn
+          ? <Stack.Screen name="app" component={MainContainer} />
+          : <Stack.Screen name="login" component={LoginPage} />
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );
