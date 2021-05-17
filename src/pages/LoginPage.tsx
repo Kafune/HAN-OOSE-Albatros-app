@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -6,9 +6,11 @@ import {
 } from '@react-native-google-signin/google-signin';
 import {StyleSheet, Text, View} from 'react-native';
 import api from '../core/data/api';
+import {useDispatch} from 'react-redux';
+import {setStoreUser} from '../core/redux/actions/userActions';
 
 const LoginPage: FC = ({navigation}) => {
-  const [userInfo, setUserInfo] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -40,14 +42,10 @@ const LoginPage: FC = ({navigation}) => {
         },
         body: JSON.stringify(newData),
       }).then(result => {
-        //save data in state
-        setUserInfo(result);
-
-        //testing console.log
-        console.log(result);
-
-        //send user to navigation
-        navigation.navigate('app');
+        if (result.status === 200 || result.status === 201) {
+          dispatch(setStoreUser(newData));
+          navigation.navigate('app');
+        }
       });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

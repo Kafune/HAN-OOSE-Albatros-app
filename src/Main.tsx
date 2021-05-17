@@ -8,6 +8,10 @@ import RoutesPage from './pages/RoutesPage';
 import colors from './styles/colors';
 import LoginPage from './pages/LoginPage';
 import NewRoutesPage from './pages/NewRoutePage';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Provider} from 'react-redux';
+
+import {store, persistor} from './core/redux/store/Store';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,9 +64,13 @@ const MainContainer = () => {
 
 const Main: React.FC = () => {
   return (
-    <SafeAreaProvider>
-      <StackContainer />
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SafeAreaProvider>
+          <StackContainer />
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 
