@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect} from 'react';
-import {Button, View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 import TrackMap from '../components/TrackMap';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsCoordinate} from '../core/maps/MapsCoordinate';
@@ -8,23 +8,41 @@ import getLocation from '../core/maps/GetLocation';
 import {Error} from '../components/Error';
 import colors, {brittishPalette} from '../styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RecordActivityInformation} from '../components/RecordActivityInformation';
+import {Duration} from '../core/domain/Duration';
+import {RecordTime} from '../core/domain/RecordTime';
 
-const RecordActivity: FC = () => {
-  const GPS_INTERVAL = 5000; // get GPS every 5000ms
-  const [intervalNr, setIntervalNr] = useState<Number>(0);
-  const [tracking, setTracking] = useState<boolean>(true);
-  const [route, setRoute] = useState<MapsLine>(
-    new MapsLine([
-      new MapsCoordinate(5.674306, 52.030944),
-      new MapsCoordinate(5.675282, 52.030033),
-      new MapsCoordinate(5.679166, 52.030257),
-      new MapsCoordinate(5.679166, 52.033257),
-      new MapsCoordinate(5.679981, 52.034237),
-    ]),
-  );
+type Props = {
+  route: MapsLine;
+};
+const RecordActivity: FC<Props> = props => {
+  //todo get form redux
+  let route = new MapsLine([
+    new MapsCoordinate(5.674306, 52.030944),
+    new MapsCoordinate(5.675282, 52.030033),
+    new MapsCoordinate(5.679166, 52.030257),
+    new MapsCoordinate(5.679166, 52.033257),
+    new MapsCoordinate(5.679981, 52.034237),
+  ]);
+
+  const GPS_INTERVAL = 950; // get GPS every 950ms
+  const [trackingError, setTrackingError] = useState<boolean>(false);
+  const [intervalNr, setIntervalNr] = useState<number>(0);
+  const [recordTime, setRecordTime] = useState<RecordTime[]>([
+    new RecordTime(false),
+  ]);
   const [walkedRoute, setWalkedRoute] = useState<MapsLine>(
-    new MapsLine([new MapsCoordinate(5.674306, 52.030954)]),
+    new MapsLine([new MapsCoordinate(5.2119331111, 52.5120321111)]),
   );
+
+  const getGPSWithCheck = async () => {
+    if (recordTime[recordTime.length - 1].isEndNode) {
+      return new Promise<void>((resolve, reject) => {
+        reject();
+      });
+    }
+    return getLocation();
+  };
   //Trackmap is in a state because it wouldn't update from its own.
   //Using a state makes sure it will allways be updated.
   const [Map, setMap] = useState<object>(
@@ -39,9 +57,15 @@ const RecordActivity: FC = () => {
   useEffect(() => {
     const trackGPS = async () => {
       try {
-        const COORDINATE = await getLocation();
-        setTracking(true);
+        const COORDINATE = await getGPSWithCheck();
+        setTrackingError(false);
         const MAPLINE = walkedRoute;
+        if (
+          MAPLINE.getfirstCoordinate().latitude === 5.2119331111 &&
+          MAPLINE.getfirstCoordinate().longitude === 52.5120321111
+        ) {
+          MAPLINE.shift();
+        }
         MAPLINE.pushCoordinate(
           new MapsCoordinate(COORDINATE.longitude, COORDINATE.latitude),
         );
@@ -55,9 +79,8 @@ const RecordActivity: FC = () => {
             zoom={14}
           />,
         );
-        console.log(walkedRoute);
       } catch {
-        setTracking(false);
+        setTrackingError(true);
         return;
       }
     };
@@ -69,33 +92,84 @@ const RecordActivity: FC = () => {
         trackGPS();
       }, GPS_INTERVAL),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // the array is supposed to be empty. It should only run once.
 
-  console.log(intervalNr);
+  const getTimeWithoutPauses = (): number => {
+    const baseTime = recordTime[0].dateTime;
+    let endTime = 0;
+    let pausedTime = 0;
+    let totalTime = 0;
+    recordTime.forEach(element => {
+      if (element.isEndNode) {
+        endTime = element.dateTime;
+      } else {
+        if (element.dateTime !== baseTime) {
+          pausedTime += element.dateTime - endTime;
+        }
+      }
+    });
+
+    totalTime = new Date().getTime() - baseTime - pausedTime;
+
+    if (recordTime[recordTime.length - 1].isEndNode) {
+      totalTime = endTime - baseTime - pausedTime;
+    }
+    return totalTime;
+  };
+  const genError = () => {
+    if (recordTime[recordTime.length - 1].isEndNode) {
+      return <Error errorCode={602} message={undefined} />;
+    } else if (trackingError) {
+      return <Error errorCode={601} message={undefined} />;
+    }
+    return <></>;
+  };
 
   return (
     <>
       <View style={styles.page}>
-        {tracking ? <></> : <Error errorCode={500} message={undefined} />}
+        {genError()}
         <View style={styles.container}>{Map}</View>
+        <RecordActivityInformation
+          duration={new Duration(getTimeWithoutPauses())}
+          distance={walkedRoute.getTotalKm()}
+        />
+
         <View style={styles.boxes}>
+          {recordTime[recordTime.length - 1].isEndNode ? (
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                let temp = recordTime;
+                temp.push(new RecordTime(true));
+                setRecordTime(temp);
+                clearInterval(intervalNr);
+                console.log('Stopped!');
+              }}>
+              <MaterialCommunityIcons
+                name="square"
+                size={30}
+                color={brittishPalette.white}
+              />
+            </Pressable>
+          ) : (
+            <></>
+          )}
           <Pressable
             style={styles.button}
             onPress={() => {
-              //@ts-ignore - In normal js (also here) setInterval returns a number.
-              //ESLint thinks that it isnt a number but a Datatype that doesn't excists.
-              clearInterval(intervalNr);
-              console.log('Stopped!');
+              let temp = recordTime;
+              temp.push(
+                new RecordTime(!recordTime[recordTime.length - 1].isEndNode),
+              );
+              setRecordTime(temp);
+              console.log('paused ');
             }}>
             <MaterialCommunityIcons
-              name="square"
-              size={30}
-              color={brittishPalette.white}
-            />
-          </Pressable>
-          <Pressable style={styles.button}>
-            <MaterialCommunityIcons
-              name="pause"
+              name={
+                recordTime[recordTime.length - 1].isEndNode ? 'play' : 'pause'
+              }
               size={30}
               color={brittishPalette.white}
             />
@@ -109,6 +183,7 @@ const RecordActivity: FC = () => {
 const styles = StyleSheet.create({
   page: {
     backgroundColor: '#F5FCFF',
+    height: '100%',
   },
   container: {
     height: 250,
