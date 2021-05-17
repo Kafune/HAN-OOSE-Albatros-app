@@ -23,7 +23,6 @@ const store = createStore(
 
 let persistor = persistStore(store);
 
-// To clear persistent storage remove comment from next line
 persistor.purge();
 
 export {store, persistor};
