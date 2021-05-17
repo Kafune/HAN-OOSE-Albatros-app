@@ -69,9 +69,9 @@ const LoginPage: FC = ({navigation}) => {
           disableOnPress
           sliderBoxHeight={'100%'}
           images={[
-            'https://placekitten.com/200/300',
-            'https://placekitten.com/200/300',
-            'https://placekitten.com/200/300',
+            'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/w1700-1591-2/Jeugdenjongeren-jongerenwerk.jpg',
+            'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/Headers-corporate-merken/Thuis-en-buurt/w1700-2831-1/Headers_Thuis_en_Buurt_3.jpg',
+            'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/Headers-corporate-merken/Thuis-en-buurt/w1700-2834-1/Headers_Thuis_en_Buurt_7.jpg',
           ]}
         />
       </View>
