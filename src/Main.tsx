@@ -29,16 +29,16 @@ const Main: React.FC = () => {
               ),
             }}
           />
-          {/*<Tab.Screen*/}
-          {/*  name="newRoute"*/}
-          {/*  component={NewRoutePage}*/}
-          {/*  options={{*/}
-          {/*    tabBarLabel: 'Add route',*/}
-          {/*    tabBarIcon: ({color, size}) => (*/}
-          {/*      <MaterialCommunityIcons name="map" size={size} color={color} />*/}
-          {/*    ),*/}
-          {/*  }}*/}
-          {/*/>*/}
+          <Tab.Screen
+            name="newRoute"
+            component={NewRoutePage}
+            options={{
+              tabBarLabel: 'Add route',
+             tabBarIcon: ({color, size}) => (
+               <MaterialCommunityIcons name="map" size={size} color={color} />
+             ),
+            }} 
+           />
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
