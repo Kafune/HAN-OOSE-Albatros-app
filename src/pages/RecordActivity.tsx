@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {RecordActivityInformation} from '../components/RecordActivityInformation';
 import {Duration} from '../core/domain/Duration';
 import {RecordTime} from '../core/domain/RecordTime';
+import Dialog from 'react-native-dialog';
 
 type Props = {
   route: MapsLine;
@@ -25,24 +26,18 @@ const RecordActivity: FC<Props> = props => {
     new MapsCoordinate(5.679981, 52.034237),
   ]);
 
-  const GPS_INTERVAL = 950; // get GPS every 950ms
+  const GPS_INTERVAL = 5000; // get GPS every 5000ms
+  const [updateTime, setUpdateTime] = useState<number>(1);
   const [trackingError, setTrackingError] = useState<boolean>(false);
   const [intervalNr, setIntervalNr] = useState<number>(0);
   const [recordTime, setRecordTime] = useState<RecordTime[]>([
     new RecordTime(false),
   ]);
   const [walkedRoute, setWalkedRoute] = useState<MapsLine>(
-    new MapsLine([new MapsCoordinate(5.2119331111, 52.5120321111)]),
+    new MapsLine([new MapsCoordinate(5.211933, 52.512032)]),
   );
+  const [dialog, setDialog] = useState<boolean>(false);
 
-  const getGPSWithCheck = async () => {
-    if (recordTime[recordTime.length - 1].isEndNode) {
-      return new Promise<void>((resolve, reject) => {
-        reject();
-      });
-    }
-    return getLocation();
-  };
   //Trackmap is in a state because it wouldn't update from its own.
   //Using a state makes sure it will allways be updated.
   const [Map, setMap] = useState<object>(
@@ -54,15 +49,31 @@ const RecordActivity: FC<Props> = props => {
     />,
   );
 
+  /**
+   * Checks if the GPS should be requested.
+   * @return {Promise}
+   */
+  const getGPSWithCheck = async () => {
+    if (recordTime[recordTime.length - 1].isEndNode) {
+      return new Promise<void>((resolve, reject) => {
+        reject();
+      });
+    }
+    return getLocation();
+  };
+
   useEffect(() => {
+    /**
+     *Handles the Gps tracking.
+     */
     const trackGPS = async () => {
       try {
         const COORDINATE = await getGPSWithCheck();
         setTrackingError(false);
         const MAPLINE = walkedRoute;
         if (
-          MAPLINE.getfirstCoordinate().latitude === 5.2119331111 &&
-          MAPLINE.getfirstCoordinate().longitude === 52.5120321111
+          MAPLINE.getfirstCoordinate().latitude === 52.512032 &&
+          MAPLINE.getfirstCoordinate().longitude === 5.211933
         ) {
           MAPLINE.shift();
         }
@@ -81,7 +92,6 @@ const RecordActivity: FC<Props> = props => {
         );
       } catch {
         setTrackingError(true);
-        return;
       }
     };
 
@@ -95,6 +105,18 @@ const RecordActivity: FC<Props> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // the array is supposed to be empty. It should only run once.
 
+  useEffect(() => {
+    let x = setTimeout(() => {
+      setUpdateTime(updateTime + 1);
+    }, 950);
+    return () => clearInterval(x);
+  });
+
+  /**
+   * Generates the thime without pauses.
+   *
+   * @return {*}  {number}
+   */
   const getTimeWithoutPauses = (): number => {
     const baseTime = recordTime[0].dateTime;
     let endTime = 0;
@@ -109,14 +131,17 @@ const RecordActivity: FC<Props> = props => {
         }
       }
     });
-
     totalTime = new Date().getTime() - baseTime - pausedTime;
-
     if (recordTime[recordTime.length - 1].isEndNode) {
       totalTime = endTime - baseTime - pausedTime;
     }
     return totalTime;
   };
+
+  /**
+   * choses what error it should return based on a trackingError or a endNode.
+   * @return {JSX}
+   */
   const genError = () => {
     if (recordTime[recordTime.length - 1].isEndNode) {
       return <Error errorCode={602} message={undefined} />;
@@ -128,24 +153,46 @@ const RecordActivity: FC<Props> = props => {
 
   return (
     <>
+      {/* quitDialog: */}
+      <Dialog.Container visible={dialog}>
+        <Dialog.Title>Activiteit stoppen</Dialog.Title>
+        <Dialog.Description>
+          Weet je zeker dat je het opnemen van een activiteit wilt stoppen?
+        </Dialog.Description>
+        <Dialog.Button label="Annuleren" onPress={() => setDialog(false)} />
+        <Dialog.Button
+          label="Stoppen"
+          onPress={() => {
+            let temp = recordTime;
+            temp.push(new RecordTime(true));
+            setRecordTime(temp);
+            clearInterval(intervalNr);
+            console.log('Stopped!');
+            setDialog(false);
+          }}
+        />
+      </Dialog.Container>
+
       <View style={styles.page}>
+        {/* Error handler */}
         {genError()}
+
+        {/* Map */}
         <View style={styles.container}>{Map}</View>
+
+        {/* Activity info */}
         <RecordActivityInformation
           duration={new Duration(getTimeWithoutPauses())}
           distance={walkedRoute.getTotalKm()}
         />
 
+        {/* Play Pause buttons */}
         <View style={styles.boxes}>
           {recordTime[recordTime.length - 1].isEndNode ? (
             <Pressable
               style={styles.button}
               onPress={() => {
-                let temp = recordTime;
-                temp.push(new RecordTime(true));
-                setRecordTime(temp);
-                clearInterval(intervalNr);
-                console.log('Stopped!');
+                setDialog(true);
               }}>
               <MaterialCommunityIcons
                 name="square"
