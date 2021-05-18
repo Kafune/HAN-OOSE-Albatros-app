@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackContainer = () => {
-  const userLoggedIn = useSelector(state => state.user.username)
+  const userLoggedIn = useSelector(state => state.user.username);
 
   return (
     <NavigationContainer>
@@ -25,10 +25,11 @@ const StackContainer = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        { userLoggedIn
-          ? <Stack.Screen name="app" component={MainContainer} />
-          : <Stack.Screen name="login" component={LoginPage} />
-        }
+        {userLoggedIn ? (
+          <Stack.Screen name="app" component={MainContainer} />
+        ) : (
+          <Stack.Screen name="login" component={LoginPage} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
