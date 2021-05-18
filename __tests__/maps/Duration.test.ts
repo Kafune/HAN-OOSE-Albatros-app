@@ -7,10 +7,6 @@ describe('Duration Test', () => {
     duration = new Duration(3772000);
   });
 
-  afterEach(() => {
-    //nothing
-  });
-
   describe('getHMS()', () => {
     // test dat Jest werkt.
     test('happy Flow', () => {
