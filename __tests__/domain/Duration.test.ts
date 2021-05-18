@@ -1,4 +1,4 @@
-import {Duration} from '../../src/core/domain/Duration';
+import {Duration} from '../../src/core/maps/Duration';
 
 describe('Duration Test', () => {
   let duration: Duration;

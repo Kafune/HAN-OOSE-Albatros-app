@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-import {Duration} from '../core/domain/Duration';
+import {Duration} from '../core/maps/Duration';
 import {brittishPalette} from '../styles/colors';
 
 type Props = {

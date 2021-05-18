@@ -9,8 +9,8 @@ import {Error} from '../components/Error';
 import colors, {brittishPalette} from '../styles/colors';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {RecordActivityInformation} from '../components/RecordActivityInformation';
-import {Duration} from '../core/domain/Duration';
-import {RecordTime} from '../core/domain/RecordTime';
+import {Duration} from '../core/maps/Duration';
+import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
 
 type Props = {
