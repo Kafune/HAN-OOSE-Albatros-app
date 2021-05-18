@@ -1,4 +1,3 @@
-import {MapsCoordinate} from '../../maps/MapsCoordinate';
 import {MapsLine} from '../../maps/MapsLine';
 
 const initialState = new MapsLine([]);

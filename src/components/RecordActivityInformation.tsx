@@ -17,8 +17,6 @@ export const RecordActivityInformation: FunctionComponent<Props> = props => {
 
           <Text style={STYLE.amounts}>{props.distance.toFixed(2)} km</Text>
         </View>
-      {/* </View> */}
-      {/* <View style={STYLE.container}> */}
         <View style={STYLE.textBox}>
           <Text style={STYLE.header}>Duration:</Text>
 
