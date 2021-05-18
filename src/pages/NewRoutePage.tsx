@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  Pressable,
   TouchableOpacity,
 } from 'react-native';
 import Maps from '../components/Maps';
@@ -18,7 +17,7 @@ import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
 
 const NewRoutePage: FC = () => {
-  const [selectCor, setSelectCor] = useState<boolean>(false);
+  const [selectCoordinate, setSelectCoordinate] = useState<boolean>(false);
   const [centerPoint, setCenterPoint] = useState([5.6679899, 52.0430533]);
   const [mapPoints, setMapPoints] = useState<number[][]>([]);
   const [POIArray, setPOIArray] = useState<(number | string)[][]>([]);
@@ -29,10 +28,10 @@ const NewRoutePage: FC = () => {
     '',
   );
 
-  function addCoordinate(coordinate: number[]) {
+  const addCoordinate = (coordinate: number[]) => {
     setMapPoints([...mapPoints, coordinate]);
-    setSelectCor(false);
-  }
+    setSelectCoordinate(false);
+  };
 
   const mapCoordinateMapper = () => {
     return mapPoints.map(
@@ -69,12 +68,12 @@ const NewRoutePage: FC = () => {
 
   const saveNewRoute = () => {};
 
-  if (selectCor) {
+  if (selectCoordinate) {
     return (
       <SelectCoordinate
         addCoordinate={addCoordinate}
         cancel={() => {
-          setSelectCor(false);
+          setSelectCoordinate(false);
         }}
       />
     );
@@ -200,7 +199,7 @@ const NewRoutePage: FC = () => {
       </View>
 
       <View style={styles.button}>
-        <Button title="Een punt toevoegen" onPress={() => setSelectCor(true)} />
+        <Button title="Een punt toevoegen" onPress={() => setSelectCoordinate(true)} />
       </View>
       <View style={styles.button}>
         <Button title="Route opslaan" onPress={() => saveNewRoute()} />
