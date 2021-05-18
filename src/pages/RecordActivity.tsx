@@ -1,5 +1,6 @@
 import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
+import {useSelector} from 'react-redux';
 import TrackMap from '../components/TrackMap';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsCoordinate} from '../core/maps/MapsCoordinate';
@@ -13,18 +14,9 @@ import {Duration} from '../core/maps/Duration';
 import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
 
-type Props = {
-  route: MapsLine;
-};
-const RecordActivity: FC<Props> = props => {
-  //todo get form redux
-  let route = new MapsLine([
-    new MapsCoordinate(5.674306, 52.030944),
-    new MapsCoordinate(5.675282, 52.030033),
-    new MapsCoordinate(5.679166, 52.030257),
-    new MapsCoordinate(5.679166, 52.033257),
-    new MapsCoordinate(5.679981, 52.034237),
-  ]);
+const RecordActivity: FC = () => {
+  //@ts-ignore TS error
+  const route = useSelector(state => state.routeLine);
 
   const GPS_INTERVAL = 5000; // get GPS every 5000ms
   const [updateTime, setUpdateTime] = useState<number>(1);
@@ -107,7 +99,11 @@ const RecordActivity: FC<Props> = props => {
 
   useEffect(() => {
     let x = setTimeout(() => {
-      setUpdateTime(updateTime + 1);
+      if (updateTime > 100) {
+        setUpdateTime(1);
+      } else {
+        setUpdateTime(updateTime + 1);
+      }
     }, 950);
     return () => clearInterval(x);
   });
