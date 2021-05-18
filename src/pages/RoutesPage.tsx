@@ -8,12 +8,16 @@ import { RouteMapper } from '../core/mapper/RouteMapper';
 import { RouteController } from '../core/controller/RouteController';
 import colors, { brittishPalette } from '../styles/colors';
 import Dialog from 'react-native-dialog';
+import { useDispatch } from 'react-redux';
+import { setStoreHighlightedRoute } from '../core/redux/actions/highlightedRouteActions';
 
 type props={
   navigation: { navigate: (arg0: string) => void; }
 }
 
 const RoutesPage: React.FC<props> = (props): JSX.Element => {
+  const dispatch = useDispatch();
+  
   const [routes, setRoutes] = useState<Route[] | undefined>();
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -35,7 +39,8 @@ const RoutesPage: React.FC<props> = (props): JSX.Element => {
 
   const startActivity = () => {
     console.log(highlightedRoute);
-    //TODO: set highlitedRoute in Redux.
+    //TODO: set highlighted Route in Redux.
+    dispatch(setStoreHighlightedRoute(highlightedRoute));
     props.navigation.navigate('newRoute');
   };
 
