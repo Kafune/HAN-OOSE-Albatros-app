@@ -9,9 +9,11 @@ import { RouteController } from '../core/controller/RouteController';
 import colors, { brittishPalette } from '../styles/colors';
 import Dialog from 'react-native-dialog';
 
-import { Link } from '@react-navigation/native';
+type props={
+  navigation: { navigate: (arg0: string) => void; }
+}
 
-const RoutesPage: React.FC = (props): JSX.Element => {
+const RoutesPage: React.FC<props> = (props): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
   const [showConfirmation, setShowConfirmation] = useState(false);
