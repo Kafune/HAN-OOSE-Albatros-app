@@ -121,6 +121,26 @@ export const Error: FunctionComponent<Props> = props => {
             )}
           </>
         );
+      case 601:
+        setBackgroundColor(brittishPalette.yellow);
+        return (
+          <>
+            {createBody(
+              'access-point-network-off',
+              message ?? 'We kunnen geen GPS vinden',
+            )}
+          </>
+        );
+      case 602:
+        setBackgroundColor(brittishPalette.blue);
+        return (
+          <>
+            {createBody(
+              'pause',
+              message ?? 'Het opnemen is gepauseerd!',
+            )}
+          </>
+        );
       default:
         setBackgroundColor(brittishPalette.yellow);
         return (

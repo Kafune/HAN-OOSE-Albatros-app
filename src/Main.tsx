@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import RoutesPage from './pages/RoutesPage';
 import colors from './styles/colors';
+import RecordActivity from './pages/RecordActivity';
 import LoginPage from './pages/LoginPage';
 import NewRoutesPage from './pages/NewRoutePage';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -50,6 +51,20 @@ const MainContainer = () => {
           tabBarLabel: 'Routes',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="map" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Record"
+        component={RecordActivity}
+        options={{
+          tabBarLabel: 'Record',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="record-circle"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
