@@ -9,7 +9,7 @@ import { RouteController } from '../core/controller/RouteController';
 import colors, { brittishPalette } from '../styles/colors';
 import Dialog from 'react-native-dialog';
 import { useDispatch } from 'react-redux';
-import { setStoreHighlightedRoute } from '../core/redux/actions/highlightedRouteActions';
+import { setStoreRouteLine } from '../core/redux/actions/routeLineActions';
 
 type props={
   navigation: { navigate: (arg0: string) => void; }
@@ -40,8 +40,8 @@ const RoutesPage: React.FC<props> = (props): JSX.Element => {
   const startActivity = () => {
     console.log(highlightedRoute);
     //TODO: set highlighted Route in Redux.
-    dispatch(setStoreHighlightedRoute(highlightedRoute));
-    props.navigation.navigate('newRoute');
+    dispatch(setStoreRouteLine(highlightedRoute));
+    props.navigation.navigate('Record');
   };
 
   return (
