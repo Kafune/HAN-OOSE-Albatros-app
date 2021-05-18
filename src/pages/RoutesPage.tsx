@@ -9,7 +9,9 @@ import { RouteController } from '../core/controller/RouteController';
 import colors, { brittishPalette } from '../styles/colors';
 import Dialog from 'react-native-dialog';
 
-const RoutesPage: React.FC = (): JSX.Element => {
+import { Link } from '@react-navigation/native';
+
+const RoutesPage: React.FC = (props): JSX.Element => {
   const [routes, setRoutes] = useState<Route[] | undefined>();
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -31,11 +33,13 @@ const RoutesPage: React.FC = (): JSX.Element => {
 
   const startActivity = () => {
     console.log(highlightedRoute);
+    //TODO: set highlitedRoute in Redux.
+    props.navigation.navigate('newRoute');
   };
 
   return (
     <View>
-      <View style={{ zIndex: 10, height: "25%" }}>
+      <View style={{ zIndex: 10, height: 220 }}>
         {highlightedRoute !== undefined && (
           <Maps
             mapsLine={RouteMapper.toMapsLine(highlightedRoute)}
@@ -44,19 +48,18 @@ const RoutesPage: React.FC = (): JSX.Element => {
             zoom={highlightedRoute.zoomLevel}
           />
         )}
-        <View
-          style={[styles.boxIs8, styles.button]}>
-          <Pressable
-            onPress={() => toggleRouteDialog()}
-            style={styles.buttonInner}>
-            <MaterialCommunityIcons
-              name="arrow-right-circle"
-              size={30}
-              color={brittishPalette.white}
-            />
-            <Text style={styles.buttonText}>Kies route</Text>
-          </Pressable>
-        </View>
+      </View>
+      <View style={[styles.boxIs8, styles.button]}>
+        <Pressable
+          onPress={() => toggleRouteDialog()}
+          style={styles.buttonInner}>
+          <MaterialCommunityIcons
+            name="arrow-right-circle"
+            size={30}
+            color={brittishPalette.white}
+          />
+          <Text style={styles.buttonText}>Kies route</Text>
+        </Pressable>
       </View>
       <ScrollView>
         <Text style={styles.routesTitle}>Kies een route</Text>
@@ -73,8 +76,8 @@ const RoutesPage: React.FC = (): JSX.Element => {
       <View>
         <Dialog.Container visible={showConfirmation}>
           <Dialog.Title>Weet je zeker dat je deze route wilt lopen?</Dialog.Title>
-          <Dialog.Description>Route: {highlightedRoute?.name + "\n"}
-                              Afstand: {highlightedRoute?.distance + "\n"}
+          <Dialog.Description>Route: {highlightedRoute?.name  + "\n"} 
+                              Afstand: {highlightedRoute?.distance + " km" + "\n"}
                               Beschrijving: {highlightedRoute?.description + "\n"} </Dialog.Description>
           <Dialog.Button label="Nee" onPress={() => toggleRouteDialog()} />
           <Dialog.Button
@@ -103,8 +106,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     borderRadius: 5,
     padding: 8,
-    marginHorizontal: 10,
-    marginBottom: 10,
+    margin: 10,
+    marginTop: 25,
 
   },
   buttonInner: {
