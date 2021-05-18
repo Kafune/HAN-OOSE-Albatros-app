@@ -29,7 +29,7 @@ export const RecordActivityInformation: FunctionComponent<Props> = props => {
             {(
               props.distance /
               (props.duration.current / 1000 / 60 / 60)
-            ).toFixed(2)} km/h
+            ).toFixed(2)} km/u
           </Text>
         </View>
       </View>
