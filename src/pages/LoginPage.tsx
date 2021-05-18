@@ -38,9 +38,7 @@ const LoginPage: FC = ({navigation}) => {
 
       await fetch(`${api.baseUrl}/registration`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: api.headers.headers,
         body: JSON.stringify(newData),
       }).then(result => {
         if (result.status === 200 || result.status === 201) {
@@ -49,14 +47,18 @@ const LoginPage: FC = ({navigation}) => {
         }
       });
     } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('sign in cancelled: ', error);
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('in progress: ', error);
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('play services not available: ', error);
-      } else {
-        console.log('something else happened: ', error);
+      switch (error.code) {
+        case statusCodes.SIGN_IN_CANCELLED:
+          console.log('Sign in cancelled: ', error);
+          break;
+        case statusCodes.IN_PROGRESS:
+          console.log('In progress: ', error);
+          break;
+        case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+          console.log('Play Services not available: ', error);
+          break;
+        default:
+          console.log('Something else happened: ', error);
       }
     }
   };
