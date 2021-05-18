@@ -1,12 +1,13 @@
 import {combineReducers} from 'redux';
 
+
 import userReducer from './userReducer';
-import highlightedRouteReducer from './highlightedRouteReducer';
+import routeLineReducer from './routeLineReducer';
 
 
 const rootReducer = combineReducers({
   user: userReducer,
-  highlightedRoute: highlightedRouteReducer,
+  routeLine: routeLineReducer,
 });
 
 export default rootReducer;
