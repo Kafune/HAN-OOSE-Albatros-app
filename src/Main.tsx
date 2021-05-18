@@ -7,7 +7,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import RoutesPage from './pages/RoutesPage';
 import colors from './styles/colors';
 import RecordActivity from './pages/RecordActivity';
-import NewRoutePage from './pages/NewRoutePage';
 import LoginPage from './pages/LoginPage';
 import NewRoutesPage from './pages/NewRoutePage';
 import {PersistGate} from 'redux-persist/integration/react';
