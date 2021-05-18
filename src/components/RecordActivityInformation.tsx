@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {Duration} from '../core/maps/Duration';
 import {brittishPalette} from '../styles/colors';
@@ -13,23 +13,23 @@ export const RecordActivityInformation: FunctionComponent<Props> = props => {
     <>
       <View style={STYLE.container}>
         <View style={STYLE.textBox}>
-          <Text style={STYLE.header}>total distance:</Text>
+          <Text style={STYLE.header}>Afstand:</Text>
 
           <Text style={STYLE.amounts}>{props.distance.toFixed(2)} km</Text>
         </View>
         <View style={STYLE.textBox}>
-          <Text style={STYLE.header}>Duration:</Text>
+          <Text style={STYLE.header}>Tijd:</Text>
 
           <Text style={STYLE.amounts}>{props.duration.getHMS()}</Text>
         </View>
         <View style={STYLE.textBox}>
-          <Text style={STYLE.header}>Speed:</Text>
+          <Text style={STYLE.header}>Snelheid:</Text>
 
           <Text style={STYLE.amounts}>
             {(
               props.distance /
               (props.duration.current / 1000 / 60 / 60)
-            ).toFixed(2)} km/h
+            ).toFixed(2)} km/u
           </Text>
         </View>
       </View>

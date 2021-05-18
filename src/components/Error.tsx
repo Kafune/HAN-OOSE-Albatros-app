@@ -137,7 +137,7 @@ export const Error: FunctionComponent<Props> = props => {
           <>
             {createBody(
               'pause',
-              message ?? 'Het opnemen is gepauseerd!',
+              message ?? 'Het opnemen is gepauzeerd!',
             )}
           </>
         );
