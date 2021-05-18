@@ -18,8 +18,7 @@ import {RouteMapper} from '../core/mapper/RouteMapper';
 const RecordActivity: FC = () => {
   //@ts-ignore TS error
   const route = useSelector(state => RouteMapper.toMapsLine(state.routeLine));
-  console.log("askjaskj");
-  console.log(route);
+
   const GPS_INTERVAL = 5000; // get GPS every 5000ms
   const [updateTime, setUpdateTime] = useState<number>(1);
   const [trackingError, setTrackingError] = useState<boolean>(false);
