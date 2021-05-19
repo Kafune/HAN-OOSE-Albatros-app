@@ -1,4 +1,6 @@
 import {Segment} from './Segment';
+import {IPointStrategy} from './strategys/IPointStrategy';
+import {PointStrategyNormal} from './strategys/PointStrategyNormal';
 
 export class Activity {
   activityId: number;
@@ -8,6 +10,7 @@ export class Activity {
   duration: number;
   distance: number;
   segments: Segment[];
+  private _PointStrategy: IPointStrategy = new PointStrategyNormal();
 
   /**
    * Creates an instance of Activity.
@@ -36,5 +39,21 @@ export class Activity {
     this.duration = duration;
     this.distance = distance;
     this.segments = segments;
+  }
+
+  public get PointStrategy(): IPointStrategy {
+    return this._PointStrategy;
+  }
+  public set PointStrategy(value: IPointStrategy) {
+    this._PointStrategy = value;
+  }
+
+  /**
+   * calculates the point and assines them.
+   *
+   * @memberof Activity
+   */
+  calculatePoints(): void {
+    this.point = this._PointStrategy.calculate(this.duration, this.distance);
   }
 }

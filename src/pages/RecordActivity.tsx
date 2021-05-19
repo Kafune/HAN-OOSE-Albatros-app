@@ -168,9 +168,9 @@ const RecordActivity: FC = () => {
             clearInterval(intervalNr);
             console.log('Stopped!');
             setDialog(false);
-            dispatch(
-              setStoreWalkedRoute(RouteMapper.mapsLineToActivity(walkedRoute)),
-            );
+            let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
+            reduxRoute.calculatePoints();
+            dispatch(setStoreWalkedRoute(reduxRoute));
           }}
         />
       </Dialog.Container>
