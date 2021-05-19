@@ -1,6 +1,6 @@
 import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import TrackMap from '../components/TrackMap';
 import {MapsLine} from '../core/maps/MapsLine';
 import {MapsCoordinate} from '../core/maps/MapsCoordinate';
@@ -13,10 +13,13 @@ import {RecordActivityInformation} from '../components/RecordActivityInformation
 import {Duration} from '../core/maps/Duration';
 import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
+import {RouteMapper} from '../core/mapper/RouteMapper';
+import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 
 const RecordActivity: FC = () => {
   //@ts-ignore TS error
   const route = useSelector(state => state.routeLine);
+  const dispatch = useDispatch();
 
   const GPS_INTERVAL = 5000; // get GPS every 5000ms
   const [updateTime, setUpdateTime] = useState<number>(1);
@@ -165,6 +168,9 @@ const RecordActivity: FC = () => {
             clearInterval(intervalNr);
             console.log('Stopped!');
             setDialog(false);
+            dispatch(
+              setStoreWalkedRoute(RouteMapper.mapsLineToActivity(walkedRoute)),
+            );
           }}
         />
       </Dialog.Container>
