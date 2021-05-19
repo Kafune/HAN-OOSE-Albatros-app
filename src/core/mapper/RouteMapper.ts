@@ -5,7 +5,6 @@ import {MapsLine} from '../maps/MapsLine';
 import RouteResponseDTO from '../dto/RouteResponseDTO';
 import {Activity} from '../domain/Activity';
 import {Segment} from '../domain/Segment';
-import {Coordinate} from '../domain/Coordinate';
 
 export class RouteMapper {
   /**
