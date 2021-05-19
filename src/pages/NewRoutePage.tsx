@@ -15,6 +15,8 @@ import {MapsPoint} from '../core/maps/MapsPoints';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
+import api from '../core/data/api';
+import {TextInput} from 'react-native-gesture-handler';
 
 const NewRoutePage: FC = () => {
   const [selectCoordinate, setSelectCoordinate] = useState<boolean>(false);
@@ -27,6 +29,9 @@ const NewRoutePage: FC = () => {
   const [currentPOIDescription, setCurrentPOIDescription] = useState<string>(
     '',
   );
+  const [routeName, setRouteName] = useState<String>('');
+  const [routeDescription, setRouteDescription] = useState<String>('');
+  const [routeDistance, setRouteDistance] = useState<number>();
 
   const addCoordinate = (coordinate: number[]) => {
     setMapPoints([...mapPoints, coordinate]);
@@ -50,7 +55,6 @@ const NewRoutePage: FC = () => {
   };
 
   const handleCreatePOI = (name: string, description: string) => {
-    //TODO: zorg ervoor dat de POI in de correcte segment komt.
     setPOIArray([
       ...POIArray,
       [
@@ -66,7 +70,48 @@ const NewRoutePage: FC = () => {
     setPOIDialog(false);
   };
 
-  const saveNewRoute = () => {};
+  const handleDeleteSegment = mapPoint => {
+    // TODO: get correct segment id, then remove from state
+  };
+
+  const saveNewRoute = async () => {
+    // TODO: calculate distance
+    const routeInfo = {
+      name: routeName,
+      description: routeDescription,
+      distance: 1,
+      segments: [
+        // {
+        //   startCoordinate: {
+        //     latitude: mapPoints[0][1],
+        //     longitude: mapPoints[0][0],
+        //   },
+        //   endCoordinate: {
+        // latitude: mapPoints[mapPoints.length - 1][1],
+        //     longitude: mapPoints[mapPoints.length - 1][0],
+        //   },
+        // },
+      ],
+    };
+    const apiOptions = {
+      baseUrl: api.baseUrl,
+      headers: {
+        method: 'POST',
+        body: JSON.stringify(routeInfo),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    };
+
+    console.log(routeInfo);
+    console.log(mapPoints);
+
+    await fetch(`${api.baseUrl}/routes`, apiOptions)
+      .then(response => response.json())
+      .then(response => console.log(response));
+  };
 
   if (selectCoordinate) {
     return (
@@ -132,7 +177,9 @@ const NewRoutePage: FC = () => {
                       name="close-circle-outline"
                       size={24}
                       color={colors.red}
-                      onPress={() => {}}
+                      onPress={() => {
+                        handleDeleteSegment(mapPoint);
+                      }}
                     />
                   </View>
                 </View>
@@ -197,10 +244,29 @@ const NewRoutePage: FC = () => {
           />
         </Dialog.Container>
       </View>
-
       <View style={styles.button}>
-        <Button title="Een punt toevoegen" onPress={() => setSelectCoordinate(true)} />
+        <Button
+          title="Een punt toevoegen"
+          onPress={() => setSelectCoordinate(true)}
+        />
       </View>
+      <View>
+        <View>
+          <Text>Route naam: </Text>
+          <TextInput
+            style={styles.inputField}
+            onChangeText={name => setRouteName(name)}
+          />
+        </View>
+        <View>
+          <Text>Route beschrijving: </Text>
+          <TextInput
+            style={styles.inputField}
+            onChangeText={description => setRouteDescription(description)}
+          />
+        </View>
+      </View>
+
       <View style={styles.button}>
         <Button title="Route opslaan" onPress={() => saveNewRoute()} />
       </View>
@@ -288,6 +354,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  inputField: {
+    borderWidth: 1,
   },
 });
 
