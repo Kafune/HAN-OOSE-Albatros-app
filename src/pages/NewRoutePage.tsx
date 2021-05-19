@@ -31,7 +31,7 @@ const NewRoutePage: FC = () => {
   );
   const [routeName, setRouteName] = useState<String>('');
   const [routeDescription, setRouteDescription] = useState<String>('');
-  const [routeDistance, setRouteDistance] = useState<number>();
+  const [routeDistance, setRouteDistance] = useState<number>(1);
 
   const addCoordinate = (coordinate: number[]) => {
     setMapPoints([...mapPoints, coordinate]);
@@ -70,45 +70,52 @@ const NewRoutePage: FC = () => {
     setPOIDialog(false);
   };
 
-  const handleDeleteSegment = mapPoint => {
-    // TODO: get correct segment id, then remove from state
-  };
-
   const saveNewRoute = async () => {
     // TODO: calculate distance
+
+    //post req 1
     const routeInfo = {
-      name: routeName,
-      description: routeDescription,
-      distance: 1,
-      segments: [
-        // {
-        //   startCoordinate: {
-        //     latitude: mapPoints[0][1],
-        //     longitude: mapPoints[0][0],
-        //   },
-        //   endCoordinate: {
-        // latitude: mapPoints[mapPoints.length - 1][1],
-        //     longitude: mapPoints[mapPoints.length - 1][0],
-        //   },
-        // },
-      ],
+      // name: routeName
+      // description: routeDescription,
+      // distance: routeDistance,
+      // segments: [
+      // {
+      //   startCoordinate: {
+      //     latitude: mapPoints[0][1],
+      //     longitude: mapPoints[0][0],
+      //   },
+      //   endCoordinate: {
+      // latitude: mapPoints[mapPoints.length - 1][1],
+      //     longitude: mapPoints[mapPoints.length - 1][0],
+      //   },
+      // },
+      // ],
     };
+
+    //post req 2
+    let data = new FormData();
+    data.append('name', routeName);
+    data.append('description', routeDescription);
+    data.append('distance', routeDistance);
+
     const apiOptions = {
       baseUrl: api.baseUrl,
       headers: {
         method: 'POST',
-        body: JSON.stringify(routeInfo),
+        credentials: 'same-origin',
+        mode: 'same-origin',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        body: data,
       },
     };
 
     console.log(routeInfo);
-    console.log(mapPoints);
+    console.log(apiOptions);
 
-    await fetch(`${api.baseUrl}/routes`, apiOptions)
+    await fetch(`${api.baseUrl}/routes/`, apiOptions)
       .then(response => response.json())
       .then(response => console.log(response));
   };
@@ -177,9 +184,7 @@ const NewRoutePage: FC = () => {
                       name="close-circle-outline"
                       size={24}
                       color={colors.red}
-                      onPress={() => {
-                        handleDeleteSegment(mapPoint);
-                      }}
+                      onPress={() => {}}
                     />
                   </View>
                 </View>
