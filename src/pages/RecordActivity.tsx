@@ -18,7 +18,7 @@ import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 
 const RecordActivity: FC = () => {
   //@ts-ignore TS error
-  const route = useSelector(state => state.routeLine); //@ts-ignore TS error
+  const route = useSelector(state => RouteMapper.toMapsLine(state.routeLine)); //@ts-ignore TS error
   const originalRoute = useSelector(state => state.routeLine);
   const dispatch = useDispatch();
 
