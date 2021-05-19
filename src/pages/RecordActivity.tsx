@@ -18,7 +18,8 @@ import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 
 const RecordActivity: FC = () => {
   //@ts-ignore TS error
-  const route = useSelector(state => state.routeLine);
+  const route = useSelector(state => state.routeLine); //@ts-ignore TS error
+  const originalRoute = useSelector(state => state.routeLine);
   const dispatch = useDispatch();
 
   const GPS_INTERVAL = 5000; // get GPS every 5000ms
@@ -170,6 +171,7 @@ const RecordActivity: FC = () => {
             setDialog(false);
             let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
             reduxRoute.calculatePoints();
+            reduxRoute.routeId = originalRoute.id;
             dispatch(setStoreWalkedRoute(reduxRoute));
           }}
         />
