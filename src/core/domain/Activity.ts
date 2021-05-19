@@ -41,9 +41,20 @@ export class Activity {
     this.segments = segments;
   }
 
+  /**
+   * gets pointStrategy
+   *
+   * @type {IPointStrategy}
+   * @memberof Activity
+   */
   public get PointStrategy(): IPointStrategy {
     return this._PointStrategy;
   }
+  /**
+   * sets PointStrategy
+   *
+   * @memberof Activity
+   */
   public set PointStrategy(value: IPointStrategy) {
     this._PointStrategy = value;
   }
