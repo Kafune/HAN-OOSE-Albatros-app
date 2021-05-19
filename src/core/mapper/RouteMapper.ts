@@ -19,8 +19,8 @@ export class RouteMapper {
     });
 
     const endPoint = new MapsCoordinate(
-      route.endCoordinates.longitude,
-      route.endCoordinates.latitude,
+      route.segments[route.segments.length - 1].end.longitude,
+      route.segments[route.segments.length - 1].end.latitude,
     );
 
     return new MapsLine([...startPoints, endPoint]);

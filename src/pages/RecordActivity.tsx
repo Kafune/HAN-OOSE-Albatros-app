@@ -13,10 +13,11 @@ import {RecordActivityInformation} from '../components/RecordActivityInformation
 import {Duration} from '../core/maps/Duration';
 import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
+import {RouteMapper} from '../core/mapper/RouteMapper';
 
 const RecordActivity: FC = () => {
   //@ts-ignore TS error
-  const route = useSelector(state => state.routeLine);
+  const route = useSelector(state => RouteMapper.toMapsLine(state.routeLine));
 
   const GPS_INTERVAL = 5000; // get GPS every 5000ms
   const [updateTime, setUpdateTime] = useState<number>(1);
