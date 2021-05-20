@@ -6,6 +6,7 @@ import Maps from '../components/Maps';
 import colors, {brittishPalette} from '../styles/colors';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {MapsPoint} from '../core/maps/MapsPoints';
+import {Duration} from '../core/maps/Duration';
 
 const RecordedActivity: FC = () => {
   const recordedActivityState = useSelector(state => state.walkedRoute);
@@ -32,22 +33,34 @@ const RecordedActivity: FC = () => {
         <View style={styles.activityItem}>
           <View>
             <Text style={styles.activityHeaderText}>Route Naam:</Text>
-            <Text style={styles.activityItemText}>...</Text>
+            <Text style={styles.activityItemText}>
+              {recordedActivityState.name}
+            </Text>
           </View>
           <View>
             <Text style={styles.activityHeaderText}>Afstand:</Text>
-            <Text style={styles.activityItemText}>...</Text>
+            <Text style={styles.activityItemText}>
+              {recordedActivityState.distance.toString().substring(0, 4)} km
+            </Text>
           </View>
         </View>
 
         <View style={styles.activityItem}>
           <View>
             <Text style={styles.activityHeaderText}>Gelopen Tijd:</Text>
-            <Text style={styles.activityItemText}>...</Text>
+            <Text style={styles.activityItemText}>
+              {new Duration(recordedActivityState.duration).getHMS()}
+            </Text>
           </View>
           <View>
             <Text style={styles.activityHeaderText}>Tempo:</Text>
-            <Text style={styles.activityItemText}>...</Text>
+            <Text style={styles.activityItemText}>
+              {(
+                recordedActivityState.distance /
+                (recordedActivityState.duration / 1000 / 60 / 60)
+              ).toFixed(2)}{' '}
+              km/u
+            </Text>
           </View>
         </View>
       </View>
@@ -55,7 +68,9 @@ const RecordedActivity: FC = () => {
       <View>
         <View style={styles.scoreWrapper}>
           <Text style={styles.scoreText}>Score</Text>
-          <Text style={styles.scoreNumber}>0</Text>
+          <Text style={styles.scoreNumber}>
+            {recordedActivityState.point.toFixed(0)}
+          </Text>
         </View>
       </View>
 

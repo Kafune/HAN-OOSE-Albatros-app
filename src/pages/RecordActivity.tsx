@@ -178,12 +178,14 @@ const RecordActivity: React.FC<props> = (props): JSX.Element => {
             console.log('Stopped!');
             setDialog(false);
             let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
+            reduxRoute.duration = getTimeWithoutPauses();
             reduxRoute.calculatePoints();
             reduxRoute.routeId = originalRoute.id;
             dispatch(
               setStoreWalkedRoute({
                 ...reduxRoute,
                 middlePoint: reduxRoute.middlePoint,
+                name: originalRoute.name,
               }),
             );
             // navigate

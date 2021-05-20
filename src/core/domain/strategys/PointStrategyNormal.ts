@@ -5,6 +5,6 @@ export class PointStrategyNormal implements IPointStrategy {
     if (distance < 1) {
       return 0;
     }
-    return (distance / (duration / 1000 / 60)) * 100;
+    return (distance / (duration / 1000 / 60)) * 10;
   }
 }
