@@ -57,29 +57,50 @@ const RecordedActivity: React.FC<props> = props => {
           />
         </View>
 
-        <View style={styles.activityGrid}>
-          <View style={styles.activityItem}>
-            <View>
-              <Text style={styles.activityHeaderText}>Route Naam:</Text>
-              <Text style={styles.activityItemText}>...</Text>
-            </View>
-            <View>
-              <Text style={styles.activityHeaderText}>Afstand:</Text>
-              <Text style={styles.activityItemText}>...</Text>
-            </View>
+      <View style={styles.activityGrid}>
+        <View style={styles.activityItem}>
+          <View>
+            <Text style={styles.activityHeaderText}>Route Naam:</Text>
+            <Text style={styles.activityItemText}>
+              {recordedActivityState.name}
+            </Text>
           </View>
-
-          <View style={styles.activityItem}>
-            <View>
-              <Text style={styles.activityHeaderText}>Gelopen Tijd:</Text>
-              <Text style={styles.activityItemText}>...</Text>
-            </View>
-            <View>
-              <Text style={styles.activityHeaderText}>Tempo:</Text>
-              <Text style={styles.activityItemText}>...</Text>
-            </View>
+          <View>
+            <Text style={styles.activityHeaderText}>Afstand:</Text>
+            <Text style={styles.activityItemText}>
+              {recordedActivityState.distance.toString().substring(0, 4)} km
+            </Text>
           </View>
         </View>
+
+        <View style={styles.activityItem}>
+          <View>
+            <Text style={styles.activityHeaderText}>Gelopen Tijd:</Text>
+            <Text style={styles.activityItemText}>
+              {new Duration(recordedActivityState.duration).getHMS()}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.activityHeaderText}>Tempo:</Text>
+            <Text style={styles.activityItemText}>
+              {(
+                recordedActivityState.distance /
+                (recordedActivityState.duration / 1000 / 60 / 60)
+              ).toFixed(2)}{' '}
+              km/u
+            </Text>
+          </View>
+        </View>
+      </View>
+
+      <View>
+        <View style={styles.scoreWrapper}>
+          <Text style={styles.scoreText}>Score</Text>
+          <Text style={styles.scoreNumber}>
+            {recordedActivityState.point.toFixed(0)}
+          </Text>
+        </View>
+      </View>
 
         <View style={styles.activityGrid}>
           <View
@@ -144,7 +165,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   activityGrid: {
-    marginTop: 32,
+    marginTop: 24,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -163,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: 24,
   },
   activityButtonWrapper: {
     textAlign: 'center',
@@ -182,6 +203,18 @@ const styles = StyleSheet.create({
     color: brittishPalette.white,
     fontWeight: 'bold',
     marginLeft: 5,
+  },
+  scoreWrapper: {
+    marginTop: 32,
+  },
+  scoreText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 24,
+  },
+  scoreNumber: {
+    textAlign: 'center',
+    fontSize: 36,
   },
 });
 

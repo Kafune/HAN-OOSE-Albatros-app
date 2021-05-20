@@ -16,6 +16,7 @@ import {store, persistor} from './core/redux/store/Store';
 import RecordedActivity from './pages/RecordedActivity';
 
 const Stack = createStackNavigator();
+const Activity = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackContainer = () => {
@@ -33,6 +34,20 @@ const StackContainer = () => {
           <Stack.Screen name="login" component={LoginPage} />
         )}
       </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const ActivityContainer = () => {
+  return (
+    <NavigationContainer independent={true}>
+      <Activity.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="Record" component={RecordActivity} />
+        <Stack.Screen name="recordedActivity" component={RecordedActivity} />
+      </Activity.Navigator>
     </NavigationContainer>
   );
 };
@@ -57,9 +72,9 @@ const MainContainer = () => {
       />
       <Tab.Screen
         name="Record"
-        component={RecordActivity}
+        component={ActivityContainer}
         options={{
-          tabBarLabel: 'Record',
+          tabBarLabel: 'Opnemen',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="record-circle"
@@ -71,23 +86,16 @@ const MainContainer = () => {
       />
 
       <Tab.Screen
-        name="recordedActivity"
-        component={RecordedActivity}
-        options={{
-          tabBarLabel: 'Recorded Activity',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="map" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
         name="newRoute"
         component={NewRoutesPage}
         options={{
-          tabBarLabel: 'Add route',
+          tabBarLabel: 'Voeg Route Toe',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="map" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="map-marker-plus"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
