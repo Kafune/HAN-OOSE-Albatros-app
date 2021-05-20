@@ -1,5 +1,5 @@
-import { Calculator } from '../helpers/Calculator';
-import { Coordinate } from './Coordinate';
+import {Calculator} from '../helpers/Calculator';
+import {Coordinate} from './Coordinate';
 import {Segment} from './Segment';
 import {IPointStrategy} from './strategys/IPointStrategy';
 import {PointStrategyNormal} from './strategys/PointStrategyNormal';

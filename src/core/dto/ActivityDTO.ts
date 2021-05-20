@@ -1,4 +1,3 @@
-import {Segment} from '../domain/Segment';
 import {SegmentDTO} from './SegmentDTO';
 
 export interface ActivityDTO {

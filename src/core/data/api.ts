@@ -9,7 +9,7 @@ const api = {
   },
   headersPost: (data: Object) => {
     return {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
