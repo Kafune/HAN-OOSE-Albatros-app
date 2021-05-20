@@ -33,7 +33,6 @@ export class SegmentMapper {
    */
   static toDTO(segment: Segment): SegmentDTO {
     return {
-      id: segment.id,
       startCoordinate: segment.start,
       endCoordinate: segment.end,
     };
