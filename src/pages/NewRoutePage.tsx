@@ -73,7 +73,6 @@ const NewRoutePage: FC = () => {
   const saveNewRoute = async () => {
     // TODO: calculate distance
 
-    //post req 1
     const routeInfo = {
       // name: routeName
       // description: routeDescription,
@@ -92,7 +91,6 @@ const NewRoutePage: FC = () => {
       // ],
     };
 
-    //post req 2
     let data = new FormData();
     data.append('name', routeName);
     data.append('description', routeDescription);
