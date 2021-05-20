@@ -13,6 +13,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {Provider, useSelector} from 'react-redux';
 
 import {store, persistor} from './core/redux/store/Store';
+import RecordedActivity from './pages/RecordedActivity';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,6 +69,18 @@ const MainContainer = () => {
           ),
         }}
       />
+
+      <Tab.Screen
+        name="recordedActivity"
+        component={RecordedActivity}
+        options={{
+          tabBarLabel: 'Recorded Activity',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="map" size={size} color={color} />
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="newRoute"
         component={NewRoutesPage}

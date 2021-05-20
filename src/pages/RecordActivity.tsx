@@ -16,9 +16,17 @@ import Dialog from 'react-native-dialog';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 
-const RecordActivity: FC = () => {
+type props = {
+  navigation: {navigate: (arg0: string) => void};
+};
+
+const RecordActivity: React.FC<props> = (props): JSX.Element => {
   //@ts-ignore TS error
-  const route = useSelector(state => RouteMapper.toMapsLine(state.routeLine)); //@ts-ignore TS error
+  const route = useSelector(state =>
+    state.routeLine !== undefined
+      ? RouteMapper.toMapsLine(state.routeLine)
+      : new MapsLine([]),
+  ); //@ts-ignore TS error
   const originalRoute = useSelector(state => state.routeLine);
   const dispatch = useDispatch();
 
@@ -172,7 +180,14 @@ const RecordActivity: FC = () => {
             let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
             reduxRoute.calculatePoints();
             reduxRoute.routeId = originalRoute.id;
-            dispatch(setStoreWalkedRoute(reduxRoute));
+            dispatch(
+              setStoreWalkedRoute({
+                ...reduxRoute,
+                middlePoint: reduxRoute.middlePoint,
+              }),
+            );
+            // navigate
+            props.navigation.navigate('recordedActivity');
           }}
         />
       </Dialog.Container>
