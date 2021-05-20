@@ -8,7 +8,7 @@ export class ActivityMapper {
    * @param {Activity} activity
    */
   static toDTO(activity: Activity) {
-    const activityDTO: ActivityDTO = {
+    const dto: ActivityDTO = {
       routeId: activity.routeId,
       userId: activity.userId,
       point: activity.point,
@@ -17,6 +17,6 @@ export class ActivityMapper {
       segments: SegmentMapper.multipleToDTO(activity.segments),
     };
 
-    return activityDTO;
+    return dto;
   }
 }
