@@ -74,7 +74,6 @@ const MainContainer = () => {
         name="Record"
         component={ActivityContainer}
         options={{
-          tabBarVisible: false,
           tabBarLabel: 'Opnemen',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
