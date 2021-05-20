@@ -52,6 +52,13 @@ const RecordedActivity: FC = () => {
         </View>
       </View>
 
+      <View>
+        <View style={styles.scoreWrapper}>
+          <Text style={styles.scoreText}>Score</Text>
+          <Text style={styles.scoreNumber}>0</Text>
+        </View>
+      </View>
+
       <View style={styles.activityGrid}>
         <View style={{...styles.activityItem, ...styles.activityButtonWrapper}}>
           <View style={styles.button}>
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   activityGrid: {
-    marginTop: 32,
+    marginTop: 24,
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: 24,
   },
   activityButtonWrapper: {
     textAlign: 'center',
@@ -136,7 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
     borderRadius: 5,
     padding: 8,
-    marginTop: 25,
     width: 150,
   },
   buttonText: {
@@ -145,6 +151,18 @@ const styles = StyleSheet.create({
     color: brittishPalette.white,
     fontWeight: 'bold',
     marginLeft: 5,
+  },
+  scoreWrapper: {
+    marginTop: 32,
+  },
+  scoreText: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 24,
+  },
+  scoreNumber: {
+    textAlign: 'center',
+    fontSize: 36,
   },
 });
 
