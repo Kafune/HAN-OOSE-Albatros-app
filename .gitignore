@@ -317,5 +317,3 @@ Temporary Items
 .apdisk
 
 # End of https://www.toptal.com/developers/gitignore/api/reactnative
-android/.project
-android/app/.project
