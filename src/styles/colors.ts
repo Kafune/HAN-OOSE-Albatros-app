@@ -1,6 +1,9 @@
 const colors = {
-  primary: '#0CA596',
+  main: '#0CA596',
   secondary: '#FADF59',
+};
+
+export const brittishPalette = {
   red: '#e84118',
   blue: '#0097e6',
   naval: '#40739e',
