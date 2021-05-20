@@ -12,7 +12,7 @@ import Dialog from 'react-native-dialog';
 import {Duration} from '../core/maps/Duration';
 import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 import _ from 'lodash';
-import { setStoreRouteLine } from '../core/redux/actions/routeLineActions';
+import {setStoreRouteLine} from '../core/redux/actions/routeLineActions';
 
 type props = {
   navigation: {navigate: (arg0: string, arg1: any) => void};
@@ -37,8 +37,10 @@ const RecordedActivity: React.FC<props> = props => {
           label="Verwijderen"
           onPress={() => {
             setRemoveDialog(false);
-            props.navigation.popToTop();
-            props.navigation.navigate('routesMaps', {screen: 'main'});
+            props.navigation.reset({
+              index: 0,
+              routes: [{name: 'app'}],
+            });
             dispatch(setStoreWalkedRoute(null));
           }}
         />
