@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Maps from '../components/Maps';
 import colors, {brittishPalette} from '../styles/colors';
 import {RouteMapper} from '../core/mapper/RouteMapper';
@@ -9,20 +9,15 @@ import {MapsPoint} from '../core/maps/MapsPoints';
 import {ActivityController} from '../core/controller/ActivityController';
 import {ActivityMapper} from '../core/mapper/ActivityMapper';
 import Dialog from 'react-native-dialog';
-import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
+import {Duration} from '../core/maps/Duration';
 
 type props = {
-  navigation: {navigate: (arg0: string) => void};
+  navigation: {navigate: (arg0: string, arg1: any) => void};
 };
 
 const RecordedActivity: React.FC<props> = props => {
   const recordedActivityState = useSelector(state => state.walkedRoute);
   const [removeDialog, setRemoveDialog] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(recordedActivityState);
-  }, [recordedActivityState]);
 
   return (
     <>
@@ -35,8 +30,7 @@ const RecordedActivity: React.FC<props> = props => {
           label="Verwijderen"
           onPress={() => {
             setRemoveDialog(false);
-            dispatch(setStoreWalkedRoute(null));
-            props.navigation.navigate('routesMaps');
+            props.navigation.navigate('routesMaps', {screen: 'app'});
           }}
         />
         <Dialog.Button
@@ -57,50 +51,50 @@ const RecordedActivity: React.FC<props> = props => {
           />
         </View>
 
-      <View style={styles.activityGrid}>
-        <View style={styles.activityItem}>
-          <View>
-            <Text style={styles.activityHeaderText}>Route Naam:</Text>
-            <Text style={styles.activityItemText}>
-              {recordedActivityState.name}
-            </Text>
+        <View style={styles.activityGrid}>
+          <View style={styles.activityItem}>
+            <View>
+              <Text style={styles.activityHeaderText}>Route Naam:</Text>
+              <Text style={styles.activityItemText}>
+                {recordedActivityState.name}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.activityHeaderText}>Afstand:</Text>
+              <Text style={styles.activityItemText}>
+                {recordedActivityState.distance.toString().substring(0, 4)} km
+              </Text>
+            </View>
           </View>
-          <View>
-            <Text style={styles.activityHeaderText}>Afstand:</Text>
-            <Text style={styles.activityItemText}>
-              {recordedActivityState.distance.toString().substring(0, 4)} km
-            </Text>
+
+          <View style={styles.activityItem}>
+            <View>
+              <Text style={styles.activityHeaderText}>Gelopen Tijd:</Text>
+              <Text style={styles.activityItemText}>
+                {new Duration(recordedActivityState.duration).getHMS()}
+              </Text>
+            </View>
+            <View>
+              <Text style={styles.activityHeaderText}>Tempo:</Text>
+              <Text style={styles.activityItemText}>
+                {(
+                  recordedActivityState.distance /
+                  (recordedActivityState.duration / 1000 / 60 / 60)
+                ).toFixed(2)}{' '}
+                km/u
+              </Text>
+            </View>
           </View>
         </View>
 
-        <View style={styles.activityItem}>
-          <View>
-            <Text style={styles.activityHeaderText}>Gelopen Tijd:</Text>
-            <Text style={styles.activityItemText}>
-              {new Duration(recordedActivityState.duration).getHMS()}
-            </Text>
-          </View>
-          <View>
-            <Text style={styles.activityHeaderText}>Tempo:</Text>
-            <Text style={styles.activityItemText}>
-              {(
-                recordedActivityState.distance /
-                (recordedActivityState.duration / 1000 / 60 / 60)
-              ).toFixed(2)}{' '}
-              km/u
+        <View>
+          <View style={styles.scoreWrapper}>
+            <Text style={styles.scoreText}>Score</Text>
+            <Text style={styles.scoreNumber}>
+              {recordedActivityState.point.toFixed(0)}
             </Text>
           </View>
         </View>
-      </View>
-
-      <View>
-        <View style={styles.scoreWrapper}>
-          <Text style={styles.scoreText}>Score</Text>
-          <Text style={styles.scoreNumber}>
-            {recordedActivityState.point.toFixed(0)}
-          </Text>
-        </View>
-      </View>
 
         <View style={styles.activityGrid}>
           <View
@@ -128,7 +122,7 @@ const RecordedActivity: React.FC<props> = props => {
                   const dto = ActivityMapper.toDTO(recordedActivityState);
                   ActivityController.post(dto).then(() => {
                     // Return back to the main page when saved.
-                    props.navigation.navigate('app');
+                    props.navigation.navigate('app', {screen: 'app'});
                   });
                 }}>
                 <MaterialCommunityIcons

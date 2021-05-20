@@ -23,7 +23,7 @@ const StackContainer = () => {
   const userLoggedIn = useSelector(state => state.user.username);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
