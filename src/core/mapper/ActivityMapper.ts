@@ -7,7 +7,7 @@ export class ActivityMapper {
    * Maps an activity to an activityDTO.
    * @param {Activity} activity
    */
-  static toActivityDTO(activity: Activity) {
+  static toDTO(activity: Activity) {
     const activityDTO: ActivityDTO = {
       routeId: activity.routeId,
       userId: activity.userId,

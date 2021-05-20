@@ -78,7 +78,7 @@ const RecordedActivity: React.FC<props> = props => {
           <View style={styles.button}>
             <Pressable
               onPress={() => {
-                const dto = ActivityMapper.toActivityDTO(recordedActivityState);
+                const dto = ActivityMapper.toDTO(recordedActivityState);
                 ActivityController.post(dto).then(() => {
                   // Return back to the main page when saved.
                   props.navigation.navigate('app');
