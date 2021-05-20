@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Maps from '../components/Maps';
 import colors, {brittishPalette} from '../styles/colors';
 import {RouteMapper} from '../core/mapper/RouteMapper';
@@ -10,15 +10,22 @@ import {ActivityController} from '../core/controller/ActivityController';
 import {ActivityMapper} from '../core/mapper/ActivityMapper';
 import Dialog from 'react-native-dialog';
 import {Duration} from '../core/maps/Duration';
+import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
+import _ from 'lodash';
+import { setStoreRouteLine } from '../core/redux/actions/routeLineActions';
 
 type props = {
   navigation: {navigate: (arg0: string, arg1: any) => void};
 };
 
 const RecordedActivity: React.FC<props> = props => {
+  const dispatch = useDispatch();
   const recordedActivityState = useSelector(state => state.walkedRoute);
   const [removeDialog, setRemoveDialog] = useState<boolean>(false);
 
+  if (_.isEmpty(recordedActivityState)) {
+    return <></>;
+  }
   return (
     <>
       <Dialog.Container visible={removeDialog}>
@@ -30,7 +37,9 @@ const RecordedActivity: React.FC<props> = props => {
           label="Verwijderen"
           onPress={() => {
             setRemoveDialog(false);
-            props.navigation.navigate('routesMaps', {screen: 'app'});
+            props.navigation.popToTop();
+            props.navigation.navigate('routesMaps', {screen: 'main'});
+            dispatch(setStoreWalkedRoute(null));
           }}
         />
         <Dialog.Button
@@ -43,12 +52,14 @@ const RecordedActivity: React.FC<props> = props => {
           <Text style={styles.headerText}>Gelopen Route</Text>
         </View>
         <View style={styles.container}>
-          <Maps
-            mapsPoint={new MapsPoint([])}
-            mapsLine={RouteMapper.toMapsLine(recordedActivityState)}
-            zoom={14}
-            center={recordedActivityState.middlePoint}
-          />
+          {!_.isEmpty(recordedActivityState) ? (
+            <Maps
+              mapsPoint={new MapsPoint([])}
+              mapsLine={RouteMapper.toMapsLine(recordedActivityState)}
+              zoom={14}
+              center={recordedActivityState.middlePoint}
+            />
+          ) : null}
         </View>
 
         <View style={styles.activityGrid}>

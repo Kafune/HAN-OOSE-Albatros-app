@@ -23,7 +23,7 @@ const StackContainer = () => {
   const userLoggedIn = useSelector(state => state.user.username);
 
   return (
-    <NavigationContainer independent={true}>
+    <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -40,22 +40,20 @@ const StackContainer = () => {
 
 const ActivityContainer = () => {
   return (
-    <NavigationContainer independent={true}>
-      <Activity.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}>
-        <Stack.Screen name="Record" component={RecordActivity} />
-        <Stack.Screen name="recordedActivity" component={RecordedActivity} />
-      </Activity.Navigator>
-    </NavigationContainer>
+    <Activity.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Record" component={RecordActivity} />
+      <Stack.Screen name="recordedActivity" component={RecordedActivity} />
+    </Activity.Navigator>
   );
 };
 
 const MainContainer = () => {
   return (
     <Tab.Navigator
-      initialRouteName="viewMaps"
+      initialRouteName="routesMaps"
       tabBarOptions={{
         activeTintColor: colors.main,
         safeAreaInsets: {bottom: 5},

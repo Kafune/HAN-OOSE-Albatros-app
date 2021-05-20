@@ -43,6 +43,24 @@ const RecordActivity: React.FC<props> = (props): JSX.Element => {
   );
   const [dialog, setDialog] = useState<boolean>(false);
 
+  const reset = () => {
+    clearInterval(intervalNr);
+    setUpdateTime(1);
+    setTrackingError(false);
+    setIntervalNr(0);
+    setRecordTime([new RecordTime(false)]);
+    setWalkedRoute(new MapsLine([new MapsCoordinate(5.211933, 52.512032)]));
+    setDialog(false);
+    setMap(
+      <TrackMap
+        mapsLines={[route, walkedRoute]}
+        mapsPoint={new MapsPoint([])}
+        center={walkedRoute.getLastCoordinate().toArray()}
+        zoom={14}
+      />,
+    );
+  };
+
   //Trackmap is in a state because it wouldn't update from its own.
   //Using a state makes sure it will allways be updated.
   const [Map, setMap] = useState<object>(
@@ -191,6 +209,8 @@ const RecordActivity: React.FC<props> = (props): JSX.Element => {
             );
             // navigate
             props.navigation.navigate('recordedActivity');
+
+            reset();
           }}
         />
       </Dialog.Container>
