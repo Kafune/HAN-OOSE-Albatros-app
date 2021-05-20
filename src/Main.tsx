@@ -75,7 +75,7 @@ const MainContainer = () => {
         component={ActivityContainer}
         options={{
           tabBarVisible: false,
-          tabBarLabel: 'Record',
+          tabBarLabel: 'Opnemen',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="record-circle"
@@ -90,9 +90,13 @@ const MainContainer = () => {
         name="newRoute"
         component={NewRoutesPage}
         options={{
-          tabBarLabel: 'Add route',
+          tabBarLabel: 'Voeg Route Toe',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="map" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="map-marker-plus"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
