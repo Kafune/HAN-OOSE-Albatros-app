@@ -27,9 +27,9 @@ const StackContainer = () => {
           headerShown: false,
         }}>
         {userLoggedIn ? (
-          <Stack.Screen name="app" component={MainContainer} />
+          <Stack.Screen name="app" component={LoginPage} />
         ) : (
-          <Stack.Screen name="login" component={LoginPage} />
+          <Stack.Screen name="login" component={NewRoutesPage} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

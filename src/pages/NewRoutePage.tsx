@@ -17,6 +17,8 @@ import colors from '../styles/colors';
 import Dialog from 'react-native-dialog';
 import api from '../core/data/api';
 import {TextInput} from 'react-native-gesture-handler';
+import {Error} from '../components/Error';
+import {RouteMapper} from '../core/mapper/RouteMapper';
 
 const NewRoutePage: FC = () => {
   const [selectCoordinate, setSelectCoordinate] = useState<boolean>(false);
@@ -26,12 +28,12 @@ const NewRoutePage: FC = () => {
   const [POIDialog, setPOIDialog] = useState(false);
   const [currentMapPoint, setCurrentMapPoint] = useState<number[]>([]);
   const [currentPOIName, setCurrentPOIName] = useState<string>('');
-  const [currentPOIDescription, setCurrentPOIDescription] = useState<string>(
-    '',
-  );
+  const [currentPOIDescription, setCurrentPOIDescription] =
+    useState<string>('');
   const [routeName, setRouteName] = useState<String>('');
   const [routeDescription, setRouteDescription] = useState<String>('');
   const [routeDistance, setRouteDistance] = useState<number>(1);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const addCoordinate = (coordinate: number[]) => {
     setMapPoints([...mapPoints, coordinate]);
@@ -70,52 +72,52 @@ const NewRoutePage: FC = () => {
     setPOIDialog(false);
   };
 
+  const handleErrorMessage = () => {
+    if (showErrorMessage) {
+      return (
+        <Error errorCode={400} message="Er is geen route naam ingevoerd!" />
+      );
+    }
+  };
+
   const saveNewRoute = async () => {
     // TODO: calculate distance
+    if (routeName === '') {
+      setShowErrorMessage(true);
+      setTimeout(() => setShowErrorMessage(false), 5000);
+    } else {
+      const routeInfo = {
+        name: routeName,
+        description: routeDescription,
+        distance: routeDistance,
+        segments: [],
+      };
 
-    const routeInfo = {
-      // name: routeName
-      // description: routeDescription,
-      // distance: routeDistance,
-      // segments: [
+      mapPoints.forEach(mapPoint => {
+        console.log(
+          new MapsLine([new MapsCoordinate(mapPoint[0], mapPoint[1])]),
+        );
+      });
+
       // {
+      //  id: 1
       //   startCoordinate: {
       //     latitude: mapPoints[0][1],
       //     longitude: mapPoints[0][0],
       //   },
       //   endCoordinate: {
-      // latitude: mapPoints[mapPoints.length - 1][1],
+      //     latitude: mapPoints[mapPoints.length - 1][1],
       //     longitude: mapPoints[mapPoints.length - 1][0],
       //   },
       // },
-      // ],
-    };
+      let segments = RouteMapper.mapsLineToRoute();
 
-    let data = new FormData();
-    data.append('name', routeName);
-    data.append('description', routeDescription);
-    data.append('distance', routeDistance);
-
-    const apiOptions = {
-      baseUrl: api.baseUrl,
-      headers: {
-        method: 'POST',
-        credentials: 'same-origin',
-        mode: 'same-origin',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: data,
-      },
-    };
-
-    console.log(routeInfo);
-    console.log(apiOptions);
-
-    await fetch(`${api.baseUrl}/routes/`, apiOptions)
-      .then(response => response.json())
-      .then(response => console.log(response));
+      // await fetch(`${api.baseUrl}/routes/`, {
+      //   method: 'POST',
+      //   headers: api.headers.headers,
+      //   body: JSON.stringify(routeInfo),
+      // }).then(response => console.log(response));
+    }
   };
 
   if (selectCoordinate) {
@@ -144,6 +146,9 @@ const NewRoutePage: FC = () => {
           <Text style={styles.title}>Segmenten in routes</Text>
         )}
         {mapPoints.map((mapPoint, index) => {
+          console.log(
+            new MapsLine([new MapsCoordinate(mapPoint[0], mapPoint[1])]),
+          );
           return (
             <Fragment key={JSON.stringify(mapPoint)}>
               <TouchableOpacity
@@ -268,6 +273,8 @@ const NewRoutePage: FC = () => {
             onChangeText={description => setRouteDescription(description)}
           />
         </View>
+
+        <View>{handleErrorMessage()}</View>
       </View>
 
       <View style={styles.button}>

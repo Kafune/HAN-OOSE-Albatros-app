@@ -107,4 +107,42 @@ export class RouteMapper {
 
     return new Activity(-1, -1, -1, -1, -1, distance, segments);
   }
+
+  /**
+   * mapsLine To Route domain converter.
+   *
+   * @static
+   * @param {MapsLine} mapsLine
+   * @return {Activity}
+   * @memberof RouteMapper
+   */
+  static mapsLineToRoute(mapsLine: MapsLine): Route {
+    let distance = mapsLine.getTotalKm();
+    let segments: Segment[] = [];
+    let old: MapsCoordinate;
+    let first: boolean = true;
+    mapsLine.coordinates.forEach(element => {
+      if (first) {
+        first = false;
+      } else {
+        segments.push({
+          id: -1,
+          start: {
+            latitude: old.latitude,
+            longitude: old.longitude,
+            altitude: -1,
+          },
+          end: {
+            latitude: element.latitude,
+            longitude: element.longitude,
+            altitude: -1,
+          },
+        });
+      }
+
+      old = element;
+    });
+
+    return new Route(-1, '', distance, '', segments);
+  }
 }
