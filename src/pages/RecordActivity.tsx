@@ -15,6 +15,7 @@ import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
+import {MapsLineMapper} from '../core/mapper/MapsLineMapper';
 
 type props = {
   navigation: {navigate: (arg0: string) => void};
@@ -177,7 +178,7 @@ const RecordActivity: React.FC<props> = (props): JSX.Element => {
             clearInterval(intervalNr);
             console.log('Stopped!');
             setDialog(false);
-            let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
+            let reduxRoute = MapsLineMapper.mapsLineToActivity(walkedRoute);
             reduxRoute.calculatePoints();
             reduxRoute.routeId = originalRoute.id;
             dispatch(

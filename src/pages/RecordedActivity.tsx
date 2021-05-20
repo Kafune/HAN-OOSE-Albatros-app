@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
@@ -6,8 +6,14 @@ import Maps from '../components/Maps';
 import colors, {brittishPalette} from '../styles/colors';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {MapsPoint} from '../core/maps/MapsPoints';
+import {ActivityController} from '../core/controller/ActivityController';
+import {ActivityMapper} from '../core/mapper/ActivityMapper';
 
-const RecordedActivity: FC = () => {
+type props = {
+  navigation: {navigate: (arg0: string) => void};
+};
+
+const RecordedActivity: React.FC<props> = props => {
   const recordedActivityState = useSelector(state => state.walkedRoute);
 
   useEffect(() => {
@@ -72,7 +78,11 @@ const RecordedActivity: FC = () => {
           <View style={styles.button}>
             <Pressable
               onPress={() => {
-                console.log('pressed');
+                const dto = ActivityMapper.toActivityDTO(recordedActivityState);
+                ActivityController.post(dto).then(() => {
+                  // Return back to the main page when saved.
+                  props.navigation.navigate('app');
+                });
               }}>
               <MaterialCommunityIcons
                 name="content-save"

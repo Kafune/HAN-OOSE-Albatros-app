@@ -1,5 +1,6 @@
 import SegmentResponseDTO from '../dto/SegmentResponseDTO';
 import {Segment} from '../domain/Segment';
+import {SegmentDTO} from "../dto/SegmentDTO";
 
 export class SegmentMapper {
   /**
@@ -23,5 +24,26 @@ export class SegmentMapper {
    */
   static multipleToDomain(DTOs: SegmentResponseDTO[]): Segment[] {
     return DTOs.map(DTO => this.toDomain(DTO));
+  }
+
+  /**
+   * Maps a single Segment domain to a DTO.
+   * @returns {Segment}
+   * @param segment
+   */
+  static toDTO(segment: Segment): SegmentDTO {
+    return {
+      startCoordinate: segment.start,
+      endCoordinate: segment.end,
+    };
+  }
+
+  /**
+   * Maps segments to DTOs.
+   * @returns {Segment}
+   * @param segments
+   */
+  static multipleToDTO(segments: Segment[]): SegmentDTO[] {
+    return segments.map(segment => this.toDTO(segment));
   }
 }

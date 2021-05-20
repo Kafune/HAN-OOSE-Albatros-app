@@ -10,7 +10,7 @@ export class RouteController {
    * @returns {Promise<Route[]>}
    */
   static async index(): Promise<Route[]> {
-    let routes: Route[] = await fetch(`${api.baseUrl}/routes`, api.headers)
+    let routes: Route[] = await fetch(`${api.baseUrl}/routes`, api.headersGet)
       .then(fetchedRoutes => fetchedRoutes.json())
       .then(fetchedRoutes => RouteMapper.multipleToDomain(fetchedRoutes));
 
@@ -27,7 +27,7 @@ export class RouteController {
    * @returns {Promise<Segment[]>}
    */
   static async getSegments(routeId: number): Promise<Segment[]> {
-    return await fetch(`${api.baseUrl}/segments/${routeId}`, api.headers)
+    return await fetch(`${api.baseUrl}/segments/${routeId}`, api.headersGet)
       .then(segments => segments.json())
       .then(segments => SegmentMapper.multipleToDomain(segments));
   }

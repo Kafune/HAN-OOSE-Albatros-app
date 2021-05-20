@@ -36,16 +36,14 @@ const LoginPage: FC = ({navigation}) => {
         imageUrl: googleUserInfo.user.photo,
       };
 
-      await fetch(`${api.baseUrl}/registration`, {
-        method: 'POST',
-        headers: api.headers.headers,
-        body: JSON.stringify(newData),
-      }).then(result => {
-        if (result.status === 200 || result.status === 201) {
-          dispatch(setStoreUser(newData));
-          navigation.navigate('app');
-        }
-      });
+      await fetch(`${api.baseUrl}/registration`, api.headersPost(newData)).then(
+        result => {
+          if (result.status === 200 || result.status === 201) {
+            dispatch(setStoreUser(newData));
+            navigation.navigate('app');
+          }
+        },
+      );
     } catch (error) {
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
