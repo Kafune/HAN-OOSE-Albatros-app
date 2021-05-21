@@ -3,8 +3,8 @@ import {SegmentDTO} from './SegmentDTO';
 export interface ActivityDTO {
   routeId: number;
   userId: number;
-  point: number;
+  point: Number;
   duration: number;
-  distance: number;
+  distance: Number;
   segments: SegmentDTO[];
 }

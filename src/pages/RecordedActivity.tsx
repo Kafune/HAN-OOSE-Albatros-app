@@ -116,7 +116,6 @@ const RecordedActivity: React.FC<props> = props => {
               <Pressable
                 onPress={() => {
                   setRemoveDialog(true);
-                  // TODO: Move user if yes.
                 }}>
                 <MaterialCommunityIcons
                   name="delete"
@@ -133,9 +132,13 @@ const RecordedActivity: React.FC<props> = props => {
               <Pressable
                 onPress={() => {
                   const dto = ActivityMapper.toDTO(recordedActivityState);
+                  console.log(dto);
                   ActivityController.post(dto).then(() => {
                     // Return back to the main page when saved.
-                    props.navigation.navigate('app', {screen: 'app'});
+                    props.navigation.reset({
+                      index: 0,
+                      routes: [{name: 'app'}],
+                    });
                   });
                 }}>
                 <MaterialCommunityIcons

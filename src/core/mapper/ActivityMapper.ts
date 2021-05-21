@@ -11,9 +11,9 @@ export class ActivityMapper {
     const dto: ActivityDTO = {
       routeId: activity.routeId,
       userId: activity.userId,
-      point: activity.point,
+      point: Number(activity.point.toFixed(0)),
       duration: activity.duration,
-      distance: activity.distance,
+      distance: Number(activity.distance.toFixed(2)),
       segments: SegmentMapper.multipleToDTO(activity.segments),
     };
 
