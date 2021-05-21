@@ -22,9 +22,9 @@ type props = {
 };
 
 const RecordActivity: React.FC<props> = (props): JSX.Element => {
-  //@ts-ignore TS error
   const route = useSelector(state =>
-    state.routeLine !== undefined
+    //@ts-ignore TS error
+    state.routeLine !== undefined //@ts-ignore TS error
       ? RouteMapper.toMapsLine(state.routeLine)
       : new MapsLine([]),
   ); //@ts-ignore TS error

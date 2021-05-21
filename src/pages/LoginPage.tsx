@@ -64,19 +64,19 @@ const LoginPage: FC = ({navigation}) => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.imageWrapper}>
-        <Text style={styles.runConnectText}>RunConnect</Text>
         <SliderBox
           disableOnPress
           sliderBoxHeight={'100%'}
           images={[
-            'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/w1700-1591-2/Jeugdenjongeren-jongerenwerk.jpg',
             'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/Headers-corporate-merken/Thuis-en-buurt/w1700-2831-1/Headers_Thuis_en_Buurt_3.jpg',
+            'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/w1700-1591-2/Jeugdenjongeren-jongerenwerk.jpg',
             'https://www.malkander-ede.nl/bestanden/Bibliotheek/Malkander/Headers/Headers-corporate-merken/Thuis-en-buurt/w1700-2834-1/Headers_Thuis_en_Buurt_7.jpg',
           ]}
         />
       </View>
       <View style={styles.buttonWrapper}>
         <View>
+          <Text style={styles.runConnectText}>RunConnect</Text>
           <Text style={styles.slogan}>Samen in Beweging</Text>
         </View>
         <GoogleSigninButton
@@ -97,16 +97,15 @@ const styles = StyleSheet.create({
     top: '25%',
   },
   wrapper: {
-    justifyContent: 'center',
     alignItems: 'center',
   },
   imageWrapper: {
-    height: '50%',
+    height: '66%',
   },
   runConnectText: {
     fontSize: 32,
-    padding: 12,
-    marginBottom: 16,
+    color: 'black',
+    paddingBottom: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -115,10 +114,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center',
     marginBottom: 32,
-    marginTop: 16,
   },
   buttonWrapper: {
-    top: '15%',
+    top: '5%',
     height: '25%',
   },
 });
