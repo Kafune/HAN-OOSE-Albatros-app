@@ -1,6 +1,12 @@
-import {MapsLine} from '../../maps/MapsLine';
+import {Route} from '../../domain/Route';
 
-const initialState = new MapsLine([]);
+const initialState = new Route(-1, '', -1, '', [
+  {
+    id: -1,
+    start: {latitude: -1, longitude: -1, altitude: -1},
+    end: {latitude: -1, longitude: -1, altitude: -1},
+  },
+]);
 
 const routeLineReducer = (state = initialState, action) => {
   switch (action.type) {

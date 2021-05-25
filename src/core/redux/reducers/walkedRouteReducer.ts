@@ -2,7 +2,7 @@ const initialState = {};
 
 const walkedRouteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ROUTE_LINE': {
+    case 'SET_WALKED_ROUTE': {
       return {
         ...action.payload,
       };

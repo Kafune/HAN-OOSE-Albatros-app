@@ -13,8 +13,10 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {Provider, useSelector} from 'react-redux';
 
 import {store, persistor} from './core/redux/store/Store';
+import RecordedActivity from './pages/RecordedActivity';
 
 const Stack = createStackNavigator();
+const Activity = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackContainer = () => {
@@ -36,10 +38,22 @@ const StackContainer = () => {
   );
 };
 
+const ActivityContainer = () => {
+  return (
+    <Activity.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Record" component={RecordActivity} />
+      <Stack.Screen name="recordedActivity" component={RecordedActivity} />
+    </Activity.Navigator>
+  );
+};
+
 const MainContainer = () => {
   return (
     <Tab.Navigator
-      initialRouteName="viewMaps"
+      initialRouteName="routesMaps"
       tabBarOptions={{
         activeTintColor: colors.main,
         safeAreaInsets: {bottom: 5},
@@ -56,9 +70,9 @@ const MainContainer = () => {
       />
       <Tab.Screen
         name="Record"
-        component={RecordActivity}
+        component={ActivityContainer}
         options={{
-          tabBarLabel: 'Record',
+          tabBarLabel: 'Opnemen',
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="record-circle"
@@ -68,13 +82,18 @@ const MainContainer = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="newRoute"
         component={NewRoutesPage}
         options={{
-          tabBarLabel: 'Add route',
+          tabBarLabel: 'Voeg Route Toe',
           tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="map" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="map-marker-plus"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />

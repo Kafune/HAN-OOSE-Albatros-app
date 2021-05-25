@@ -15,10 +15,19 @@ import {RecordTime} from '../core/maps/RecordTime';
 import Dialog from 'react-native-dialog';
 import {RouteMapper} from '../core/mapper/RouteMapper';
 import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
+import {MapsLineMapper} from '../core/mapper/MapsLineMapper';
 
-const RecordActivity: FC = () => {
-  //@ts-ignore TS redux error We cant do anything about that
-  const route = useSelector(state => RouteMapper.toMapsLine(state.routeLine)); //@ts-ignore TS redux error We cant do anything about that
+type props = {
+  navigation: {navigate: (arg0: string) => void};
+};
+
+const RecordActivity: React.FC<props> = (props): JSX.Element => {
+  const route = useSelector(state =>
+    //@ts-ignore TS error
+    state.routeLine !== undefined //@ts-ignore TS error
+      ? RouteMapper.toMapsLine(state.routeLine)
+      : new MapsLine([]),
+  ); //@ts-ignore TS error
   const originalRoute = useSelector(state => state.routeLine);
   const dispatch = useDispatch();
 
@@ -33,6 +42,24 @@ const RecordActivity: FC = () => {
     new MapsLine([new MapsCoordinate(5.211933, 52.512032)]),
   );
   const [dialog, setDialog] = useState<boolean>(false);
+
+  const reset = () => {
+    clearInterval(intervalNr);
+    setUpdateTime(1);
+    setTrackingError(false);
+    setIntervalNr(0);
+    setRecordTime([new RecordTime(false)]);
+    setWalkedRoute(new MapsLine([new MapsCoordinate(5.211933, 52.512032)]));
+    setDialog(false);
+    setMap(
+      <TrackMap
+        mapsLines={[route, walkedRoute]}
+        mapsPoint={new MapsPoint([])}
+        center={walkedRoute.getLastCoordinate().toArray()}
+        zoom={14}
+      />,
+    );
+  };
 
   //Trackmap is in a state because it wouldn't update from its own.
   //Using a state makes sure it will allways be updated.
@@ -169,10 +196,21 @@ const RecordActivity: FC = () => {
             clearInterval(intervalNr);
             console.log('Stopped!');
             setDialog(false);
-            let reduxRoute = RouteMapper.mapsLineToActivity(walkedRoute);
+            let reduxRoute = MapsLineMapper.mapsLineToActivity(walkedRoute);
+            reduxRoute.duration = getTimeWithoutPauses();
             reduxRoute.calculatePoints();
             reduxRoute.routeId = originalRoute.id;
-            dispatch(setStoreWalkedRoute(reduxRoute));
+            dispatch(
+              setStoreWalkedRoute({
+                ...reduxRoute,
+                middlePoint: reduxRoute.middlePoint,
+                name: originalRoute.name,
+              }),
+            );
+            // navigate
+            props.navigation.navigate('recordedActivity');
+
+            reset();
           }}
         />
       </Dialog.Container>
