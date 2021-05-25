@@ -3,6 +3,8 @@ import {MapsCoordinate} from '../maps/MapsCoordinate';
 import {MapsPoint} from '../maps/MapsPoints';
 import {MapsLine} from '../maps/MapsLine';
 import RouteResponseDTO from '../dto/RouteResponseDTO';
+import {Activity} from '../domain/Activity';
+import {Segment} from '../domain/Segment';
 
 export class RouteMapper {
   /**
@@ -19,8 +21,8 @@ export class RouteMapper {
     });
 
     const endPoint = new MapsCoordinate(
-      route.endCoordinates.longitude,
-      route.endCoordinates.latitude,
+      route.segments[route.segments.length - 1].end.longitude,
+      route.segments[route.segments.length - 1].end.latitude,
     );
 
     return new MapsLine([...startPoints, endPoint]);
