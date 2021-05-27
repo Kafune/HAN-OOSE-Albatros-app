@@ -1,7 +1,7 @@
 import {Activity} from '../domain/Activity';
 import {ActivityDTO} from '../dto/ActivityDTO';
 import {SegmentMapper} from './SegmentMapper';
-
+import {Route} from '../domain/Route';
 export class ActivityMapper {
   /**
    * Maps an activity to an activityDTO.
@@ -18,5 +18,23 @@ export class ActivityMapper {
     };
 
     return dto;
+  }
+
+  /**
+   * Needs a activity and maps it to a Route
+   *
+   * @static
+   * @param {Activity} activity
+   * @return {Route}
+   * @memberof ActivityMapper
+   */
+  static activityToRoute(activity: Activity): Route {
+    return new Route(
+      activity.activityId,
+      '-1',
+      activity.distance,
+      '-1',
+      activity.segments,
+    );
   }
 }
