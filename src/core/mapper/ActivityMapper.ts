@@ -21,7 +21,7 @@ export class ActivityMapper {
   }
 
   /**
-   * Needs a activity and maps it to a
+   * Needs a activity and maps it to a Route
    *
    * @static
    * @param {Activity} activity
