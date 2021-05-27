@@ -20,6 +20,14 @@ export class ActivityMapper {
     return dto;
   }
 
+  /**
+   * Needs a activity and maps it to a
+   *
+   * @static
+   * @param {Activity} activity
+   * @return {Route}
+   * @memberof ActivityMapper
+   */
   static activityToRoute(activity: Activity): Route {
     return new Route(
       activity.activityId,
