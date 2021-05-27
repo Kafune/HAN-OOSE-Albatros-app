@@ -30,9 +30,9 @@ const StackContainer = () => {
           headerShown: false,
         }}>
         {userLoggedIn ? (
-          <Stack.Screen name="app" component={LoginPage} />
+          <Stack.Screen name="app" component={MainContainer} />
         ) : (
-          <Stack.Screen name="login" component={MainContainer} />
+          <Stack.Screen name="login" component={LoginPage} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

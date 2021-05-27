@@ -39,6 +39,7 @@ const LoginPage: FC = ({navigation}) => {
       await fetch(`${api.baseUrl}/registration`, api.headersPost(newData)).then(
         result => {
           if (result.status === 200 || result.status === 201) {
+            console.log(result);
             dispatch(setStoreUser(newData));
             navigation.navigate('app');
           }
