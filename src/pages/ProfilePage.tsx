@@ -1,50 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import ProfileUserInfo from '../components/ProfileUserInfo';
-import { ActivityMapper } from '../core/mapper/ActivityMapper';
+import RouteInformation from '../components/RouteInformation';
+import {Activity} from '../core/domain/Activity';
+import {Route} from '../core/domain/Route';
+import {ActivityMapper} from '../core/mapper/ActivityMapper';
 
 const ProfilePage: React.FC = () => {
   const userData = useSelector(state => state.user);
 
-  //todo: get from back-end
-  const activities = [
-    {
-      routeId: 1,
-      userId: userData.username,
-      point: 100,
-      duration: 50,
-      distance: 23,
-      segments: [
-        {
-          endCoordinate: {
-            longitude: 5.679981,
-            latitude: 52.034237,
-            altitude: 27,
-          },
-          startCoordinate: {
-            longitude: 5.679166,
-            latitude: 52.030257,
-            altitude: 26.0,
-          },
+  const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
+
+  const activities: Activity[] = [
+    new Activity(-1, 1, userData.username, 100, 50, 23, [
+      {
+        id: 1,
+        end: {
+          longitude: 5.679981,
+          latitude: 52.034237,
+          altitude: 27,
         },
-        {
-          endCoordinate: {
-            longitude: 5.3232,
-            latitude: 52.565,
-            altitude: 21,
-          },
-          startCoordinate: {
-            longitude: 5.55,
-            latitude: 52.66,
-            altitude: 28.0,
-          },
+        start: {
+          longitude: 5.679166,
+          latitude: 52.030257,
+          altitude: 26.0,
         },
-      ],
-    },
+      },
+    ]),
+    new Activity(-1, 1, userData.username, 100, 50, 23, []),
   ];
 
-  const activityRoutes = ActivityMapper.activityToRoute(activities[0]);
+  // TODO: replace dummy with fetch from back-end
+  // useEffect(() => {});
+
+  let activityRoutes: Routes[] = activities.map(activity =>
+    ActivityMapper.activityToRoute(activity),
+  );
 
   return (
     <>
@@ -69,9 +61,14 @@ const ProfilePage: React.FC = () => {
         </View>
         <View style={styles.activities}>
           <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
-          {/* {activities.map(activity => {
-            
-          })} */}
+          {activityRoutes.map(route => {
+            <RouteInformation
+              isActive={route.id === highlightedRoute?.id}
+              key={route.id}
+              route={route}
+              setHighlightedRoute={setHighlightedRoute}
+            />;
+          })}
         </View>
       </View>
     </>
