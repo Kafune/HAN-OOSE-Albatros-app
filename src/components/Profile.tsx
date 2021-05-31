@@ -4,7 +4,7 @@ import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from '../components/RouteInformation';
 import {Activity} from '../core/domain/Activity';
 import api from '../core/data/api';
-import { ActivityMapper } from '../core/mapper/ActivityMapper';
+import {ActivityMapper} from '../core/mapper/ActivityMapper';
 
 type Props = {
   userId: Number;
