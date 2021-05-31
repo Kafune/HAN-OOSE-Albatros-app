@@ -20,6 +20,9 @@ const FeedPage: FC = () => {
           <Text style={styles.profilePoints}>100 Punten</Text>
         </View>
       </TouchableOpacity>
+      <View style={styles.feedWrapper}>
+        <Text style={styles.feedText}>Activiteiten</Text>
+      </View>
     </>
   );
 };
@@ -44,6 +47,21 @@ const styles = StyleSheet.create({
   },
   profilePoints: {
     fontSize: 14,
+  },
+  feedWrapper: {
+    borderTopWidth: 2,
+    marginTop: 16,
+  },
+  feedText: {
+    textAlign: 'center',
+    backgroundColor: '#F0F0F1FF',
+    position: 'absolute',
+    width: 120,
+    fontStyle: 'italic',
+    borderRadius: 100,
+    top: -13,
+    alignSelf: 'center',
+    fontSize: 16,
   },
 });
 
