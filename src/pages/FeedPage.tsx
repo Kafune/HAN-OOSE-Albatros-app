@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, Touchable, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
+import colors from '../styles/colors';
 
 const FeedPage: FC = () => {
   const userData = useSelector(state => state.user);
@@ -26,19 +27,71 @@ const FeedPage: FC = () => {
 
       <ScrollView style={styles.scrollViewWrapper}>
         <View style={styles.activityWrapper}>
-          <TouchableOpacity
-            style={styles.activityUserWrapper}
-            onPress={() => console.log(true)}>
-            <Image
-              style={styles.activityImage}
-              source={{uri: userData.imageUrl}}
-            />
-            <Text style={styles.activityUsername}>{userData.username}</Text>
-          </TouchableOpacity>
+          <View style={styles.grid}>
+            <TouchableOpacity
+              style={styles.activityUserWrapper}
+              onPress={() => console.log(true)}>
+              <Image style={styles.activityImage} source={{uri: ''}} />
+              <Text style={styles.activityUsername}>Bart Simpson</Text>
+            </TouchableOpacity>
 
-          <View style={styles.activityTime}>
-            <Text style={styles.italic}>Vandaag</Text>
-            <Text style={styles.italicCenterBold}>11:10</Text>
+            <View style={styles.activityTime}>
+              <Text style={styles.italic}>Vandaag</Text>
+              <Text style={styles.italicCenterBold}>11:10</Text>
+            </View>
+          </View>
+
+          <View style={styles.activityRouteWrapper}>
+            <Text style={styles.activityRouteHeader}>
+              Heeft de route ... gelopen
+            </Text>
+            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
+          </View>
+        </View>
+
+        <View style={styles.activityWrapper}>
+          <View style={styles.grid}>
+            <TouchableOpacity
+              style={styles.activityUserWrapper}
+              onPress={() => console.log(true)}>
+              <Image style={styles.activityImage} source={{uri: ''}} />
+              <Text style={styles.activityUsername}>Bart Simpson</Text>
+            </TouchableOpacity>
+
+            <View style={styles.activityTime}>
+              <Text style={styles.italic}>Vandaag</Text>
+              <Text style={styles.italicCenterBold}>11:10</Text>
+            </View>
+          </View>
+
+          <View style={styles.activityRouteWrapper}>
+            <Text style={styles.activityRouteHeader}>
+              Heeft de route ... gelopen
+            </Text>
+            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
+          </View>
+        </View>
+
+        <View style={styles.activityWrapper}>
+          <View style={styles.grid}>
+            <TouchableOpacity
+              style={styles.activityUserWrapper}
+              onPress={() => console.log(true)}>
+              <Image style={styles.activityImage} source={{uri: ''}} />
+              <Text style={styles.activityUsername}>Bart Simpson</Text>
+            </TouchableOpacity>
+
+            <View style={styles.activityTime}>
+              <Text style={styles.italic}>Vandaag</Text>
+              <Text style={styles.italicCenterBold}>11:10</Text>
+            </View>
+          </View>
+
+          <View style={styles.activityRouteWrapper}>
+            <Text style={styles.activityRouteHeader}>
+              Heeft de route ... gelopen
+            </Text>
+            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
           </View>
         </View>
       </ScrollView>
@@ -69,6 +122,7 @@ const styles = StyleSheet.create({
   },
   feedWrapper: {
     borderTopWidth: 2,
+    borderColor: colors.main,
     marginTop: 16,
   },
   feedText: {
@@ -86,11 +140,15 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
 
-  activityWrapper: {
+  grid: {
     flexDirection: 'row',
-    padding: 6,
+    padding: 12,
+  },
+  activityWrapper: {
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: colors.main,
     backgroundColor: 'white',
   },
   activityUserWrapper: {
@@ -100,6 +158,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 100,
+    backgroundColor: 'black',
   },
   activityUsername: {
     fontSize: 16,
@@ -111,7 +170,8 @@ const styles = StyleSheet.create({
   activityTime: {
     position: 'absolute',
     right: 16,
-    padding: 12,
+    top: 16,
+    padding: 0,
   },
   italic: {
     fontStyle: 'italic',
@@ -120,6 +180,21 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  activityRouteWrapper: {
+    textAlign: 'center',
+    width: '100%',
+    alignItems: 'center',
+    padding: 12,
+    marginBottom: 16,
+  },
+  activityRouteHeader: {
+    fontSize: 21,
+  },
+  activityRouteSubheader: {
+    fontSize: 16,
+    paddingTop: 12,
+    fontStyle: 'italic',
   },
 });
 
