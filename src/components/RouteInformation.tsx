@@ -4,6 +4,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
 import {Activity} from '../core/domain/Activity';
+import {Duration} from '../core/maps/Duration';
 
 interface Props {
   route: Route | Activity;
@@ -28,12 +29,29 @@ const RouteInformation: React.FC<Props> = ({
       />
       <View style={styles.statistics}>
         <Text style={styles.title}>
-          {route instanceof Route ? route.name : route.activityId}
+          {route instanceof Route
+            ? route.name
+            : 'Activiteit ' + route.activityId}
         </Text>
         <Text style={styles.subtitle}>{route.distance} kilometer</Text>
-        <Text style={styles.description}>
-          {route.description.substring(0, 60)}...
-        </Text>
+        {route instanceof Route ? (
+          <Text style={styles.description}>
+            {route.description.substring(0, 60)}...
+          </Text>
+        ) : (
+          <Text style={styles.description}>
+            <Text>
+              Afstand: {route.distance} km{'\n'}
+            </Text>
+            <Text>Tijd: {new Duration(route.duration).getHMS() + '\n'}</Text>
+            <Text>
+              Snelheid:{' '}
+              {(route.distance / (route.duration / 1000 / 60 / 60)).toFixed(2)}{' '}
+              km/u{'\n'}
+            </Text>
+            <Text>Score: {route.point}</Text>
+          </Text>
+        )}
       </View>
       <View style={styles.button}>
         <MaterialCommunityIcons

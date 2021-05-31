@@ -3,8 +3,6 @@ import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from '../components/RouteInformation';
 import {Activity} from '../core/domain/Activity';
-import {Route} from '../core/domain/Route';
-import {ActivityMapper} from '../core/mapper/ActivityMapper';
 import api from '../core/data/api';
 
 type Props = {
@@ -18,11 +16,13 @@ export const Profile: React.FC<Props> = props => {
         api.headersGet,
       );
       const response = await request.json();
+      setUserId(response.userId);
       setUsername(response.username);
       setImageUrl(response.imageURL);
       setFirstName(response.firstName);
       setLastName(response.lastName);
       setEmailAddress(response.emailAddress);
+      setTotalScore(response.score);
     };
 
     getData();
@@ -30,6 +30,7 @@ export const Profile: React.FC<Props> = props => {
 
   // const userData = useSelector(state => state.user);
 
+  const [userId, setUserId] = useState<number>(-1);
   const [username, setUsername] = useState<String>('Laden...');
   const [imageUrl, setImageUrl] = useState<String>(
     'https://lh3.googleusercontent.com/ogw/ADGmqu_e0wq2lSmi26PLd_Oa3yHmala3PclbIxFCX5e9=s32-c-mo',
@@ -37,13 +38,14 @@ export const Profile: React.FC<Props> = props => {
   const [firstName, setFirstName] = useState<String>('Laden...');
   const [lastName, setLastName] = useState<String>('Laden...');
   const [emailAddress, setEmailAddress] = useState<String>('Laden...');
+  const [totalScore, setTotalScore] = useState<number>(-1);
 
   const [totalDistance, setTotalDistance] = useState<number>(0);
 
   let distanceFromActivities: number = 0;
 
   const activities: Activity[] = [
-    new Activity(1, 1, username, 100, 50, 23, [
+    new Activity(1, 1, userId, 100, 500000, 23, [
       {
         id: 1,
         end: {
@@ -58,10 +60,10 @@ export const Profile: React.FC<Props> = props => {
         },
       },
     ]),
-    new Activity(2, 1, username, 100, 50, 2, []),
-    new Activity(3, 1, username, 100, 50, 5, []),
-    new Activity(4, 1, username, 100, 50, 12, []),
-    new Activity(5, 1, username, 100, 50, 14, []),
+    new Activity(2, 1, userId, 4, 3000000, 2, []),
+    new Activity(3, 1, userId, 3, 1300, 5, []),
+    new Activity(4, 1, userId, 9, 100, 12, []),
+    new Activity(5, 1, userId, 16, 50, 14, []),
   ];
 
   // TODO: replace dummy with fetch from back-end
@@ -70,15 +72,15 @@ export const Profile: React.FC<Props> = props => {
     [distanceFromActivities],
   );
 
-  let activityRoutes: Route[] = ActivityMapper.activitiesToRoutes(activities);
-
   return (
     <>
       <View style={styles.wrapper}>
         <View style={styles.header}>
           <Image style={styles.profileImage} source={{uri: imageUrl}} />
           <View style={styles.profileUserInfo}>
-            <Text style={styles.profileUserName}>{username}#1111</Text>
+            <Text style={styles.profileUserName}>
+              {username}#{userId}
+            </Text>
             <Text style={styles.profileUserEmail}>{emailAddress}</Text>
           </View>
         </View>
@@ -91,18 +93,17 @@ export const Profile: React.FC<Props> = props => {
             label={'Totaal gelopen km: '}
             value={totalDistance + ' km'}
           />
-          <ProfileUserInfo label={'Totale score: '} value={10} />
+          <ProfileUserInfo label={'Totale score: '} value={totalScore} />
         </View>
         <ScrollView style={styles.activities}>
           <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
-          {console.log(activityRoutes)}
-          {activityRoutes.map(route => {
-            distanceFromActivities += route.distance;
+          {activities.map(activity => {
+            distanceFromActivities += activity.distance;
             return (
               <RouteInformation
                 isActive={false}
-                key={route.id}
-                route={route}
+                key={activity.activityId}
+                route={activity}
                 onSelectRoute={() => {}}
               />
             );
