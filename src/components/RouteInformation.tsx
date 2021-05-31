@@ -3,30 +3,33 @@ import {Route} from '../core/domain/Route';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
+import {Activity} from '../core/domain/Activity';
 
 interface Props {
-  route: Route;
-  setHighlightedRoute: Function;
+  route: Route | Activity;
+  onSelectRoute: Function;
   isActive: boolean;
 }
 
 const RouteInformation: React.FC<Props> = ({
   route,
-  setHighlightedRoute,
+  onSelectRoute,
   isActive,
 }): JSX.Element => {
   return (
     <TouchableOpacity
       disabled={isActive}
       style={[styles.wrapper, isActive ? styles.active : styles.inactive]}
-      onPress={() => setHighlightedRoute(route)}>
+      onPress={() => onSelectRoute(route)}>
       {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
         style={styles.image}
       />
       <View style={styles.statistics}>
-        <Text style={styles.title}>{route.name}</Text>
+        <Text style={styles.title}>
+          {route instanceof Route ? route.name : route.activityId}
+        </Text>
         <Text style={styles.subtitle}>{route.distance} kilometer</Text>
         <Text style={styles.description}>
           {route.description.substring(0, 60)}...

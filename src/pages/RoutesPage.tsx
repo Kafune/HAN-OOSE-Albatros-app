@@ -72,7 +72,7 @@ const RoutesPage: React.FC<props> = (props): JSX.Element => {
               isActive={route.id === highlightedRoute?.id}
               key={route.id}
               route={route}
-              setHighlightedRoute={setHighlightedRoute}
+              onSelectRoute={setHighlightedRoute}
             />
           ))}
       </ScrollView>

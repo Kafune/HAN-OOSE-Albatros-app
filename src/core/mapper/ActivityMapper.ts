@@ -31,10 +31,22 @@ export class ActivityMapper {
   static activityToRoute(activity: Activity): Route {
     return new Route(
       activity.activityId,
-      '-1',
+      '-1', //name
       activity.distance,
-      '-1',
+      '-1', //description
       activity.segments,
     );
+  }
+
+  /**
+   * Maps an array of activities to an array of routes
+   *
+   * @static
+   * @param {Activity[]} activity
+   * @return {Route[]}
+   * @memberof ActivityMapper
+   */
+  static activitiesToRoutes(activities: Activity[]): Route[] {
+    return activities.map(activity => this.activityToRoute(activity));
   }
 }
