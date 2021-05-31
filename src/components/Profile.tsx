@@ -4,6 +4,7 @@ import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from '../components/RouteInformation';
 import {Activity} from '../core/domain/Activity';
 import api from '../core/data/api';
+import { ActivityMapper } from '../core/mapper/ActivityMapper';
 
 type Props = {
   userId: Number;
@@ -16,6 +17,8 @@ export const Profile: React.FC<Props> = props => {
         api.headersGet,
       );
       const response = await request.json();
+      const responseActivities = ActivityMapper.multipleToDomain(response);
+      console.log(responseActivities);
       setUserId(response.userId);
       setUsername(response.username);
       setImageUrl(response.imageURL);

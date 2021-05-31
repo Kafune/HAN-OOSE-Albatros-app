@@ -36,7 +36,7 @@ const LoginPage: FC = ({navigation}) => {
         imageUrl: googleUserInfo.user.photo,
       };
 
-      await fetch(`${api.baseUrl}/registration`, api.headersPost(newData)).then(
+      await fetch(`${api.baseUrl}/users`, api.headersPost(newData)).then(
         result => {
           if (result.status === 200 || result.status === 201) {
             console.log(result);
