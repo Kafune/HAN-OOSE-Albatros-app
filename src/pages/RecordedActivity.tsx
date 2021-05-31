@@ -22,6 +22,7 @@ const RecordedActivity: React.FC<props> = props => {
   const dispatch = useDispatch();
   const recordedActivityState = useSelector(state => state.walkedRoute);
   const [removeDialog, setRemoveDialog] = useState<boolean>(false);
+  const user = useSelector(state => state.user);
 
   if (_.isEmpty(recordedActivityState)) {
     return <></>;
@@ -133,7 +134,8 @@ const RecordedActivity: React.FC<props> = props => {
                 onPress={() => {
                   const dto = ActivityMapper.toDTO(recordedActivityState);
                   console.log(dto);
-                  ActivityController.post(dto).then(() => {
+                  dto.userId = user.userId;
+                  ActivityController.post(dto, user.token).then(() => {
                     // Return back to the main page when saved.
                     props.navigation.reset({
                       index: 0,
