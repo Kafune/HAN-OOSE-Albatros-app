@@ -13,11 +13,11 @@ export const Profile: React.FC<Props> = props => {
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
-        (api.baseUrl = '/users/' + props.userId),
+        (api.baseUrl = '/activities/user/' + props.userId),
         api.headersGet,
       );
       const response = await request.json();
-      const responseActivities = await ActivityMapper.multipleToDomain(response);
+      const responseActivities = ActivityMapper.multipleToDomain(response);
       console.log(response);
       console.log(responseActivities);
       setUserId(response.userId);
