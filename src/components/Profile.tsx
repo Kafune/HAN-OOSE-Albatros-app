@@ -17,7 +17,8 @@ export const Profile: React.FC<Props> = props => {
         api.headersGet,
       );
       const response = await request.json();
-      const responseActivities = ActivityMapper.multipleToDomain(response);
+      const responseActivities = await ActivityMapper.multipleToDomain(response);
+      console.log(response);
       console.log(responseActivities);
       setUserId(response.userId);
       setUsername(response.username);

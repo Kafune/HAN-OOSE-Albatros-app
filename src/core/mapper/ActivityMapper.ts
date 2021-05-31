@@ -60,8 +60,9 @@ export class ActivityMapper {
 
   /**
    * Maps multiple responses to a domain.
-   * @param {RouteResponseDTO[]} routes
-   * @returns {Route}
+   * @param {ActivityDTO[]} activities
+   * @returns {Activity[]}
+   * @memberof ActivityMapper
    */
   static multipleToDomain(activities: ActivityDTO[]): Activity[] {
     return activities.map(activity => this.toDomain(activity));
