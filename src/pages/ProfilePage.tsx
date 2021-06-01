@@ -9,6 +9,14 @@ const ProfilePage: React.FC = ({route, navigation}) => {
   const [userIdData, setUserIdData] = useState();
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('tabPress', e => {
+      e.preventDefault();
+      navigation.navigate('profile', {username: userData.username});
+    });
+    return unsubscribe;
+  }, [navigation, userData.username]);
+
+  useEffect(() => {
     const getData = async () => {
       const request = await fetch(
         api.baseUrl +
