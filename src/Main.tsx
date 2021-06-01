@@ -14,6 +14,7 @@ import {Provider, useSelector} from 'react-redux';
 
 import {store, persistor} from './core/redux/store/Store';
 import RecordedActivity from './pages/RecordedActivity';
+import SearchPage from './pages/SearchPage';
 
 const Stack = createStackNavigator();
 const Activity = createStackNavigator();
@@ -76,6 +77,21 @@ const MainContainer = () => {
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="record-circle"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="search"
+        component={SearchPage}
+        options={{
+          tabBarLabel: 'Zoeken',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="account-search"
               size={size}
               color={color}
             />
