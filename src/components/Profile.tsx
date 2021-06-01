@@ -1,112 +1,96 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from '../components/RouteInformation';
 import {Activity} from '../core/domain/Activity';
 import api from '../core/data/api';
 import {ActivityMapper} from '../core/mapper/ActivityMapper';
+import {useSelector} from 'react-redux';
 
 type Props = {
   user: any;
 };
 export const Profile: React.FC<Props> = props => {
-  const [userId, setUserId] = useState<number>(-1);
-  const [username, setUsername] = useState<String>('Laden...');
-  const [imageUrl, setImageUrl] = useState<String>(
-    'https://lh3.googleusercontent.com/ogw/ADGmqu_e0wq2lSmi26PLd_Oa3yHmala3PclbIxFCX5e9=s32-c-mo',
-  );
-  const [firstName, setFirstName] = useState<String>('Laden...');
-  const [lastName, setLastName] = useState<String>('Laden...');
-  const [emailAddress, setEmailAddress] = useState<String>('Laden...');
-  const [totalScore, setTotalScore] = useState<number>(-1);
+  const loggedInUser = useSelector(state => state.user);
   const [activities, setActivities] = useState<Activity[]>([]);
 
-  const [totalDistance, setTotalDistance] = useState<number>(0);
-  let distanceFromActivities: number = 0;
-
   useEffect(() => {
-    const getData = async () => {
-      const request = await fetch(
-        api.baseUrl +
-          '/activities/user/' +
-          props.user.userId +
-          '?token=' +
-          props.user.token,
-        api.headersGet,
-      );
-      const response = await request.json();
-      const responseActivities = ActivityMapper.multipleToDomain(response);
-      setUserId(props.user.userId);
-      setUsername(props.user.username);
-      setImageUrl(props.user.imageUrl);
-      setFirstName(props.user.firstName);
-      setLastName(props.user.lastName);
-      setEmailAddress(props.user.emailAddress);
-      setTotalScore(props.user.totalScore);
-      setActivities(responseActivities);
-    };
-    //todo: look for possibility to calculate total amount of walked distance?
-    const calculateDistance = async () => {
-      // activities.forEach(activity => {
-      //   distanceFromActivities += activity.distance;
-      // });
-    };
+    if (props.user) {
+      const getData = async () => {
+        const request = await fetch(
+          api.baseUrl +
+            '/activities/user/' +
+            props.user[0].userId +
+            '?token=' +
+            loggedInUser.token,
+          api.headersGet,
+        );
+        const response = await request.json();
+        console.log(response);
+        const responseActivities = ActivityMapper.multipleToDomain(response);
+        setActivities(responseActivities);
+      };
 
-    getData();
-    calculateDistance();
-  }, [props.user, activities]);
+      getData();
+    }
+  }, [loggedInUser.token, props.user]);
 
-  return (
-    <>
-      <View style={styles.wrapper}>
-        <View style={styles.header}>
-          <Image style={styles.profileImage} source={{uri: imageUrl}} />
-          <View style={styles.profileUserInfo}>
-            <Text style={styles.profileUserName}>
-              {username}#{userId}
-            </Text>
-            <Text style={styles.profileUserEmail}>{emailAddress}</Text>
+  if (props.user) {
+    return (
+      <>
+        <View style={styles.wrapper}>
+          <View style={styles.header}>
+            <Image
+              style={styles.profileImage}
+              source={{uri: props.user[0].imageUrl}}
+            />
+            <View style={styles.profileUserInfo}>
+              <Text style={styles.profileUserName}>
+                {props.user.username}#{props.user[0].userId}
+              </Text>
+              <Text style={styles.profileUserEmail}>
+                {props.user[0].emailAddress}
+              </Text>
+            </View>
           </View>
+          <View style={styles.profileUserStats}>
+            <ProfileUserInfo
+              label={'Voornaam: '}
+              value={props.user[0].firstName}
+              icon={'emoticon-happy-outline'}
+            />
+            <ProfileUserInfo
+              label={'Achternaam: '}
+              value={props.user[0].lastName}
+              icon={'emoticon-happy-outline'}
+            />
+          </View>
+          <View style={styles.profileUserStats}>
+            <ProfileUserInfo
+              label={'Totale score: '}
+              value={props.user[0].totalScore}
+              icon={'run'}
+            />
+          </View>
+          <ScrollView style={styles.activities}>
+            <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
+            {activities.map(activity => {
+              return (
+                <RouteInformation
+                  isActive={false}
+                  key={activity.activityId}
+                  route={activity}
+                  onSelectRoute={() => {}}
+                />
+              );
+            })}
+          </ScrollView>
         </View>
-        <View style={styles.profileUserStats}>
-          <ProfileUserInfo
-            label={'Voornaam: '}
-            value={firstName}
-            icon={'emoticon-happy-outline'}
-          />
-          <ProfileUserInfo
-            label={'Achternaam: '}
-            value={lastName}
-            icon={'emoticon-happy-outline'}
-          />
-        </View>
-        <View style={styles.profileUserStats}>
-          <ProfileUserInfo
-            label={'Totaal gelopen km: '}
-            value={distanceFromActivities.toFixed(2) + ' km'}
-          />
-          <ProfileUserInfo
-            label={'Totale score: '}
-            value={totalScore}
-            icon={'run'}
-          />
-        </View>
-        <ScrollView style={styles.activities}>
-          <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
-          {activities.map(activity => {
-            return (
-              <RouteInformation
-                isActive={false}
-                key={activity.activityId}
-                route={activity}
-                onSelectRoute={() => {}}
-              />
-            );
-          })}
-        </ScrollView>
-      </View>
-    </>
-  );
+      </>
+    );
+  } else {
+    return <Text>Loading...</Text>;
+  }
 };
 
 const styles = StyleSheet.create({
