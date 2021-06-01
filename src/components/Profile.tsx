@@ -35,8 +35,6 @@ export const Profile: React.FC<Props> = props => {
     getData();
   }, [props.user]);
 
-  // const userData = useSelector(state => state.user);
-
   const [userId, setUserId] = useState<number>(-1);
   const [username, setUsername] = useState<String>('Laden...');
   const [imageUrl, setImageUrl] = useState<String>(
