@@ -2,6 +2,7 @@ import 'react-native';
 import {Route} from '../../src/core/domain/Route';
 import {Activity} from '../../src/core/domain/Activity';
 import {ActivityMapper} from '../../src/core/mapper/ActivityMapper';
+import {ActivityDTO} from '../../src/core/dto/ActivityDTO';
 
 let activityId = 99;
 let routeId = 88;
@@ -48,6 +49,25 @@ const ACTIVITY = new Activity(
   segments,
 );
 
+const activityDTOS: ActivityDTO[] = [
+  {
+    routeId: 1,
+    userId: 1,
+    point: 100,
+    duration: 5000000,
+    distance: 10,
+    segments: [],
+  },
+  {
+    routeId: 2,
+    userId: 1,
+    point: 500,
+    duration: 2500000,
+    distance: 15,
+    segments: [],
+  },
+];
+
 describe('Activity Mapper tests', () => {
   it('activityToRoute.', () => {
     const EXPECTED_RESULT = new Route(
@@ -65,5 +85,27 @@ describe('Activity Mapper tests', () => {
     expect(RESPONSE.distance).toEqual(ACTIVITY.distance);
     expect(RESPONSE.segments).toEqual(ACTIVITY.segments);
     expect(RESPONSE).toStrictEqual(EXPECTED_RESULT);
+  });
+  it('Maps activity DTO to domain', () => {
+    const domain = ActivityMapper.toDomain(activityDTOS[0]);
+
+    expect(domain.routeId).toBe(activityDTOS[0].routeId);
+    expect(domain.userId).toBe(activityDTOS[0].userId);
+    expect(domain.point).toBe(activityDTOS[0].point);
+    expect(domain.duration).toBe(activityDTOS[0].duration);
+    expect(domain.distance).toBe(activityDTOS[0].distance);
+    expect(domain.segments).toStrictEqual(activityDTOS[0].segments);
+  });
+  it('Maps multiple activity DTOs to domains correctly', () => {
+    const domains = ActivityMapper.multipleToDomain(activityDTOS);
+
+    for (let i = 0; i > domains.length; i++) {
+      expect(domains[i].routeId).toBe(activityDTOS[i].routeId);
+      expect(domains[i].userId).toBe(activityDTOS[i].userId);
+      expect(domains[i].point).toBe(activityDTOS[i].point);
+      expect(domains[i].duration).toBe(activityDTOS[i].duration);
+      expect(domains[i].distance).toBe(activityDTOS[i].distance);
+      expect(domains[i].segments).toStrictEqual(activityDTOS[i].segments);
+    }
   });
 });

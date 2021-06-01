@@ -9,6 +9,7 @@ import colors from './styles/colors';
 import RecordActivity from './pages/RecordActivity';
 import LoginPage from './pages/LoginPage';
 import NewRoutesPage from './pages/NewRoutePage';
+import ProfilePage from './pages/ProfilePage';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider, useSelector} from 'react-redux';
 
@@ -107,6 +108,20 @@ const MainContainer = () => {
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons
               name="map-marker-plus"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="profile"
+        component={ProfilePage}
+        options={{
+          tabBarLabel: 'Profiel',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="account-circle"
               size={size}
               color={color}
             />

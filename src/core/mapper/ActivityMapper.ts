@@ -37,4 +37,34 @@ export class ActivityMapper {
       activity.segments,
     );
   }
+
+  /**
+   * Maps a response to a domain.
+   *
+   * @static
+   * @param {ActivityDTO} activity
+   * @returns {Activity}
+   * @memberof ActivityMapper
+   */
+  static toDomain(activity: ActivityDTO): Activity {
+    return new Activity(
+      activity.activityId,
+      activity.routeId,
+      activity.userId,
+      Number(activity.point),
+      activity.duration,
+      Number(activity.distance),
+      [],
+    );
+  }
+
+  /**
+   * Maps multiple responses to a domain.
+   * @param {ActivityDTO[]} activities
+   * @returns {Activity[]}
+   * @memberof ActivityMapper
+   */
+  static multipleToDomain(activities: ActivityDTO[]): Activity[] {
+    return activities.map(activity => this.toDomain(activity));
+  }
 }
