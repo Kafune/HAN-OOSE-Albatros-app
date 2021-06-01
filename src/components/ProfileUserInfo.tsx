@@ -35,7 +35,7 @@ const colors = {
 
 const styles = StyleSheet.create({
   wrapper: {
-    width: '50%',
+    width: '33%',
     padding: 10,
     display: 'flex',
   },
