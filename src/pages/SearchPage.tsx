@@ -40,10 +40,10 @@ const SearchPage: FC = () => {
         <Text style={styles.foundUsersHeader}>Gevonden gebruikers:</Text>
         {searchedData ? (
           searchedData.map(info => {
-            console.log(info);
             return (
               <TouchableOpacity
                 key={info.emailAddress}
+                // Add profile page switcher here
                 onPress={() => console.log(true)}
                 style={styles.activityWrapper}>
                 <View style={styles.grid}>
