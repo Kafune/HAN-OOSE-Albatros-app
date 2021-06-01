@@ -32,7 +32,7 @@ export class ActivityMapper {
     return new Route(
       activity.activityId,
       '-1',
-      activity.distance,
+      Number(activity.distance.toFixed(0)),
       '-1',
       activity.segments,
     );
