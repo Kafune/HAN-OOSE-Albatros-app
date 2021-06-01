@@ -9,13 +9,16 @@ export class RouteController {
    * Fetches an index of all the Routes.
    * @returns {Promise<Route[]>}
    */
-  static async index(): Promise<Route[]> {
-    let routes: Route[] = await fetch(`${api.baseUrl}/routes`, api.headersGet)
+  static async index(token: number): Promise<Route[]> {
+    let routes: Route[] = await fetch(
+      `${api.baseUrl}/routes?token=${token}`,
+      api.headersGet,
+    )
       .then(fetchedRoutes => fetchedRoutes.json())
       .then(fetchedRoutes => RouteMapper.multipleToDomain(fetchedRoutes));
 
     for (const route of routes) {
-      route.segments = await this.getSegments(route.id);
+      route.segments = await this.getSegments(route.id, token);
     }
 
     return routes;
@@ -26,8 +29,11 @@ export class RouteController {
    * @param {number} routeId
    * @returns {Promise<Segment[]>}
    */
-  static async getSegments(routeId: number): Promise<Segment[]> {
-    return await fetch(`${api.baseUrl}/segments/${routeId}`, api.headersGet)
+  static async getSegments(routeId: number, token: number): Promise<Segment[]> {
+    return await fetch(
+      `${api.baseUrl}/segments/${routeId}?token=${token}`,
+      api.headersGet,
+    )
       .then(segments => segments.json())
       .then(segments => SegmentMapper.multipleToDomain(segments));
   }

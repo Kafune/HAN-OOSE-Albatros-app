@@ -1,3 +1,9 @@
+/*
+ * The state object of a user includes a very strange atribute.
+ * a61646d696e: true/false
+ * This is the admin boolean. The name has been changed due security reasons.
+ */
+
 import React, {FC, useEffect} from 'react';
 import {
   GoogleSignin,
@@ -26,7 +32,6 @@ const LoginPage: FC = ({navigation}) => {
     try {
       await GoogleSignin.hasPlayServices();
       const googleUserInfo = await GoogleSignin.signIn();
-
       const newData = {
         firstName: googleUserInfo.user.givenName,
         lastName: googleUserInfo.user.familyName,
@@ -35,12 +40,12 @@ const LoginPage: FC = ({navigation}) => {
         googleId: googleUserInfo.idToken,
         imageUrl: googleUserInfo.user.photo,
       };
-
       await fetch(`${api.baseUrl}/users`, api.headersPost(newData)).then(
-        result => {
+        async result => {
+          let response = await result.json();
+          response.googleId = googleUserInfo.idToken;
           if (result.status === 200 || result.status === 201) {
-            console.log(result);
-            dispatch(setStoreUser(newData));
+            dispatch(setStoreUser(response));
             navigation.navigate('app');
           }
         },

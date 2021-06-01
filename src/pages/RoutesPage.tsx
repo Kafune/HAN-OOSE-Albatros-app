@@ -8,7 +8,7 @@ import {RouteMapper} from '../core/mapper/RouteMapper';
 import {RouteController} from '../core/controller/RouteController';
 import colors, {brittishPalette} from '../styles/colors';
 import Dialog from 'react-native-dialog';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setStoreRouteLine} from '../core/redux/actions/routeLineActions';
 
 type props = {
@@ -21,9 +21,11 @@ const RoutesPage: React.FC<props> = (props): JSX.Element => {
   const [highlightedRoute, setHighlightedRoute] = useState<Route | undefined>();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const user = useSelector(state => state.user);
+
   useEffect(() => {
     const fetchRoutes: Function = async (): Promise<void> => {
-      const fetchedRoutes = await RouteController.index();
+      const fetchedRoutes = await RouteController.index(user.token);
       setRoutes(fetchedRoutes);
       setHighlightedRoute(fetchedRoutes[0]);
     };
