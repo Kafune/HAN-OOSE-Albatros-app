@@ -16,11 +16,6 @@ type Props = {
 };
 
 export const SafeAsRouteForm: FunctionComponent<Props> = props => {
-  // props.close();
-  // props.navigation.reset({
-  //   index: 0,
-  //   routes: [{ name: 'app' }],
-  // });
 
   const [state, setState] = useState(1);
   const [name, setName] = useState<string>('Route naam');
