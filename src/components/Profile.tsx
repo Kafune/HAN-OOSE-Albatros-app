@@ -45,14 +45,23 @@ export const Profile: React.FC<Props> = props => {
       setTotalScore(props.user.totalScore);
       setActivities(responseActivities);
     };
+    const calculateDistance = async () => {
+      activities.forEach(activity => {
+        console.log((distanceFromActivities += activity.distance));
+        distanceFromActivities += activity.distance;
+      });
+    };
 
     getData();
-  }, [props.user]);
+    calculateDistance();
+  }, [props.user, distanceFromActivities]);
 
-  useEffect(
-    () => setTotalDistance(distanceFromActivities),
-    [distanceFromActivities],
-  );
+  // useEffect(() => {
+  //   const calculateDistance = async () => {
+  //     setTotalDistance(distanceFromActivities);
+  //   };
+  //   calculateDistance();
+  // }, [distanceFromActivities]);
 
   return (
     <>
@@ -73,14 +82,13 @@ export const Profile: React.FC<Props> = props => {
         <View style={styles.profileUserStats}>
           <ProfileUserInfo
             label={'Totaal gelopen km: '}
-            value={totalDistance + ' km'}
+            value={totalDistance.toFixed(2) + ' km'}
           />
           <ProfileUserInfo label={'Totale score: '} value={totalScore} />
         </View>
         <ScrollView style={styles.activities}>
           <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
           {activities.map(activity => {
-            distanceFromActivities += activity.distance;
             return (
               <RouteInformation
                 isActive={false}
