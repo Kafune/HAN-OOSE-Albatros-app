@@ -67,12 +67,6 @@ const RoutesPage: React.FC<props> = (props): JSX.Element => {
         </Pressable>
       </View>
       <ScrollView>
-        <Pressable
-          onPress={() => {
-            props.navigation.navigate('profile', {username: 'tim'});
-          }}>
-          <Text>Hello</Text>
-        </Pressable>
         <Text style={styles.routesTitle}>Kies een route</Text>
         {routes !== undefined &&
           routes.map(route => (

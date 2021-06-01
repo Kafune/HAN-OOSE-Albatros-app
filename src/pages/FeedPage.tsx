@@ -4,14 +4,15 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import colors from '../styles/colors';
 
-const FeedPage: FC = () => {
+const FeedPage: FC = ({navigation}) => {
   const userData = useSelector(state => state.user);
-
   return (
     <>
       <TouchableOpacity
         style={styles.profileWrapper}
-        onPress={() => console.log(true)}>
+        onPress={() =>
+          navigation.navigate('profile', {username: userData.username})
+        }>
         <Image
           style={styles.profilePicture}
           source={{uri: userData.imageUrl}}
@@ -30,7 +31,7 @@ const FeedPage: FC = () => {
           <View style={styles.grid}>
             <TouchableOpacity
               style={styles.activityUserWrapper}
-              onPress={() => console.log(true)}>
+              onPress={() => navigation.navigate('profile', {username: 'tim'})}>
               <Image style={styles.activityImage} source={{uri: ''}} />
               <Text style={styles.activityUsername}>Bart Simpson</Text>
             </TouchableOpacity>

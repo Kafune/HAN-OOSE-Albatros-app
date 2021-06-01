@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { Text } from 'react-native-elements';
 import {useSelector} from 'react-redux';
 
 import {Profile} from '../components/Profile';
@@ -27,11 +26,8 @@ const ProfilePage: React.FC = ({route, navigation}) => {
   }, [route.params.username, userData.token]);
 
   if (route.params.username === userData.username) {
-    console.log('yepp');
-    return <Profile user={userData} />;
+    return <Profile user={{0: {...userData}}} />;
   } else {
-    console.log(userIdData);
-
     return <Profile user={userIdData} />;
   }
 };

@@ -32,7 +32,9 @@ const StackContainer = () => {
           headerShown: false,
         }}>
         {userLoggedIn ? (
-          <Stack.Screen name="app" component={MainContainer} />
+          <>
+            <Stack.Screen name="app" component={MainContainer} />
+          </>
         ) : (
           <Stack.Screen name="login" component={LoginPage} />
         )}
@@ -126,6 +128,7 @@ const MainContainer = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="profile"
         component={ProfilePage}

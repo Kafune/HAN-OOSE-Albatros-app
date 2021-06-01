@@ -15,6 +15,8 @@ export const Profile: React.FC<Props> = props => {
   const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
+    console.log('test');
+    setActivities([]);
     if (props.user) {
       const getData = async () => {
         const request = await fetch(
@@ -26,7 +28,6 @@ export const Profile: React.FC<Props> = props => {
           api.headersGet,
         );
         const response = await request.json();
-        console.log(response);
         const responseActivities = ActivityMapper.multipleToDomain(response);
         setActivities(responseActivities);
       };
