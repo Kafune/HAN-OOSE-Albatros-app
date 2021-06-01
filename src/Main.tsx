@@ -15,6 +15,8 @@ import {Provider, useSelector} from 'react-redux';
 
 import {store, persistor} from './core/redux/store/Store';
 import RecordedActivity from './pages/RecordedActivity';
+import SearchPage from './pages/SearchPage';
+import FeedPage from './pages/FeedPage';
 
 const Stack = createStackNavigator();
 const Activity = createStackNavigator();
@@ -30,7 +32,9 @@ const StackContainer = () => {
           headerShown: false,
         }}>
         {userLoggedIn ? (
-          <Stack.Screen name="app" component={MainContainer} />
+          <>
+            <Stack.Screen name="app" component={MainContainer} />
+          </>
         ) : (
           <Stack.Screen name="login" component={LoginPage} />
         )}
@@ -54,11 +58,22 @@ const ActivityContainer = () => {
 const MainContainer = () => {
   return (
     <Tab.Navigator
-      initialRouteName="routesMaps"
+      initialRouteName="feed"
       tabBarOptions={{
         activeTintColor: colors.main,
         safeAreaInsets: {bottom: 5},
       }}>
+      <Tab.Screen
+        name="feed"
+        component={FeedPage}
+        options={{
+          tabBarLabel: 'Activiteiten',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" size={size} color={color} />
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="routesMaps"
         component={RoutesPage}
@@ -85,6 +100,21 @@ const MainContainer = () => {
       />
 
       <Tab.Screen
+        name="search"
+        component={SearchPage}
+        options={{
+          tabBarLabel: 'Zoeken',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons
+              name="account-search"
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
         name="newRoute"
         component={NewRoutesPage}
         options={{
@@ -98,6 +128,7 @@ const MainContainer = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="profile"
         component={ProfilePage}
