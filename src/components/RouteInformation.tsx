@@ -17,6 +17,9 @@ const RouteInformation: React.FC<Props> = ({
   onSelectRoute,
   isActive,
 }): JSX.Element => {
+  const calculateActivitySpeed = (activity: Activity) =>
+    (activity.distance / (activity.duration / 1000 / 60 / 60)).toFixed(2);
+
   return (
     <TouchableOpacity
       disabled={isActive}
@@ -45,9 +48,7 @@ const RouteInformation: React.FC<Props> = ({
             </Text>
             <Text>Tijd: {new Duration(route.duration).getHMS() + '\n'}</Text>
             <Text>
-              Snelheid:{' '}
-              {(route.distance / (route.duration / 1000 / 60 / 60)).toFixed(2)}{' '}
-              km/u{'\n'}
+              Snelheid: {calculateActivitySpeed(route)} km/u{'\n'}
             </Text>
             <Text>Score: {route.point}</Text>
           </Text>

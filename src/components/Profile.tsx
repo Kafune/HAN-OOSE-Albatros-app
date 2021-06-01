@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from '../components/RouteInformation';
@@ -45,23 +45,16 @@ export const Profile: React.FC<Props> = props => {
       setTotalScore(props.user.totalScore);
       setActivities(responseActivities);
     };
+    //todo: look for possibility to calculate total amount of walked distance?
     const calculateDistance = async () => {
-      activities.forEach(activity => {
-        console.log((distanceFromActivities += activity.distance));
-        distanceFromActivities += activity.distance;
-      });
+      // activities.forEach(activity => {
+      //   distanceFromActivities += activity.distance;
+      // });
     };
 
     getData();
     calculateDistance();
-  }, [props.user, distanceFromActivities]);
-
-  // useEffect(() => {
-  //   const calculateDistance = async () => {
-  //     setTotalDistance(distanceFromActivities);
-  //   };
-  //   calculateDistance();
-  // }, [distanceFromActivities]);
+  }, [props.user, activities]);
 
   return (
     <>
@@ -76,15 +69,27 @@ export const Profile: React.FC<Props> = props => {
           </View>
         </View>
         <View style={styles.profileUserStats}>
-          <ProfileUserInfo label={'Voornaam: '} value={firstName} />
-          <ProfileUserInfo label={'Achternaam: '} value={lastName} />
+          <ProfileUserInfo
+            label={'Voornaam: '}
+            value={firstName}
+            icon={'emoticon-happy-outline'}
+          />
+          <ProfileUserInfo
+            label={'Achternaam: '}
+            value={lastName}
+            icon={'emoticon-happy-outline'}
+          />
         </View>
         <View style={styles.profileUserStats}>
           <ProfileUserInfo
             label={'Totaal gelopen km: '}
-            value={totalDistance.toFixed(2) + ' km'}
+            value={distanceFromActivities.toFixed(2) + ' km'}
           />
-          <ProfileUserInfo label={'Totale score: '} value={totalScore} />
+          <ProfileUserInfo
+            label={'Totale score: '}
+            value={totalScore}
+            icon={'run'}
+          />
         </View>
         <ScrollView style={styles.activities}>
           <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
@@ -130,12 +135,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   profileUserStats: {
+    marginHorizontal: 15,
     flexDirection: 'row',
   },
   activities: {
     height: 475,
   },
   activitiesHeader: {
+    marginVertical: 10,
     marginHorizontal: 15,
     fontSize: 28,
     fontWeight: 'bold',
