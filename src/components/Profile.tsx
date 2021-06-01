@@ -46,7 +46,7 @@ export const Profile: React.FC<Props> = props => {
             />
             <View style={styles.profileUserInfo}>
               <Text style={styles.profileUserName}>
-                {props.user.username}#{props.user[0].userId}
+                {props.user[0].username}#{props.user[0].userId}
               </Text>
               <Text style={styles.profileUserEmail}>
                 {props.user[0].emailAddress}
@@ -64,8 +64,6 @@ export const Profile: React.FC<Props> = props => {
               value={props.user[0].lastName}
               icon={'emoticon-happy-outline'}
             />
-          </View>
-          <View style={styles.profileUserStats}>
             <ProfileUserInfo
               label={'Totale score: '}
               value={props.user[0].totalScore}

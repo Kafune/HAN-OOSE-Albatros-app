@@ -30,7 +30,7 @@ const ProfileUserInfo: React.FC<Props> = ({
 };
 
 const colors = {
-  iconColor: brittishPalette.naval,
+  iconColor: brittishPalette.green,
 };
 
 const styles = StyleSheet.create({
