@@ -10,6 +10,20 @@ type Props = {
   user: any;
 };
 export const Profile: React.FC<Props> = props => {
+  const [userId, setUserId] = useState<number>(-1);
+  const [username, setUsername] = useState<String>('Laden...');
+  const [imageUrl, setImageUrl] = useState<String>(
+    'https://lh3.googleusercontent.com/ogw/ADGmqu_e0wq2lSmi26PLd_Oa3yHmala3PclbIxFCX5e9=s32-c-mo',
+  );
+  const [firstName, setFirstName] = useState<String>('Laden...');
+  const [lastName, setLastName] = useState<String>('Laden...');
+  const [emailAddress, setEmailAddress] = useState<String>('Laden...');
+  const [totalScore, setTotalScore] = useState<number>(-1);
+  const [activities, setActivities] = useState<Activity[]>([]);
+
+  const [totalDistance, setTotalDistance] = useState<number>(0);
+  let distanceFromActivities: number = 0;
+
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
@@ -34,21 +48,6 @@ export const Profile: React.FC<Props> = props => {
 
     getData();
   }, [props.user]);
-
-  const [userId, setUserId] = useState<number>(-1);
-  const [username, setUsername] = useState<String>('Laden...');
-  const [imageUrl, setImageUrl] = useState<String>(
-    'https://lh3.googleusercontent.com/ogw/ADGmqu_e0wq2lSmi26PLd_Oa3yHmala3PclbIxFCX5e9=s32-c-mo',
-  );
-  const [firstName, setFirstName] = useState<String>('Laden...');
-  const [lastName, setLastName] = useState<String>('Laden...');
-  const [emailAddress, setEmailAddress] = useState<String>('Laden...');
-  const [totalScore, setTotalScore] = useState<number>(-1);
-  const [activities, setActivities] = useState<Activity[]>([]);
-
-  const [totalDistance, setTotalDistance] = useState<number>(0);
-
-  let distanceFromActivities: number = 0;
 
   useEffect(
     () => setTotalDistance(distanceFromActivities),
