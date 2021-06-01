@@ -28,7 +28,10 @@ const SearchPage: FC = () => {
         searchIcon={{size: 24}}
         onChangeText={text => setSearch(text)}
         onSubmitEditing={() => searchUsers()}
-        onClear={() => setSearch('')}
+        onClear={() => {
+          setSearch();
+          setSearchedData();
+        }}
         placeholder="Zoeken naar gebruikersnaam..."
         style={{fontSize: 16}}
         value={search}
