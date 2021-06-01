@@ -18,7 +18,7 @@ const ProfileUserInfo: React.FC<Props> = ({label, value}): JSX.Element => {
 const styles = StyleSheet.create({
   wrapper: {
     width: '50%',
-    marginVertical: 15,
+    marginVertical: 5,
     padding: 10,
   },
 });

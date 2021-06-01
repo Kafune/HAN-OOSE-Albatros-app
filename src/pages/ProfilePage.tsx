@@ -5,7 +5,7 @@ import {Profile} from '../components/Profile';
 
 const ProfilePage: React.FC = () => {
   const userData = useSelector(state => state.user);
-  return <Profile userId={userData.userId} />;
+  return <Profile user={userData} />;
 };
 
 export default ProfilePage;

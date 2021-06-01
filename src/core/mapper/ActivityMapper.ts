@@ -48,7 +48,7 @@ export class ActivityMapper {
    */
   static toDomain(activity: ActivityDTO): Activity {
     return new Activity(
-      -1,
+      activity.activityId,
       activity.routeId,
       activity.userId,
       Number(activity.point),

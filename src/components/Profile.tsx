@@ -7,30 +7,33 @@ import api from '../core/data/api';
 import {ActivityMapper} from '../core/mapper/ActivityMapper';
 
 type Props = {
-  userId: Number;
+  user: any;
 };
 export const Profile: React.FC<Props> = props => {
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
-        (api.baseUrl = '/activities/user/' + props.userId),
+        api.baseUrl +
+          '/activities/user/' +
+          props.user.userId +
+          '?token=' +
+          props.user.token,
         api.headersGet,
       );
       const response = await request.json();
       const responseActivities = ActivityMapper.multipleToDomain(response);
-      console.log(response);
-      console.log(responseActivities);
-      setUserId(response.userId);
-      setUsername(response.username);
-      setImageUrl(response.imageURL);
-      setFirstName(response.firstName);
-      setLastName(response.lastName);
-      setEmailAddress(response.emailAddress);
-      setTotalScore(response.score);
+      setUserId(props.user.userId);
+      setUsername(props.user.username);
+      setImageUrl(props.user.imageUrl);
+      setFirstName(props.user.firstName);
+      setLastName(props.user.lastName);
+      setEmailAddress(props.user.emailAddress);
+      setTotalScore(props.user.totalScore);
+      setActivities(responseActivities);
     };
 
     getData();
-  });
+  }, [props.user]);
 
   // const userData = useSelector(state => state.user);
 
@@ -43,34 +46,12 @@ export const Profile: React.FC<Props> = props => {
   const [lastName, setLastName] = useState<String>('Laden...');
   const [emailAddress, setEmailAddress] = useState<String>('Laden...');
   const [totalScore, setTotalScore] = useState<number>(-1);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   const [totalDistance, setTotalDistance] = useState<number>(0);
 
   let distanceFromActivities: number = 0;
 
-  const activities: Activity[] = [
-    new Activity(1, 1, userId, 100, 500000, 23, [
-      {
-        id: 1,
-        end: {
-          longitude: 5.679981,
-          latitude: 52.034237,
-          altitude: 27,
-        },
-        start: {
-          longitude: 5.679166,
-          latitude: 52.030257,
-          altitude: 26.0,
-        },
-      },
-    ]),
-    new Activity(2, 1, userId, 4, 3000000, 2, []),
-    new Activity(3, 1, userId, 3, 1300, 5, []),
-    new Activity(4, 1, userId, 9, 100, 12, []),
-    new Activity(5, 1, userId, 16, 50, 14, []),
-  ];
-
-  // TODO: replace dummy with fetch from back-end
   useEffect(
     () => setTotalDistance(distanceFromActivities),
     [distanceFromActivities],
@@ -147,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   activities: {
-    height: 400,
+    height: 475,
   },
   activitiesHeader: {
     marginHorizontal: 15,
