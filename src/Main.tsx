@@ -115,21 +115,6 @@ const MainContainer = () => {
       />
 
       <Tab.Screen
-        name="newRoute"
-        component={NewRoutesPage}
-        options={{
-          tabBarLabel: 'Voeg Route Toe',
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons
-              name="map-marker-plus"
-              size={size}
-              color={color}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen
         name="profile"
         component={ProfilePage}
         options={{
