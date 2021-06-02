@@ -19,7 +19,9 @@ const FeedPage: FC = ({navigation}) => {
         />
         <View style={styles.profileTextWrapper}>
           <Text style={styles.profileName}>{userData.username}</Text>
-          <Text style={styles.profilePoints}>100 Punten</Text>
+          <Text style={styles.profilePoints}>
+            totale score: {userData.totalScore}
+          </Text>
         </View>
       </TouchableOpacity>
       <View style={styles.feedWrapper}>

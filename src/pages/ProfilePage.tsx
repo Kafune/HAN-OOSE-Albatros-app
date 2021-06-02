@@ -8,14 +8,6 @@ const ProfilePage: React.FC = ({route, navigation}) => {
   const userData = useSelector(state => state.user);
   const [userIdData, setUserIdData] = useState();
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('tabPress', e => {
-      e.preventDefault();
-      navigation.navigate('profile', {username: userData.username});
-    });
-    return unsubscribe;
-  }, [navigation, userData.username]);
-
   const paramUserId = route.params ? route.params.userId : userData.userId;
 
   useEffect(() => {
@@ -37,7 +29,6 @@ const ProfilePage: React.FC = ({route, navigation}) => {
         api.headersGet,
       );
       const response = await request.json();
-      // console.log(response);
       setUserIdData(response);
     };
 
