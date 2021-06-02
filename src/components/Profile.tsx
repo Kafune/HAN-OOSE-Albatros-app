@@ -36,8 +36,6 @@ export const Profile: React.FC<Props> = props => {
               value={props.user.lastName}
               icon={'emoticon-happy-outline'}
             />
-          </View>
-          <View style={styles.profileUserStats}>
             <ProfileUserInfo
               label={'Totale score: '}
               value={props.user.totalScore}
@@ -70,12 +68,14 @@ export const Profile: React.FC<Props> = props => {
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
+    backgroundColor: 'white',
   },
   header: {
     marginHorizontal: 15,
-    marginVertical: 10,
+    paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
+    borderBottomWidth: 1,
   },
   profileImage: {
     height: 50,
@@ -97,11 +97,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   activities: {
-    height: 475,
+    height: 525,
   },
   activitiesHeader: {
     marginVertical: 10,
     marginHorizontal: 15,
+    borderTopWidth: 1,
     fontSize: 28,
     fontWeight: 'bold',
   },
