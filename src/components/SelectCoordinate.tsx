@@ -66,19 +66,9 @@ const SelectCordinate: React.FC<Props> = (props: Props): JSX.Element => {
         </View>
 
         <View style={styles.boxes}>
-          <View style={styles.boxIs1}>
-            <MaterialCommunityIcons
-              name="arrow-left"
-              size={30}
-              color={colors.main}
-              onPress={() => {
-                props.cancel();
-              }}
-            />
-          </View>
+          <View style={styles.boxIs1} />
 
-          <View
-            style={[styles.boxIs8, styles.button]}>
+          <View style={[styles.boxIs8, styles.button]}>
             <Pressable
               onPress={() => setCurrentGps()}
               style={styles.buttonInner}>
