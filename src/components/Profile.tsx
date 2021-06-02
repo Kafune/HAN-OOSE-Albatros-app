@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from './RouteInformation';
+import colors from '../styles/colors';
 
 type Props = {
   user: any;
@@ -42,8 +43,10 @@ export const Profile: React.FC<Props> = props => {
               icon={'run'}
             />
           </View>
+          <View style={styles.feedWrapper}>
+            <Text style={styles.feedText}>Laatste activiteiten</Text>
+          </View>
           <ScrollView style={styles.activities}>
-            <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
             {props.user.activities
               ? props.user.activities.map(activity => {
                   return (
@@ -97,13 +100,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   activities: {
-    height: 525,
+    height: 455,
+    marginTop: 16,
   },
-  activitiesHeader: {
-    marginVertical: 10,
-    marginHorizontal: 15,
-    borderTopWidth: 1,
-    fontSize: 28,
-    fontWeight: 'bold',
+  feedWrapper: {
+    borderTopWidth: 2,
+    borderColor: colors.main,
+    marginTop: 32,
+  },
+  feedText: {
+    textAlign: 'center',
+    backgroundColor: 'white',
+    position: 'absolute',
+    width: 165,
+    fontStyle: 'italic',
+    borderRadius: 100,
+    top: -13,
+    alignSelf: 'center',
+    fontSize: 16,
   },
 });
