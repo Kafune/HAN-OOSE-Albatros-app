@@ -2,9 +2,9 @@ export class Duration {
   current: number;
 
   /**
-   * Creates an instance of Duratation.
+   * Creates an instance of Duration.
    * @param {number} current
-   * @memberof Duratation
+   * @memberof Duration
    */
   constructor(current: number) {
     this.current = current;

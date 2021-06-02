@@ -3,34 +3,56 @@ import {Route} from '../core/domain/Route';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../styles/colors';
+import {Activity} from '../core/domain/Activity';
+import {Duration} from '../core/maps/Duration';
 
 interface Props {
-  route: Route;
-  setHighlightedRoute: Function;
+  route: Route | Activity;
+  onSelectRoute: Function;
   isActive: boolean;
 }
 
 const RouteInformation: React.FC<Props> = ({
   route,
-  setHighlightedRoute,
+  onSelectRoute,
   isActive,
 }): JSX.Element => {
+  const calculateActivitySpeed = (activity: Activity) =>
+    (activity.distance / (activity.duration / 1000 / 60 / 60)).toFixed(2);
+
   return (
     <TouchableOpacity
       disabled={isActive}
       style={[styles.wrapper, isActive ? styles.active : styles.inactive]}
-      onPress={() => setHighlightedRoute(route)}>
+      onPress={() => onSelectRoute(route)}>
       {/* TODO: Replace dummy image for real image. */}
       <Image
         source={{uri: 'https://reactjs.org/logo-og.png'}}
         style={styles.image}
       />
       <View style={styles.statistics}>
-        <Text style={styles.title}>{route.name}</Text>
-        <Text style={styles.subtitle}>{route.distance} kilometer</Text>
-        <Text style={styles.description}>
-          {route.description.substring(0, 60)}...
+        <Text style={styles.title}>
+          {route instanceof Route
+            ? route.name
+            : 'Activiteit ' + route.activityId}
         </Text>
+        <Text style={styles.subtitle}>{route.distance} kilometer</Text>
+        {route instanceof Route ? (
+          <Text style={styles.description}>
+            {route.description.substring(0, 60)}...
+          </Text>
+        ) : (
+          <Text style={styles.description}>
+            <Text>
+              Afstand: {route.distance} km{'\n'}
+            </Text>
+            <Text>Tijd: {new Duration(route.duration).getHMS() + '\n'}</Text>
+            <Text>
+              Snelheid: {calculateActivitySpeed(route)} km/u{'\n'}
+            </Text>
+            <Text>Score: {route.point}</Text>
+          </Text>
+        )}
       </View>
       <View style={styles.button}>
         <MaterialCommunityIcons
