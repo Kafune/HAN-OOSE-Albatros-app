@@ -73,7 +73,7 @@ describe('Activity Mapper tests', () => {
     const EXPECTED_RESULT = new Route(
       ACTIVITY.activityId,
       '-1',
-      ACTIVITY.distance,
+      Number(ACTIVITY.distance.toFixed(0)),
       '-1',
       ACTIVITY.segments,
     );
