@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import api from '../core/data/api';
 import colors from '../styles/colors';
 
-const SearchPage: FC = () => {
+const SearchPage: FC = ({navigation}) => {
   const user = useSelector(state => state.user);
   const [search, setSearch] = useState('');
   const [searchedData, setSearchedData] = useState();
@@ -44,7 +44,9 @@ const SearchPage: FC = () => {
               <TouchableOpacity
                 key={info.emailAddress}
                 // Add profile page switcher here
-                onPress={() => console.log(true)}
+                onPress={() =>
+                  navigation.navigate('profile', {userId: info.userId})
+                }
                 style={styles.activityWrapper}>
                 <View style={styles.grid}>
                   <View style={styles.activityUserWrapper}>
