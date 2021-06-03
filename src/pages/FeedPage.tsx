@@ -1,5 +1,5 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
-import {Image, RefreshControl, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useEffect} from 'react';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {Activity} from '../components/Activity';
