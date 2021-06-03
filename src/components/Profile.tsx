@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
 import RouteInformation from './RouteInformation';
 import colors from '../styles/colors';
+import {FollowButtons} from './FollowButtons';
 
 type Props = {
   user: any;
@@ -24,6 +25,9 @@ export const Profile: React.FC<Props> = props => {
               <Text style={styles.profileUserEmail}>
                 {props.user.emailAddress}
               </Text>
+            </View>
+            <View style={{alignItems: 'flex-end', width: 175}}>
+              <FollowButtons user={props.user} />
             </View>
           </View>
           <View style={styles.profileUserStats}>

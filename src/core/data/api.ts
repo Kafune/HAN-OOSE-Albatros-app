@@ -17,6 +17,13 @@ const api = {
       body: JSON.stringify(data),
     };
   },
+  headersDelete: {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  },
 };
 
 export default api;

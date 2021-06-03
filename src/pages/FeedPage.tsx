@@ -56,7 +56,7 @@ const FeedPage: FC = ({navigation}) => {
           <View style={styles.grid}>
             <TouchableOpacity
               style={styles.activityUserWrapper}
-              onPress={() => console.log(true)}>
+              onPress={() => navigation.navigate('profile', {userId: 3})}>
               <Image style={styles.activityImage} source={{uri: ''}} />
               <Text style={styles.activityUsername}>Bart Simpson</Text>
             </TouchableOpacity>
