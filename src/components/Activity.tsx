@@ -61,7 +61,7 @@ export const Activity: React.FC<Props> = props => {
       </View>
     );
   } else {
-    return <Text>Loading...</Text>;
+    return <Text style={styles.loadingText}>Loading...</Text>;
   }
 };
 
@@ -121,5 +121,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingTop: 12,
     fontStyle: 'italic',
+  },
+  loadingText: {
+    marginTop: 32,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontSize: 16,
+    marginBottom: 6,
   },
 });

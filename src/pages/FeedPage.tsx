@@ -14,24 +14,31 @@ const FeedPage: FC = ({navigation}) => {
   const activities = useSelector(state => state.activities);
 
   useEffect(() => {
-    const getData = async () => {
-      const request = await fetch(
-        api.baseUrl +
-          '/users/' +
-          userData.userId +
-          '/followee-activities' +
-          '?token=' +
-          userData.token,
-        api.headersGet,
-      );
-      const response = await request.json();
-      if (request.status === 200) {
-        dispatch(setStoreActivities(response));
-      }
-    };
+    const unsubscribe = navigation.addListener('focus', () => {
+      const getData = async () => {
+        const request = await fetch(
+          api.baseUrl +
+            '/users/' +
+            userData.userId +
+            '/followee-activities' +
+            '?token=' +
+            userData.token,
+          api.headersGet,
+        );
+        if (request.status === 200) {
+          const response = await request.json();
+          dispatch(setStoreActivities(response));
+        } else if (request.status === 400) {
+          dispatch(setStoreActivities(''));
+        }
+      };
 
-    getData();
-  }, [userData.token, userData.userId, dispatch]);
+      if (userData) {
+        getData();
+      }
+    });
+    return unsubscribe;
+  }, [dispatch, navigation, userData, userData.token, userData.userId]);
 
   return (
     <>
@@ -56,15 +63,24 @@ const FeedPage: FC = ({navigation}) => {
       </View>
 
       <ScrollView style={styles.scrollViewWrapper}>
-        {activities.AllActivities.map(activity => {
-          return (
-            <Activity
-              key={Math.random()}
-              navigation={navigation}
-              activity={activity}
-            />
-          );
-        })}
+        {activities.AllActivities ? (
+          activities.AllActivities.map(activity => {
+            return (
+              <Activity
+                key={activity.activityId}
+                navigation={navigation}
+                activity={activity}
+              />
+            );
+          })
+        ) : (
+          <>
+            <Text style={styles.noFriendsText1}>Je volgt nog niemand :(</Text>
+            <Text style={styles.noFriendsText2}>
+              Er zijn geen activiteiten gevonden...
+            </Text>
+          </>
+        )}
       </ScrollView>
     </>
   );
@@ -109,6 +125,19 @@ const styles = StyleSheet.create({
   },
   scrollViewWrapper: {
     marginTop: 12,
+  },
+  noFriendsText1: {
+    marginTop: 32,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontSize: 16,
+    marginBottom: 6,
+  },
+  noFriendsText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
   },
 
   grid: {
