@@ -61,7 +61,7 @@ export const Activity: React.FC<Props> = props => {
       </View>
     );
   } else {
-    return <Text style={styles.loadingText}>Loading...</Text>;
+    return <></>;
   }
 };
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import api from '../core/data/api';
-import colors from '../styles/colors';
+import colors, { brittishPalette } from '../styles/colors';
 
 type Props = {
   user: any;
@@ -78,7 +78,7 @@ export const FollowButtons: React.FC<Props> = props => {
           style={[styles.button, styles.red]}
           onPress={() => unFollowRequest()}>
           <View>
-            <Text style={styles.greenText}>Unfollow</Text>
+            <Text style={styles.greenText}>Ontvolgen</Text>
           </View>
         </TouchableOpacity>
       );
@@ -88,7 +88,7 @@ export const FollowButtons: React.FC<Props> = props => {
           style={[styles.button, styles.green]}
           onPress={() => followRequest()}>
           <View>
-            <Text style={styles.greenText}>Follow</Text>
+            <Text style={styles.greenText}>Volgen</Text>
           </View>
         </TouchableOpacity>
       );
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   red: {
     color: 'white',
-    backgroundColor: 'red',
+    backgroundColor: brittishPalette.darkgray,
   },
   greenText: {
     color: 'white',
