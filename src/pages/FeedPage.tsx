@@ -12,15 +12,6 @@ const FeedPage: FC = ({navigation}) => {
   const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
   const activities = useSelector(state => state.activities);
-  const [refreshing, setRefreshing] = useState(false);
-  const wait = timeout => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  };
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -34,11 +25,13 @@ const FeedPage: FC = ({navigation}) => {
         api.headersGet,
       );
       const response = await request.json();
-      dispatch(setStoreActivities(response));
+      if (request.status === 200) {
+        dispatch(setStoreActivities(response));
+      }
     };
 
     getData();
-  }, [userData.token, userData.userId, refreshing, dispatch]);
+  }, [userData.token, userData.userId, dispatch]);
 
   return (
     <>
@@ -62,12 +55,8 @@ const FeedPage: FC = ({navigation}) => {
         <Text style={styles.feedText}>Activiteiten</Text>
       </View>
 
-      <ScrollView
-        style={styles.scrollViewWrapper}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {activities.AllActivities.map((activity) => {
+      <ScrollView style={styles.scrollViewWrapper}>
+        {activities.AllActivities.map(activity => {
           return (
             <Activity
               key={Math.random()}
