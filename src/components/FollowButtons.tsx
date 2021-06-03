@@ -14,7 +14,7 @@ export const FollowButtons: React.FC<Props> = props => {
 
   useEffect(() => {
     const checkFollows = async () => {
-      await fetch(
+      const request = await fetch(
         api.baseUrl +
           '/users/' +
           userData.userId +
@@ -23,9 +23,9 @@ export const FollowButtons: React.FC<Props> = props => {
           '?token=' +
           userData.token,
         api.headersGet,
-      )
-        .then(response => response.json())
-        .then(response => setFollowed(response));
+      );
+      const response = await request.json();
+      setFollowed(response);
     };
 
     checkFollows();
@@ -42,6 +42,7 @@ export const FollowButtons: React.FC<Props> = props => {
         userData.token,
       api.headersPost(1),
     ).then(response => {
+      console.log(response);
       if (response.status === 200) {
         setFollowed(true);
       } else if (response.status === 400) {
@@ -61,6 +62,7 @@ export const FollowButtons: React.FC<Props> = props => {
         userData.token,
       api.headersDelete,
     ).then(response => {
+      console.log(response);
       if (response.status === 200) {
         setFollowed(false);
       }

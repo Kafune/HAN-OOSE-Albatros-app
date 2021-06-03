@@ -1,11 +1,45 @@
-import React, {FC} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useCallback, useEffect, useState} from 'react';
+import {Image, RefreshControl, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {Activity} from '../components/Activity';
+import api from '../core/data/api';
+import {setStoreActivities} from '../core/redux/actions/activitiesActions';
 import colors from '../styles/colors';
+import _ from 'lodash';
 
 const FeedPage: FC = ({navigation}) => {
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
+  const activities = useSelector(state => state.activities);
+  const [refreshing, setRefreshing] = useState(false);
+  const wait = timeout => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  };
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  useEffect(() => {
+    const getData = async () => {
+      const request = await fetch(
+        api.baseUrl +
+          '/users/' +
+          userData.userId +
+          '/followee-activities' +
+          '?token=' +
+          userData.token,
+        api.headersGet,
+      );
+      const response = await request.json();
+      dispatch(setStoreActivities(response));
+    };
+
+    getData();
+  }, [userData.token, userData.userId, refreshing, dispatch]);
+
   return (
     <>
       <TouchableOpacity
@@ -28,75 +62,20 @@ const FeedPage: FC = ({navigation}) => {
         <Text style={styles.feedText}>Activiteiten</Text>
       </View>
 
-      <ScrollView style={styles.scrollViewWrapper}>
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => navigation.navigate('profile', {userId: 2})}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
-            </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
-
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => navigation.navigate('profile', {userId: 3})}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
-            </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
-
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => console.log(true)}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
-            </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
+      <ScrollView
+        style={styles.scrollViewWrapper}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        {activities.AllActivities.map((activity) => {
+          return (
+            <Activity
+              key={Math.random()}
+              navigation={navigation}
+              activity={activity}
+            />
+          );
+        })}
       </ScrollView>
     </>
   );
