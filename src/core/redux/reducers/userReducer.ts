@@ -1,12 +1,17 @@
-const initialState = {
-
-};
+const initialState = {};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_USER': {
       return {
-        ...action.payload
+        ...action.payload,
+      };
+    }
+
+    case 'SET_POINTS': {
+      return {
+        ...state,
+        totalScore: action.payload,
       };
     }
 

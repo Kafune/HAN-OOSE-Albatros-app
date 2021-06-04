@@ -1,17 +1,51 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {Activity} from '../components/Activity';
+import api from '../core/data/api';
+import {setStoreActivities} from '../core/redux/actions/activitiesActions';
 import colors from '../styles/colors';
 
 const FeedPage: FC = ({navigation}) => {
+  const dispatch = useDispatch();
   const userData = useSelector(state => state.user);
+  const activities = useSelector(state => state.activities);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const getData = async () => {
+        const request = await fetch(
+          `${api.baseUrl}/users/${userData.userId}/followee-activities?token=${userData.token}`,
+          api.headersGet,
+        );
+
+        switch (request.status) {
+          case 200:
+            const response = await request.json();
+            dispatch(setStoreActivities(response));
+            break;
+          case 400:
+            dispatch(setStoreActivities(''));
+            break;
+          default:
+            console.log(request);
+        }
+      };
+
+      if (userData) {
+        getData();
+      }
+    });
+    return unsubscribe;
+  }, [dispatch, navigation, userData, userData.token, userData.userId]);
+
   return (
     <>
       <TouchableOpacity
         style={styles.profileWrapper}
         onPress={() =>
-          navigation.navigate('profile', {username: userData.username})
+          navigation.navigate('profile', {userId: userData.userId})
         }>
         <Image
           style={styles.profilePicture}
@@ -19,7 +53,9 @@ const FeedPage: FC = ({navigation}) => {
         />
         <View style={styles.profileTextWrapper}>
           <Text style={styles.profileName}>{userData.username}</Text>
-          <Text style={styles.profilePoints}>100 Punten</Text>
+          <Text style={styles.profilePoints}>
+            Totale Score: {userData.totalScore.toFixed(0)}
+          </Text>
         </View>
       </TouchableOpacity>
       <View style={styles.feedWrapper}>
@@ -27,74 +63,24 @@ const FeedPage: FC = ({navigation}) => {
       </View>
 
       <ScrollView style={styles.scrollViewWrapper}>
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => navigation.navigate('profile', {username: 'tim'})}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
+        {activities.AllActivities ? (
+          activities.AllActivities.map(activity => {
+            return (
+              <Activity
+                key={activity.activityId}
+                navigation={navigation}
+                activity={activity}
+              />
+            );
+          })
+        ) : (
+          <>
+            <Text style={styles.noFriendsText1}>Je volgt nog niemand.</Text>
+            <Text style={styles.noFriendsText2}>
+              Er zijn geen activiteiten gevonden.
             </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
-
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => console.log(true)}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
-            </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
-
-        <View style={styles.activityWrapper}>
-          <View style={styles.grid}>
-            <TouchableOpacity
-              style={styles.activityUserWrapper}
-              onPress={() => console.log(true)}>
-              <Image style={styles.activityImage} source={{uri: ''}} />
-              <Text style={styles.activityUsername}>Bart Simpson</Text>
-            </TouchableOpacity>
-
-            <View style={styles.activityTime}>
-              <Text style={styles.italic}>Vandaag</Text>
-              <Text style={styles.italicCenterBold}>11:10</Text>
-            </View>
-          </View>
-
-          <View style={styles.activityRouteWrapper}>
-            <Text style={styles.activityRouteHeader}>
-              Heeft de route ... gelopen
-            </Text>
-            <Text style={styles.activityRouteSubheader}>15km - 100 punten</Text>
-          </View>
-        </View>
+          </>
+        )}
       </ScrollView>
     </>
   );
@@ -139,6 +125,19 @@ const styles = StyleSheet.create({
   },
   scrollViewWrapper: {
     marginTop: 12,
+  },
+  noFriendsText1: {
+    marginTop: 32,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontSize: 16,
+    marginBottom: 6,
+  },
+  noFriendsText2: {
+    fontSize: 16,
+    textAlign: 'center',
+    fontStyle: 'italic',
+    fontWeight: 'bold',
   },
 
   grid: {

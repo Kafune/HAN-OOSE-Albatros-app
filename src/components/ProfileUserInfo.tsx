@@ -14,7 +14,7 @@ const ProfileUserInfo: React.FC<Props> = ({
   value,
   icon,
 }): JSX.Element => {
-  const size = 24;
+  const size = 42;
   return (
     <View style={styles.wrapper}>
       <MaterialCommunityIcons
@@ -23,8 +23,9 @@ const ProfileUserInfo: React.FC<Props> = ({
         color={colors.iconColor}
         style={styles.icon}
       />
-      <Text>{label}</Text>
-      <Text>{value}</Text>
+
+      <Text style={styles.titletext}>{label}</Text>
+      <Text style={styles.subtext}>{value}</Text>
     </View>
   );
 };
@@ -40,7 +41,18 @@ const styles = StyleSheet.create({
     display: 'flex',
   },
   icon: {
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
+  },
+  titletext: {
+    textAlign: 'center',
+    fontStyle: 'italic',
+    opacity: 0.35,
+  },
+  subtext: {
+    textAlign: 'center',
+    fontSize: 16,
+    marginTop: 6,
+    fontWeight: 'bold',
   },
 });
 

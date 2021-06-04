@@ -1,40 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
 import ProfileUserInfo from '../components/ProfileUserInfo';
-import RouteInformation from '../components/RouteInformation';
-import {Activity} from '../core/domain/Activity';
-import api from '../core/data/api';
-import {ActivityMapper} from '../core/mapper/ActivityMapper';
-import {useSelector} from 'react-redux';
+import RouteInformation from './RouteInformation';
+import colors from '../styles/colors';
+import {FollowButtons} from './FollowButtons';
 
 type Props = {
   user: any;
 };
 export const Profile: React.FC<Props> = props => {
-  const loggedInUser = useSelector(state => state.user);
-  const [activities, setActivities] = useState<Activity[]>([]);
-
-  useEffect(() => {
-    setActivities([]);
-    if (props.user) {
-      const getData = async () => {
-        const request = await fetch(
-          api.baseUrl +
-            '/activities/user/' +
-            props.user[0].userId +
-            '?token=' +
-            loggedInUser.token,
-          api.headersGet,
-        );
-        const response = await request.json();
-        const responseActivities = ActivityMapper.multipleToDomain(response);
-        setActivities(responseActivities);
-      };
-
-      getData();
-    }
-  }, [loggedInUser.token, props.user]);
-
   if (props.user) {
     return (
       <>
@@ -42,46 +16,53 @@ export const Profile: React.FC<Props> = props => {
           <View style={styles.header}>
             <Image
               style={styles.profileImage}
-              source={{uri: props.user[0].imageUrl}}
+              source={{uri: props.user.imageUrl}}
             />
             <View style={styles.profileUserInfo}>
               <Text style={styles.profileUserName}>
-                {props.user[0].username}#{props.user[0].userId}
+                {props.user.username}#{props.user.userId}
               </Text>
               <Text style={styles.profileUserEmail}>
-                {props.user[0].emailAddress}
+                {props.user.emailAddress}
               </Text>
+            </View>
+            <View style={{alignItems: 'flex-end', width: 175}}>
+              <FollowButtons user={props.user} />
             </View>
           </View>
           <View style={styles.profileUserStats}>
             <ProfileUserInfo
               label={'Voornaam: '}
-              value={props.user[0].firstName}
+              value={props.user.firstName}
               icon={'emoticon-happy-outline'}
             />
             <ProfileUserInfo
               label={'Achternaam: '}
-              value={props.user[0].lastName}
+              value={props.user.lastName}
               icon={'emoticon-happy-outline'}
             />
             <ProfileUserInfo
               label={'Totale score: '}
-              value={props.user[0].totalScore}
+              value={props.user.totalScore}
               icon={'run'}
             />
           </View>
+          <View style={styles.feedWrapper}>
+            <Text style={styles.feedText}>Laatste activiteiten</Text>
+          </View>
           <ScrollView style={styles.activities}>
-            <Text style={styles.activitiesHeader}>Laatste activiteiten</Text>
-            {activities.map(activity => {
-              return (
-                <RouteInformation
-                  isActive={false}
-                  key={activity.activityId}
-                  route={activity}
-                  onSelectRoute={() => {}}
-                />
-              );
-            })}
+            {props.user.activities
+              ? props.user.activities.map(activity => {
+                  return (
+                    <RouteInformation
+                      isActive={false}
+                      key={activity.activityId}
+                      route={activity}
+                      onSelectRoute={() => {}}
+                    />
+                  );
+                })
+              : null}
           </ScrollView>
         </View>
       </>
@@ -94,14 +75,14 @@ export const Profile: React.FC<Props> = props => {
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
-    backgroundColor: 'white',
   },
   header: {
     marginHorizontal: 15,
     paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
+    borderColor: colors.main,
   },
   profileImage: {
     height: 50,
@@ -123,13 +104,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   activities: {
-    height: 525,
+    height: 455,
+    marginTop: 16,
   },
-  activitiesHeader: {
-    marginVertical: 10,
-    marginHorizontal: 15,
-    borderTopWidth: 1,
-    fontSize: 28,
-    fontWeight: 'bold',
+  feedWrapper: {
+    borderTopWidth: 2,
+    borderColor: colors.main,
+    marginTop: 32,
+  },
+  feedText: {
+    textAlign: 'center',
+    backgroundColor: '#F2F2F2',
+    position: 'absolute',
+    width: 165,
+    fontStyle: 'italic',
+    borderRadius: 100,
+    top: -13,
+    alignSelf: 'center',
+    fontSize: 16,
   },
 });

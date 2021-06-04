@@ -8,22 +8,22 @@ const ProfilePage: React.FC = ({route, navigation}) => {
   const userData = useSelector(state => state.user);
   const [userIdData, setUserIdData] = useState();
 
+  const paramUserId = route.params ? route.params.userId : userData.userId;
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', e => {
       e.preventDefault();
-      navigation.navigate('profile', {username: userData.username});
+      navigation.navigate('profile', {userId: userData.userId});
     });
     return unsubscribe;
-  }, [navigation, userData.username]);
+  }, [navigation, userData.userId]);
 
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
-        api.baseUrl +
-          '/users/find/' +
-          route.params.username +
-          '?token=' +
-          userData.token,
+        `${api.baseUrl}/users/get-by-id/${
+          paramUserId === userData.userId ? userData.userId : paramUserId
+        }?token=${userData.token}`,
         api.headersGet,
       );
       const response = await request.json();
@@ -31,13 +31,9 @@ const ProfilePage: React.FC = ({route, navigation}) => {
     };
 
     getData();
-  }, [route.params.username, userData.token]);
+  }, [paramUserId, userData.token, userData.userId]);
 
-  if (route.params.username === userData.username) {
-    return <Profile user={{0: {...userData}}} />;
-  } else {
-    return <Profile user={userIdData} />;
-  }
+  return <Profile user={userIdData} />;
 };
 
 export default ProfilePage;
