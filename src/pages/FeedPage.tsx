@@ -6,7 +6,6 @@ import {Activity} from '../components/Activity';
 import api from '../core/data/api';
 import {setStoreActivities} from '../core/redux/actions/activitiesActions';
 import colors from '../styles/colors';
-import _ from 'lodash';
 
 const FeedPage: FC = ({navigation}) => {
   const dispatch = useDispatch();
@@ -54,7 +53,7 @@ const FeedPage: FC = ({navigation}) => {
         <View style={styles.profileTextWrapper}>
           <Text style={styles.profileName}>{userData.username}</Text>
           <Text style={styles.profilePoints}>
-            totale score: {userData.totalScore}
+            totale score: {userData.totalScore.toFixed(0)}
           </Text>
         </View>
       </TouchableOpacity>
