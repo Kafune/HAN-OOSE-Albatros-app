@@ -16,11 +16,7 @@ export const Activity: React.FC<Props> = props => {
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
-        api.baseUrl +
-          '/users/get-by-id/' +
-          props.activity.userId +
-          '?token=' +
-          userData.token,
+        `${api.baseUrl}/users/get-by-id/${props.activity.userId}?token=${userData.token}`,
         api.headersGet,
       );
       const response = await request.json();
@@ -32,7 +28,7 @@ export const Activity: React.FC<Props> = props => {
 
   if (user) {
     return (
-      <View key={Math.random()} style={styles.activityWrapper}>
+      <View style={styles.activityWrapper}>
         <View style={styles.grid}>
           <TouchableOpacity
             style={styles.activityUserWrapper}

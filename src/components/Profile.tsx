@@ -75,14 +75,14 @@ export const Profile: React.FC<Props> = props => {
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
-    backgroundColor: 'white',
   },
   header: {
     marginHorizontal: 15,
     paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
+    borderColor: colors.main,
   },
   profileImage: {
     height: 50,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   feedText: {
     textAlign: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F2F2F2',
     position: 'absolute',
     width: 165,
     fontStyle: 'italic',

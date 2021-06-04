@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 import api from '../core/data/api';
-import colors, { brittishPalette } from '../styles/colors';
+import colors, {brittishPalette} from '../styles/colors';
 
 type Props = {
   user: any;
@@ -15,13 +15,7 @@ export const FollowButtons: React.FC<Props> = props => {
   useEffect(() => {
     const checkFollows = async () => {
       const request = await fetch(
-        api.baseUrl +
-          '/users/' +
-          userData.userId +
-          '/is-following/' +
-          props.user.userId +
-          '?token=' +
-          userData.token,
+        `${api.baseUrl}/users/${userData.userId}/is-following/${props.user.userId}?token=${userData.token}`,
         api.headersGet,
       );
       const response = await request.json();
@@ -33,33 +27,25 @@ export const FollowButtons: React.FC<Props> = props => {
 
   const followRequest = async () => {
     await fetch(
-      api.baseUrl +
-        '/users/' +
-        userData.userId +
-        '/follows/' +
-        props.user.userId +
-        '?token=' +
-        userData.token,
+      `${api.baseUrl}/users/${userData.userId}/follows/${props.user.userId}?token=${userData.token}`,
       api.headersPost(1),
     ).then(response => {
-      console.log(response);
-      if (response.status === 200) {
-        setFollowed(true);
-      } else if (response.status === 400) {
-        setFollowed(false);
+      switch (response.status) {
+        case 200:
+          setFollowed(true);
+          break;
+        case 400:
+          setFollowed(false);
+          break;
+        default:
+          console.log(response);
       }
     });
   };
 
   const unFollowRequest = async () => {
     await fetch(
-      api.baseUrl +
-        '/users/' +
-        userData.userId +
-        '/follows/' +
-        props.user.userId +
-        '?token=' +
-        userData.token,
+      `${api.baseUrl}/users/${userData.userId}/follows/${props.user.userId}?token=${userData.token}`,
       api.headersDelete,
     ).then(response => {
       console.log(response);

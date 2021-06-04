@@ -16,19 +16,20 @@ const FeedPage: FC = ({navigation}) => {
     const unsubscribe = navigation.addListener('focus', () => {
       const getData = async () => {
         const request = await fetch(
-          api.baseUrl +
-            '/users/' +
-            userData.userId +
-            '/followee-activities' +
-            '?token=' +
-            userData.token,
+          `${api.baseUrl}/users/${userData.userId}/followee-activities?token=${userData.token}`,
           api.headersGet,
         );
-        if (request.status === 200) {
-          const response = await request.json();
-          dispatch(setStoreActivities(response));
-        } else if (request.status === 400) {
-          dispatch(setStoreActivities(''));
+
+        switch (request.status) {
+          case 200:
+            const response = await request.json();
+            dispatch(setStoreActivities(response));
+            break;
+          case 400:
+            dispatch(setStoreActivities(''));
+            break;
+          default:
+            console.log(request);
         }
       };
 
@@ -53,7 +54,7 @@ const FeedPage: FC = ({navigation}) => {
         <View style={styles.profileTextWrapper}>
           <Text style={styles.profileName}>{userData.username}</Text>
           <Text style={styles.profilePoints}>
-            totale score: {userData.totalScore.toFixed(0)}
+            Totale Score: {userData.totalScore.toFixed(0)}
           </Text>
         </View>
       </TouchableOpacity>
@@ -74,9 +75,9 @@ const FeedPage: FC = ({navigation}) => {
           })
         ) : (
           <>
-            <Text style={styles.noFriendsText1}>Je volgt nog niemand :(</Text>
+            <Text style={styles.noFriendsText1}>Je volgt nog niemand.</Text>
             <Text style={styles.noFriendsText2}>
-              Er zijn geen activiteiten gevonden...
+              Er zijn geen activiteiten gevonden.
             </Text>
           </>
         )}

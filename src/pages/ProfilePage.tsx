@@ -21,11 +21,9 @@ const ProfilePage: React.FC = ({route, navigation}) => {
   useEffect(() => {
     const getData = async () => {
       const request = await fetch(
-        api.baseUrl +
-          '/users/get-by-id/' +
-          (paramUserId === userData.userId ? userData.userId : paramUserId) +
-          '?token=' +
-          userData.token,
+        `${api.baseUrl}/users/get-by-id/${
+          paramUserId === userData.userId ? userData.userId : paramUserId
+        }?token=${userData.token}`,
         api.headersGet,
       );
       const response = await request.json();
