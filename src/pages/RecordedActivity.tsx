@@ -12,22 +12,49 @@ import Dialog from 'react-native-dialog';
 import {Duration} from '../core/maps/Duration';
 import {setStoreWalkedRoute} from '../core/redux/actions/walkedRouteActions';
 import _ from 'lodash';
-import {setStoreRouteLine} from '../core/redux/actions/routeLineActions';
+import {SafeAsRouteForm} from '../components/SafeAsRouteForm';
+import { setStorePoints } from '../core/redux/actions/userActions';
 
 type props = {
-  navigation: {navigate: (arg0: string, arg1: any) => void};
+  navigation: {reset?: any; navigate?: (arg0: string, arg1: any) => void};
 };
 
 const RecordedActivity: React.FC<props> = props => {
   const dispatch = useDispatch();
   const recordedActivityState = useSelector(state => state.walkedRoute);
   const [removeDialog, setRemoveDialog] = useState<boolean>(false);
+  const [showSafeAsRouteDialog, SetShowSafeAsRouteDialog] =
+    useState<boolean>(false);
+  const user = useSelector(state => state.user);
+
+  const safeActivity = () => {
+    const dto = ActivityMapper.toDTO(recordedActivityState);
+    dto.point = user.totalScore + recordedActivityState.point;
+    dto.point = Number(dto.point.toFixed());
+    dto.userId = user.userId;
+    ActivityController.post(dto, user.token).then(() => {
+      dispatch(setStorePoints(dto.point));
+      // Return back to the main page when saved.
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: 'app'}],
+      });
+    });
+  };
 
   if (_.isEmpty(recordedActivityState)) {
     return <></>;
   }
   return (
     <>
+      <SafeAsRouteForm
+        navigation={props.navigation}
+        showDialog={showSafeAsRouteDialog}
+        close={() => SetShowSafeAsRouteDialog(false)}
+        oplsaanAlsActiviteit={() => safeActivity()}
+        activity={recordedActivityState}
+        token={user.token}
+      />
       <Dialog.Container visible={removeDialog}>
         <Dialog.Title>Gelopen route verwijderen</Dialog.Title>
         <Dialog.Description>
@@ -131,15 +158,11 @@ const RecordedActivity: React.FC<props> = props => {
             <View style={styles.button}>
               <Pressable
                 onPress={() => {
-                  const dto = ActivityMapper.toDTO(recordedActivityState);
-                  console.log(dto);
-                  ActivityController.post(dto).then(() => {
-                    // Return back to the main page when saved.
-                    props.navigation.reset({
-                      index: 0,
-                      routes: [{name: 'app'}],
-                    });
-                  });
+                  if (user.a61646d696e) {
+                    SetShowSafeAsRouteDialog(true);
+                  } else {
+                    safeActivity();
+                  }
                 }}>
                 <MaterialCommunityIcons
                   name="content-save"

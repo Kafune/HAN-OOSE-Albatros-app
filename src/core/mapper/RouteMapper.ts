@@ -3,8 +3,11 @@ import {MapsCoordinate} from '../maps/MapsCoordinate';
 import {MapsPoint} from '../maps/MapsPoints';
 import {MapsLine} from '../maps/MapsLine';
 import RouteResponseDTO from '../dto/RouteResponseDTO';
+import {SegmentDTO} from '../dto/SegmentDTO'
+import {SegmentMapper} from './SegmentMapper';
 import {Activity} from '../domain/Activity';
 import {Segment} from '../domain/Segment';
+import RouteDTO from '../dto/RouteDTO';
 
 export class RouteMapper {
   /**
@@ -68,5 +71,21 @@ export class RouteMapper {
    */
   static multipleToDomain(routes: RouteResponseDTO[]): Route[] {
     return routes.map(route => this.toDomain(route));
+  }
+
+  /**
+   * Maps an Route to an RouteDTO.
+   * @param {Route} route
+   */
+  static toDTO(route: Route) {
+    const dto: RouteDTO = {
+      routeId: route.id,
+      distance: Number(route.distance.toFixed(2)),
+      segments: SegmentMapper.multipleToDTO(route.segments),
+      name: route.name,
+      description: route.description,
+    };
+
+    return dto;
   }
 }
